@@ -1,971 +1,902 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Algebra Units 6–9 • Interactive Practice (GCF → Quadratics)</title>
-<meta name="description" content="Fully offline single‑file practice for Beginning Algebra Units 6–9: factoring, rational expressions, radicals, and quadratics. Includes step‑by‑step solutions and explanations for common mistakes.">
+<title>MA025 Units 6–9 • Interactive Review Quiz</title>
 <style>
   :root{
     --bg:#0b0d10;
-    --card:#12161b;
-    --ink:#e9eef5;
-    --muted:#a8b3c7;
-    --accent:#4cc9f0;
-    --accent-2:#80ffdb;
-    --ok:#5ee38d;
-    --bad:#ff6b6b;
-    --warn:#f3b343;
-    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    --card:#12161c;
+    --muted:#8da0b3;
+    --text:#eef3f8;
+    --accent:#4fb8ff;
+    --accent-2:#72ffa1;
+    --danger:#ff5d6e;
+    --warning:#ffd166;
+    --ok:#00d2a8;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius:14px;
+    --radius-sm:10px;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;
-    font-family:var(--sans);
-    color:var(--ink);
-    background: radial-gradient(1200px 800px at 10% -10%, #16202b 0%, var(--bg) 45%);
-    line-height:1.45;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    background: linear-gradient(180deg,#0a0d12,#0c1016 45%,#0a0d12);
+    color:var(--text);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
   header{
-    position:sticky; top:0; z-index:5;
-    background:linear-gradient(180deg, rgba(18,22,27,.95), rgba(18,22,27,.85));
-    backdrop-filter: blur(6px);
-    border-bottom:1px solid #1f2a36;
+    position:sticky; top:0; z-index:10;
+    background:rgba(11,13,16,.85);
+    backdrop-filter:saturate(140%) blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.06);
   }
-  .wrap{max-width:1100px; margin:0 auto; padding:12px 16px}
-  .title{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
-  .title h1{margin:.1rem 0; font-weight:700; font-size:clamp(20px,2.8vw,30px)}
-  .title small{color:var(--muted)}
+  header .wrap{
+    max-width:1100px; margin:0 auto; padding:14px 16px;
+    display:flex; gap:10px; align-items:center; justify-content:space-between;
+  }
+  h1{font-size:clamp(18px,2.6vw,24px); margin:0; letter-spacing:.2px;}
+  .badge{font-size:12px; color:var(--muted);}
+  main{max-width:1100px; margin:0 auto; padding:18px 16px 80px;}
   .grid{
-    display:grid;
-    grid-template-columns: 300px 1fr;
-    gap:16px;
-    padding:16px;
+    display:grid; gap:16px;
+    grid-template-columns: 1fr;
   }
-  @media (max-width:900px){
-    .grid{grid-template-columns:1fr}
+  @media(min-width:870px){
+    .grid{grid-template-columns: 340px 1fr;}
   }
   .card{
     background:var(--card);
-    border:1px solid #1f2a36;
-    border-radius:12px;
-    padding:14px;
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
   }
-  .nav .group{margin-bottom:16px}
-  .nav h3{font-size:15px; color:var(--accent); margin:0 0 8px 0; letter-spacing:.03em}
-  .nav button{
+  .pad{padding:16px;}
+  .title{font-weight:700; margin:0 0 6px;}
+  .sub{color:var(--muted); font-size:14px; margin:0 0 10px;}
+  .section{margin:14px 0 10px; font-weight:700; color:#cbe2ff; letter-spacing:.2px;}
+  .units{
+    display:grid; gap:10px;
+  }
+  .unit-btn{
     width:100%; text-align:left;
-    margin:6px 0; padding:10px 12px;
-    background:#0f141a; color:var(--ink);
-    border:1px solid #283546; border-radius:9px;
-    cursor:pointer; transition:transform .04s ease, background .2s;
-  }
-  .nav button:hover{background:#101a22}
-  .nav button:focus{outline:2px solid var(--accent)}
-  .nav .tiny{font-size:12px; color:var(--muted); display:block; margin-top:3px}
-  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-  .controls button, .controls select {
-    background:#0f141a; color:var(--ink);
-    border:1px solid #283546; border-radius:9px; padding:9px 12px;
+    border-radius:var(--radius-sm);
+    border:1px solid rgba(255,255,255,.08);
+    padding:10px 12px;
+    background:#0f141b;
+    color:var(--text);
     cursor:pointer;
   }
-  .controls button.primary{background:linear-gradient(180deg, #1b9bd7, #1378a8); border-color:#2a99d0}
-  .controls button.ghost{background:transparent}
-  .controls .score{color:var(--muted)}
-  .question-area{min-height:220px}
-  .question{font-size:clamp(18px,2.2vw,21px); margin:0 0 8px 0}
-  .scratch{
-    width:100%; min-height:90px;
-    padding:10px; font-family:var(--mono); font-size:14px;
-    background:#0a0f13; color:#dbe7ff; border:1px dashed #2d3a4b; border-radius:8px;
+  .unit-btn:hover, .unit-btn:focus{outline:none; border-color:rgba(79,184,255,.6); background:#0f171f;}
+  .unit-code{font-weight:700; color:var(--accent)}
+  .unit-title{display:block; color:#e5f2ff; font-weight:600}
+  .meta{display:block; font-size:12px; color:var(--muted)}
+  .controls{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+  .btn{
+    appearance:none; border:1px solid rgba(255,255,255,.1); color:var(--text);
+    background:#0f141b; padding:10px 14px; border-radius:12px; cursor:pointer;
   }
-  .options{display:grid; gap:8px; margin:10px 0 8px 0}
-  .options label{
-    padding:10px 12px; border:1px solid #2a384a; border-radius:10px; display:flex; gap:10px; align-items:center;
-    background:#0f141a;
+  .btn:hover{border-color:var(--accent);}
+  .btn.primary{background:linear-gradient(180deg,#1a7fda,#1167c7); border-color:#1983e6}
+  .btn.good{background:linear-gradient(180deg,#11a36b,#0f8d5c); border-color:#0fa66b}
+  .btn.warn{background:linear-gradient(180deg,#be7f11,#b66b0f); border-color:#be7f11}
+  .btn.ghost{background:transparent}
+  .small{font-size:13px}
+  .pill{border-radius:999px; padding:6px 10px; font-size:12px; border:1px solid rgba(255,255,255,.12); color:var(--muted)}
+  .list{display:flex; flex-direction:column; gap:8px}
+  .video-item a{color:#bfe2ff; text-decoration:none}
+  .video-item a:hover{text-decoration:underline}
+  details{background:#0e1319; border:1px solid rgba(255,255,255,.06); border-radius:10px; padding:10px 12px}
+  details[open]{background:#0f1620}
+  summary{cursor:pointer; outline:none}
+  .quiz-card{ padding:12px 14px 16px;}
+  .q-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+  .q-id{color:var(--muted); font-size:12px}
+  .q-body{margin:10px 0}
+  .math{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#0b1118; padding:2px 6px; border-radius:6px; border:1px solid rgba(255,255,255,.08)}
+  .choices{display:grid; gap:8px; margin-top:8px}
+  .choice{
+    background:#0d131a; border:1px solid rgba(255,255,255,.08); padding:10px 12px;
+    border-radius:12px; display:flex; align-items:flex-start; gap:10px;
   }
-  input[type=radio]{transform:scale(1.2)}
-  .explain{display:none; margin-top:12px; color:var(--muted)}
-  .steps{display:none; background:#0d1217; border:1px solid #2a384a; border-radius:10px; padding:12px; margin-top:12px; line-height:1.5}
-  .steps ol{margin:0 0 0 20px}
+  .choice input{margin:3px 2px 0 0; transform:scale(1.2)}
+  .feedback{margin-top:10px; border-radius:12px; border:1px dashed rgba(255,255,255,.12); padding:10px}
+  .feedback.correct{border-color:rgba(0,210,168,.5); background:#0b1a16}
+  .feedback.wrong{border-color:rgba(255,93,110,.55); background:#1a1011}
+  .steps{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; white-space:pre-wrap}
+  .progress{display:flex; gap:8px; align-items:center; color:var(--muted); font-size:13px}
+  .bar{flex:1; height:8px; border-radius:999px; background:#0b1118; overflow:hidden; border:1px solid rgba(255,255,255,.08)}
+  .bar>i{display:block; height:100%; background:linear-gradient(90deg,#2ea6ff,#72ffa1); width:0%}
   .muted{color:var(--muted)}
-  .pill{display:inline-block; padding:2px 8px; border-radius:999px; background:#113247; color:#9fd7ff; font-size:12px; border:1px solid #24506b; margin-left:6px}
-  .ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
-  .footer{font-size:13px; color:var(--muted)}
-  a{color:#9fd7ff; text-decoration:none}
-  a:hover{color:var(--accent-2); text-decoration:underline}
-  .ref-list li{margin:.25rem 0}
-  .hide{display:none !important}
-  .katex{font-family:var(--mono)}
-  .blockquote{
-    border-left:3px solid #284963; padding-left:10px; margin:8px 0; color:#bcdfff
+  .katex-mock{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}
+  footer{max-width:1100px; margin:20px auto; padding:0 16px 40px; color:var(--muted); font-size:13px}
+  .infobox{background:#0d131a; border:1px solid rgba(255,255,255,.06); padding:12px; border-radius:12px}
+  .notice{border-left:4px solid var(--accent); padding-left:10px}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+  .sticky-actions{position:sticky; bottom:0; backdrop-filter: blur(8px) saturate(140%); background:rgba(14,17,22,.85); border-top:1px solid rgba(255,255,255,.06); padding:10px 12px; border-radius:0 0 var(--radius) var(--radius); display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between}
+  .toggler{display:flex; gap:10px; align-items:center}
+  .toggler input{transform:scale(1.1)}
+  .unit-select{display:grid; grid-template-columns: repeat( auto-fit, minmax(180px, 1fr) ); gap:8px}
+  .unit-select label{display:flex; gap:8px; align-items:flex-start; background:#0d131a; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,.08)}
+  .nowrap{white-space:nowrap}
+  .hr{height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent); margin:12px 0}
+  .mono{font-family: ui-monospace, Menlo, Consolas, "Liberation Mono", monospace}
+  @media (pointer:coarse){
+    .choice{padding:14px}
+    .choice input{transform:scale(1.35)}
   }
-  .note{font-size:13px; color:var(--muted); margin-top:6px}
+  @media print{
+    header,.sticky-actions,.controls{display:none !important}
+    body{background:#fff; color:#000}
+    .card{border:1px solid #ccc; box-shadow:none}
+    .math{background:transparent; border:0}
+  }
 </style>
 </head>
 <body>
-  <header>
-    <div class="wrap title">
-      <h1>Beginning Algebra Units <span class="pill">6 → 9</span> Interactive Practice</h1>
-      <small>Factoring • Rational Expressions • Radicals • Quadratics</small>
+<header>
+  <div class="wrap">
+    <h1>MA025 Interactive Review • Units 6–9 <span class="badge">(Factoring → Quadratics)</span></h1>
+    <div class="progress" aria-hidden="true">
+      <span id="progressLabel" class="sr-only">Progress</span>
+      <div class="bar" aria-labelledby="progressLabel"><i id="barFill" style="width:0%"></i></div>
+      <span id="scoreMini" class="pill">Score: 0/0</span>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main class="wrap grid">
-    <aside class="card nav" aria-label="Topic Navigator">
-      <div class="group">
-        <h3>Unit 6 • Factoring</h3>
-        <button data-topic="6.1">6.1 GCF – Greatest Common Factor<span class="tiny">Factor out the GCF</span></button>
-        <button data-topic="6.2">6.2 Grouping (4-term)<span class="tiny">Factor by grouping</span></button>
-        <button data-topic="6.3">6.3 Trinomials a = 1<span class="tiny">ac method with a=1</span></button>
-        <button data-topic="6.4">6.4 Trinomials a ≠ 1<span class="tiny">ac method + grouping</span></button>
-        <button data-topic="6.5">6.5 Special Products<span class="tiny">Diff. of squares • Perfect squares • Cubes</span></button>
-        <button data-topic="6.6">6.6 Strategies Mix<span class="tiny">Choose the right method</span></button>
-        <button data-topic="6.7">6.7 Solve by Factoring<span class="tiny">Zero‑product rule</span></button>
-      </div>
-      <div class="group">
-        <h3>Unit 7 • Rational Expressions</h3>
-        <button data-topic="7.1">7.1 Reduce Rational Expressions</button>
-        <button data-topic="7.2">7.2 Multiply / Divide Rationals</button>
-        <button data-topic="7.3">7.3 Least Common Denominator</button>
-        <button data-topic="7.4">7.4 Add / Subtract Rationals</button>
-        <button data-topic="7.5">7.5 Complex Fractions</button>
-        <button data-topic="7.7">7.7 Solve Rational Equations</button>
-      </div>
-      <div class="group">
-        <h3>Unit 8 • Radicals</h3>
-        <button data-topic="8.1">8.1 Square & Higher Roots</button>
-        <button data-topic="8.2">8.2 Adding Radicals</button>
-        <button data-topic="8.3">8.3 Multiplying Radicals</button>
-        <button data-topic="8.5">8.5 Dividing / Rationalizing</button>
-      </div>
-      <div class="group">
-        <h3>Unit 9 • Quadratics</h3>
-        <button data-topic="9.1">9.1 Solving with Radicals</button>
-        <button data-topic="9.2">9.2 Square‑Root Property</button>
-        <button data-topic="9.3">9.3 Completing the Square</button>
-        <button data-topic="9.4">9.4 Quadratic Formula</button>
-      </div>
-      <div class="group">
-        <h3>Videos & References</h3>
-        <div class="note">Tap a topic in the navigator to practice. See “References” below for free videos for every unit.</div>
-      </div>
-    </aside>
+<main class="grid">
+  <aside class="card pad" id="sidebar">
+    <h2 class="title">Start here</h2>
+    <p class="sub">Pick a unit to study or create a mixed exam across any units. Fully offline; no installs or logins.</p>
 
-    <section class="card">
+    <div class="section">Study by Unit</div>
+    <div class="units" id="unitList"></div>
+
+    <div class="section">Exam Mode</div>
+    <div class="infobox">
+      <div class="unit-select" id="unitSelect"></div>
       <div class="controls">
-        <button id="newQuestion" class="primary">New Question</button>
-        <button id="showSteps">Show steps</button>
-        <button id="showExplain">Why is my answer wrong?</button>
-        <button id="revealAnswer" class="ghost">Reveal answer</button>
-        <select id="mode">
-          <option value="mcq">Mode: Multiple‑choice</option>
-          <option value="scratch">Mode: Enter final answer</option>
-        </select>
-        <span class="score" id="score">Score: 0 / 0</span>
+        <label class="pill">
+          <input type="number" min="5" max="60" value="20" id="numQuestions" style="width:70px;background:transparent;border:0;color:inherit"> questions
+        </label>
+        <button class="btn primary" id="startExamBtn">Start Mixed Exam</button>
+        <button class="btn ghost small" id="selectAllBtn">Select all</button>
+        <button class="btn ghost small" id="clearAllBtn">Clear</button>
       </div>
-      <div class="question-area">
-        <div id="skillTag" class="pill hide"></div>
-        <h2 id="question" class="question">Choose a topic on the left and press “New Question”.</h2>
-        <div id="options" class="options"></div>
-        <div id="freeEntry" class="hide">
-          <label for="answerInput" class="muted">Type your final answer (use ^ for exponents and * for multiplication):</label>
-          <input id="answerInput" type="text" style="width:100%; padding:10px; border-radius:8px; border:1px solid #2a384a; background:#0f141a; color:#dbe7ff; font-size:16px">
-        </div>
-        <div class="controls" style="margin-top:8px">
-          <button id="checkAnswer">Check answer</button>
-          <span id="correctness" class="pill hide"></span>
-        </div>
-        <details class="blockquote" style="margin-top:6px">
-          <summary style="cursor:pointer">Scratchpad (for your own steps)</summary>
-          <textarea class="scratch" placeholder="Work here just like on a notebook. This is NOT graded."></textarea>
-        </details>
-        <div id="explain" class="explain"></div>
-        <div id="steps" class="steps"></div>
+      <p class="muted small">Tip: On a phone, rotate to landscape for more room.</p>
+    </div>
+
+    <div class="section">Reference Videos</div>
+    <div class="list" id="videoList"></div>
+
+    <div class="section">Options</div>
+    <div class="toggler">
+      <label class="pill"><input type="checkbox" id="shuffleOpt" checked> Shuffle questions</label>
+      <label class="pill"><input type="checkbox" id="shuffleChoices" checked> Shuffle choices</label>
+    </div>
+  </aside>
+
+  <section class="card quiz-card" id="quiz">
+    <div id="intro">
+      <p class="notice">Choose a unit on the left to begin. You can also build a mixed exam from multiple units (perfect for full‑course review).</p>
+      <ul>
+        <li>After you answer, you’ll see a step‑by‑step solution like you’d write in a notebook.</li>
+        <li>Works offline on iOS/Android, Windows/macOS, Steam Deck, and any modern browser.</li>
+        <li>No ads, trackers, or external libraries.</li>
+      </ul>
+      <div class="hr"></div>
+      <p class="muted small">Assumptions: variables represent real numbers; denominators are non‑zero; principal roots are used; when simplifying radicals with variables, assume variables are nonnegative unless otherwise noted.</p>
+    </div>
+
+    <div id="qContainer" hidden></div>
+
+    <div class="sticky-actions" id="actions" hidden>
+      <div class="nowrap">
+        <span id="qCounter" class="pill">Q 0/0</span>
+        <span id="qUnit" class="pill">—</span>
       </div>
-
-      <hr style="border:none; border-top:1px solid #253244; margin:16px 0">
-      <div class="footer">
-        <p><strong>How answers are checked.</strong> For multiple‑choice, pick one option; we’ll also show why common wrong answers are tempting. For “Enter final answer,” we compare simplified forms using a tolerant checker for many formats (e.g., <code>(x-2)(x-3)</code> equals <code>(x-3)(x-2)</code>). If something should be accepted but isn’t, use the multiple‑choice mode.</p>
-
-        <p><strong>Accessibility & devices.</strong> This file is 100% client‑side HTML/CSS/JS with no external libraries, so it works offline on modern versions of Chrome, Edge, Firefox, Safari (iOS/macOS), and Chromium (Steam Deck). It adapts to small screens and fully supports keyboard navigation.</p>
-
-        <details>
-          <summary><strong>References & free videos by unit</strong></summary>
-          <div class="ref-list">
-            
-            <ul>
-              <li><strong>Unit 6 (Factoring)</strong>
-                <ul>
-                  <li><a href="https://www.youtube.com/playlist?list=PLSQl0a2vh4HCs7W-8rLD4J4lzuu1yCj7V" target="_blank" rel="noopener">Mathispower4u – Factoring Playlists</a></li>
-                  <li><a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:factoring" target="_blank" rel="noopener">Khan Academy – Factoring</a></li>
-                  <li><a href="https://www.youtube.com/results?search_query=patrickJMT+factoring+trinomials" target="_blank" rel="noopener">patrickJMT – Factoring Trinomials (search)</a></li>
-                </ul>
-              </li>
-              <li><strong>Unit 7 (Rational Expressions)</strong>
-                <ul>
-                  <li><a href="https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:rational-expressions" target="_blank" rel="noopener">Khan Academy – Rational expressions</a></li>
-                  <li><a href="https://www.youtube.com/playlist?list=PLSQl0a2vh4HBb6cQ92rVnWk9nOArQZz4Z" target="_blank" rel="noopener">Mathispower4u – Rational Expressions</a></li>
-                </ul>
-              </li>
-              <li><strong>Unit 8 (Radicals)</strong>
-                <ul>
-                  <li><a href="https://www.khanacademy.org/math/algebra/rational-exponents-and-radicals" target="_blank" rel="noopener">Khan Academy – Radicals & Rational exponents</a></li>
-                  <li><a href="https://www.youtube.com/playlist?list=PLSQl0a2vh4HBvd1k9C4y5mQDa8w8qkkl8" target="_blank" rel="noopener">Mathispower4u – Radicals</a></li>
-                </ul>
-              </li>
-              <li><strong>Unit 9 (Quadratics)</strong>
-                <ul>
-                  <li><a href="https://www.khanacademy.org/math/algebra/quadratics" target="_blank" rel="noopener">Khan Academy – Quadratic equations</a></li>
-                  <li><a href="https://www.youtube.com/playlist?list=PLSQl0a2vh4HAnJmQp22Yo8qwF0W6RQ1gM" target="_blank" rel="noopener">Mathispower4u – Quadratics</a></li>
-                  <li><a href="https://www.youtube.com/watch?v=VOXYMRcWbF8" target="_blank" rel="noopener">3Blue1Brown – Why the quadratic formula works</a></li>
-                </ul>
-              </li>
-            </ul>
-
-            <p class="note">These are well‑known open videos. If you host this file online, you can add direct links near each topic by editing the <code>videoRefs</code> list in the source (search for “videoRefs”).</p>
-          </div>
-        </details>
-
-        <details>
-          <summary><strong>Attribution & license (sources of topics)</strong></summary>
-          <p>This practice set follows the scope & sequence of <em>Beginning Algebra (Part II)</em>, Chapters 6–9 (Factoring; Rational Expressions; Radicals; Quadratics), which is available as an Open Educational Resource (OER) and licensed CC BY‑NC‑SA 4.0 by the Open Textbook Collaborative / Middlesex College consortium. See the “Beginning Algebra Part II” OER for learning objectives and worksheet topic lists. Appropriate attribution is retained here.</p>
-          <p class="note">If you redistribute, please keep this attribution and the CC BY‑NC‑SA 4.0 license notice.</p>
-        </details>
+      <div>
+        <button class="btn good" id="submitBtn">Check answer</button>
+        <button class="btn" id="nextBtn" disabled>Next</button>
+        <button class="btn warn" id="resetBtn">End session</button>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="infobox">
+    <strong>Credits & alignment.</strong>
+    This practice set follows MA025 topics for Units 6–9 (Factoring, Rational Expressions, Radicals, Quadratics) and mirrors the structure of the Beginning Algebra OER workbook (Chapters 6–9) and college review sheets. See syllabus/workbook materials for scope and examples. 
+    Open‑licensed content and problem styles are adapted for interactive use. 
+  </div>
+  <p class="small">Made for offline study. You can host this page anywhere (e.g., GitHub Pages) or just open the HTML file directly.</p>
+</footer>
 
 <script>
-(function(){
-  'use strict';
+// --- Utility helpers ---
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const shuffle = arr => { for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; };
+const clamp = (v,min,max)=> Math.max(min, Math.min(max, v));
 
-  // ------- Utility helpers (very conservative ES features) -------
-  function shuffle(arr){
-    for(var i=arr.length-1;i>0;i--){
-      var j=Math.floor(Math.random()*(i+1));
-      var t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+// --- Question bank ---
+// Each question: {id, unit, code, stem, choices:[...], correct:0-based, steps:[...], tags:[]}
+const QUESTION_BANK = [
+  // 6.1 Factoring — GCF
+  {id:"6.1-1", unit:"6.1", code:"Factoring — GCF", stem:"Factor <span class='math'>12x^3 + 18x^2</span>.",
+    choices:["<span class='math'>6x^2(2x+3)</span>","<span class='math'>6x(2x^2+3)</span>","<span class='math'>3x^2(4x+6)</span>","<span class='math'>2x^2(6x+9)</span>"],
+    correct:0,
+    steps:[
+      "Find the GCF of coefficients: gcd(12,18)=6; of variables: smallest power is x^2.",
+      "Factor out 6x^2: 12x^3+18x^2 = 6x^2(2x) + 6x^2(3) = 6x^2(2x+3).",
+      "Quick check: distribute 6x^2 → 12x^3+18x^2."
+    ], tags:["gcf"]},
+  {id:"6.1-2", unit:"6.1", code:"Factoring — GCF", stem:"Factor <span class='math'>-8x^3 + 20x^2</span>. Prefer a positive leading term inside.",
+    choices:["<span class='math'>-4x^2(2x-5)</span>","<span class='math'>4x^2(-2x+5)</span>","<span class='math'>-2x^2(4x-10)</span>","<span class='math'>x^2(-8x+20)</span>"],
+    correct:0,
+    steps:[
+      "GCF of coefficients: 4; of variables: x^2. To keep the inside leading term positive, factor out -4x^2.",
+      "-8x^3+20x^2 = -4x^2(2x) + -4x^2(-5) = -4x^2(2x-5)."
+    ], tags:["gcf"]},
+
+  // 6.2 Grouping
+  {id:"6.2-1", unit:"6.2", code:"Factoring — Grouping", stem:"Factor by grouping: <span class='math'>10ab + 15b + 4a + 6</span>.",
+    choices:["<span class='math'>(2a+3)(5b+2)</span>","<span class='math'>(a+3)(10b+2)</span>","<span class='math'>(a+2)(10b+3)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Group: (10ab+15b) + (4a+6).",
+      "Left GCF: 5b ⇒ 5b(2a+3). Right GCF: 2 ⇒ 2(2a+3).",
+      "Common binomial (2a+3). Factor it: (2a+3)(5b+2)."
+    ], tags:["grouping"]},
+  {id:"6.2-2", unit:"6.2", code:"Factoring — Grouping", stem:"Factor by grouping: <span class='math'>5xy - 10y + 3x - 6</span>.",
+    choices:["<span class='math'>(x-2)(5y+3)</span>","<span class='math'>(x+2)(5y-3)</span>","<span class='math'>(x-2)(5y-3)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Group: (5xy-10y) + (3x-6).",
+      "Left GCF: 5y ⇒ 5y(x-2). Right GCF: 3 ⇒ 3(x-2).",
+      "Common binomial (x-2). Factor it: (x-2)(5y+3)."
+    ], tags:["grouping"]},
+
+  // 6.3 a = 1
+  {id:"6.3-1", unit:"6.3", code:"Trinomials (a=1)", stem:"Factor <span class='math'>x^2 + 5x + 6</span>.",
+    choices:["<span class='math'>(x+2)(x+3)</span>","<span class='math'>(x+1)(x+6)</span>","<span class='math'>(x-2)(x-3)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Find two numbers that multiply to 6 and add to 5 → 2 and 3.",
+      "Write factors: (x+2)(x+3)."
+    ], tags:["trinomial"]},
+  {id:"6.3-2", unit:"6.3", code:"Trinomials (a=1)", stem:"Factor <span class='math'>m^2 - mn - 30n^2</span>.",
+    choices:["<span class='math'>(m+5n)(m-6n)</span>","<span class='math'>(m-5n)(m+6n)</span>","<span class='math'>(m+3n)(m-10n)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Numbers multiply to -30 and add to -1: 5 and -6.",
+      "Use variables: (m+5n)(m-6n)."
+    ], tags:["trinomial"]},
+
+  // 6.4 a ≠ 1
+  {id:"6.4-1", unit:"6.4", code:"Trinomials (a≠1)", stem:"Factor <span class='math'>2x^2 - x - 6</span>.",
+    choices:["<span class='math'>(2x+3)(x-2)</span>","<span class='math'>(2x-3)(x+2)</span>","<span class='math'>(x-3)(2x+2)</span>","Prime"],
+    correct:0,
+    steps:[
+      "ac = 2·(-6) = -12; find numbers with product -12 and sum -1 → -4 and 3.",
+      "Split and group: 2x^2 - 4x + 3x - 6 = 2x(x-2) + 3(x-2) = (x-2)(2x+3)."
+    ], tags:["ac-method"]},
+  {id:"6.4-2", unit:"6.4", code:"Trinomials (a≠1)", stem:"Factor <span class='math'>3x^2 + 11x + 6</span>.",
+    choices:["<span class='math'>(3x+2)(x+3)</span>","<span class='math'>(3x+3)(x+2)</span>","<span class='math'>(3x-2)(x+3)</span>","Prime"],
+    correct:0,
+    steps:[
+      "ac = 3·6 = 18; numbers adding to 11 → 9 and 2.",
+      "3x^2 + 9x + 2x + 6 = 3x(x+3) + 2(x+3) = (x+3)(3x+2)."
+    ], tags:["ac-method"]},
+
+  // 6.5 Special products
+  {id:"6.5-1", unit:"6.5", code:"Special Products", stem:"Factor <span class='math'>9k^2 - 25</span>.",
+    choices:["<span class='math'>(3k+5)(3k-5)</span>","<span class='math'>(9k+5)(k-5)</span>","<span class='math'>(k+5)(k-5)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Difference of squares: (3k)^2 - 5^2 ⇒ (3k+5)(3k-5)."
+    ], tags:["difsq"]},
+  {id:"6.5-2", unit:"6.5", code:"Special Products", stem:"Factor <span class='math'>x^2 + 6x + 9</span>.",
+    choices:["<span class='math'>(x+3)^2</span>","<span class='math'>(x+9)(x-3)</span>","<span class='math'>(x+1)(x+9)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Perfect square: x^2 + 2(3)x + 3^2 ⇒ (x+3)^2."
+    ], tags:["perf-square"]},
+  {id:"6.5-3", unit:"6.5", code:"Special Products", stem:"Factor <span class='math'>x^3 - 64</span>.",
+    choices:["<span class='math'>(x-4)(x^2+4x+16)</span>","<span class='math'>(x-4)(x^2-4x+16)</span>","<span class='math'>(x+4)(x^2-4x+16)</span>","Prime"],
+    correct:0,
+    steps:[
+      "Difference of cubes: a^3-b^3=(a-b)(a^2+ab+b^2) with a=x, b=4 ⇒ (x-4)(x^2+4x+16)."
+    ], tags:["cubes"]},
+
+  // 6.6 Strategies
+  {id:"6.6-1", unit:"6.6", code:"Factoring Strategies", stem:"Factor completely: <span class='math'>100x^2 - 400</span>.",
+    choices:["<span class='math'>100(x+2)(x-2)</span>","<span class='math'>(10x-20)(10x+20)</span>","<span class='math'>20(5x-20)</span>","Prime"],
+    correct:0,
+    steps:[
+      "GCF first: 100(x^2-4).",
+      "Difference of squares: x^2-4=(x+2)(x-2).",
+      "Final: 100(x+2)(x-2)."
+    ], tags:["strategy"]},
+  {id:"6.6-2", unit:"6.6", code:"Factoring Strategies", stem:"Factor completely: <span class='math'>108x^3y^2 - 39x^2y^2 + 3xy^2</span>.",
+    choices:["<span class='math'>3xy^2(4x-1)(9x-1)</span>","<span class='math'>3xy^2(12x^2-13x+1)</span>","<span class='math'>3y^2x(36x^2-13x+1)</span>","Prime"],
+    correct:0,
+    steps:[
+      "GCF: 3xy^2 → 3xy^2(36x^2 - 13x + 1).",
+      "ac=36; need -13 → split: -9 and -4.",
+      "3xy^2[9x(4x-1) - 1(4x-1)] = 3xy^2(4x-1)(9x-1)."
+    ], tags:["strategy"]},
+
+  // 6.7 Solve by factoring
+  {id:"6.7-1", unit:"6.7", code:"Solve by Factoring", stem:"Solve: <span class='math'>4x^2 + x - 3 = 0</span>.",
+    choices:["<span class='math'>x=-1 \\text{ or } x=3/4</span>","<span class='math'>x=1 \\text{ or } x=-3/4</span>","<span class='math'>x=-1/4 \\text{ or } x=3</span>","<span class='math'>x=1/4 \\text{ or } x=-3</span>"],
+    correct:0,
+    steps:[
+      "Factor: 4x^2 + x - 3 = (4x-3)(x+1).",
+      "Zero‑product rule ⇒ 4x-3=0 or x+1=0 → x=3/4 or x=-1."
+    ], tags:["solve"]},
+  {id:"6.7-2", unit:"6.7", code:"Solve by Factoring", stem:"Solve: <span class='math'>x^2 - 8x + 15 = 0</span>.",
+    choices:["<span class='math'>x=3 \\text{ or } 5</span>","<span class='math'>x=-3 \\text{ or } -5</span>","<span class='math'>x= -3 \\text{ or } 5</span>","No real solution"],
+    correct:0,
+    steps:[
+      "Factor: (x-3)(x-5)=0.",
+      "Solutions: x=3 or x=5."
+    ], tags:["solve"]},
+
+  // 7.1 Reduce rational expressions
+  {id:"7.1-1", unit:"7.1", code:"Reduce Rational Expressions", stem:"Simplify and state restrictions: <span class='math'>(x^2 - 9)/(x^2 - 3x)</span>.",
+    choices:["<span class='math'>(x+3)/x; &nbsp; x\\ne 0,3</span>","<span class='math'>(x-3)/x; &nbsp; x\\ne 0,3</span>","<span class='math'>(x+3)/(x-3); &nbsp; x\\ne \\pm 3</span>","<span class='math'>x; &nbsp; x\\ne 0</span>"],
+    correct:0,
+    steps:[
+      "Factor: numerator (x-3)(x+3); denominator x(x-3).",
+      "Cancel (x-3) (allowed only when factored).",
+      "Result: (x+3)/x; restrictions from original denominator: x≠0,3."
+    ], tags:["simplify"]},
+  {id:"7.1-2", unit:"7.1", code:"Reduce Rational Expressions", stem:"Simplify <span class='math'>(4a^2 b)/(2ab^2)</span> (assume a,b≠0).",
+    choices:["<span class='math'>2a/b</span>","<span class='math'>2a^2/b^2</span>","<span class='math'>2b/a</span>","<span class='math'>a/(2b)</span>"],
+    correct:0,
+    steps:[
+      "Cancel common numeric factor: 4/2 → 2.",
+      "Cancel a: a^2/a → a.",
+      "Cancel b: b/b^2 → 1/b.",
+      "Result: 2a/b."
+    ], tags:["simplify"]},
+
+  // 7.2 Multiply/Divide rationals
+  {id:"7.2-1", unit:"7.2", code:"Multiply & Divide Rationals", stem:"Multiply and simplify: <span class='math'>\\dfrac{x^2-1}{x^2} \\cdot \\dfrac{x}{x+1}</span>.",
+    choices:["<span class='math'>(x-1)/x</span>","<span class='math'>(x+1)/x</span>","<span class='math'>x/(x+1)</span>","<span class='math'>(x^2-1)/(x^2+x)</span>"],
+    correct:0,
+    steps:[
+      "Factor x^2-1=(x-1)(x+1).",
+      "Cancel (x+1) with denominator; cancel one x with x^2.",
+      "Left with (x-1)/x."
+    ], tags:["multiply"]},
+  {id:"7.2-2", unit:"7.2", code:"Multiply & Divide Rationals", stem:"Divide and simplify: <span class='math'>\\dfrac{3a}{2b} \\div \\dfrac{9a^2}{4b^2}</span> (assume a,b≠0).",
+    choices:["<span class='math'>\\dfrac{2b}{3a}</span>","<span class='math'>\\dfrac{3a}{2b} \\cdot \\dfrac{9a^2}{4b^2}</span>","<span class='math'>\\dfrac{1}{3ab}</span>","<span class='math'>\\dfrac{b}{6a}</span>"],
+    correct:0,
+    steps:[
+      "Division ⇒ multiply by reciprocal: (3a/2b)·(4b^2/9a^2).",
+      "Cancel: 3 with 9 → 1/3; a with a^2 → 1/a; b with b^2 → b.",
+      "Compute remaining numbers: (1·4·b)/(2·3·a) = 4b/(6a) = 2b/(3a)."
+    ], tags:["divide"]},
+
+  // 7.3 LCD
+  {id:"7.3-1", unit:"7.3", code:"Least Common Denominator", stem:"Find the LCD of <span class='math'>12x^2y</span> and <span class='math'>18xy^3</span>.",
+    choices:["<span class='math'>36x^2y^3</span>","<span class='math'>216x^3y^4</span>","<span class='math'>6xy</span>","<span class='math'>12xy^3</span>"],
+    correct:0,
+    steps:[
+      "Prime factors: 12=2^2·3; 18=2·3^2. Take the highest power of each: 2^2 and 3^2 ⇒ 36.",
+      "Variables: x^2 vs x → x^2; y vs y^3 → y^3.",
+      "LCD: 36x^2y^3."
+    ], tags:["lcd"]},
+  {id:"7.3-2", unit:"7.3", code:"Least Common Denominator", stem:"Rewrite over a common denominator: <span class='math'>\\dfrac{1}{x} \\text{ and } \\dfrac{1}{x+1}</span>.",
+    choices:["<span class='math'>\\dfrac{x+1}{x(x+1)} \\text{ and } \\dfrac{x}{x(x+1)}</span>","<span class='math'>\\dfrac{x}{x+1} \\text{ and } \\dfrac{x+1}{x}</span>","<span class='math'>\\dfrac{1}{x(x+1)} \\text{ and } \\dfrac{1}{x(x+1)}</span>","<span class='math'>\\dfrac{1}{x+1} \\text{ and } \\dfrac{1}{x}</span>"],
+    correct:0,
+    steps:[
+      "LCD is x(x+1) because x and (x+1) share no factor.",
+      "Multiply first fraction by (x+1)/(x+1) and second by x/x.",
+      "Results as shown."
+    ], tags:["lcd"]},
+
+  // 7.4 Add/Subtract rationals
+  {id:"7.4-1", unit:"7.4", code:"Add/Subtract Rationals", stem:"Compute: <span class='math'>\\dfrac{1}{x} + \\dfrac{1}{x+1}</span>.",
+    choices:["<span class='math'>\\dfrac{2x+1}{x(x+1)}</span>","<span class='math'>\\dfrac{2x}{x(x+1)}</span>","<span class='math'>\\dfrac{1}{x(x+1)}</span>","<span class='math'>\\dfrac{x+1}{x}</span>"],
+    correct:0,
+    steps:[
+      "LCD: x(x+1).",
+      "Rewrite: (x+1)/LCD + x/LCD = (2x+1)/LCD."
+    ], tags:["add"]},
+  {id:"7.4-2", unit:"7.4", code:"Add/Subtract Rationals", stem:"Compute: <span class='math'>\\dfrac{3}{2x} - \\dfrac{1}{x}</span>.",
+    choices:["<span class='math'>\\dfrac{1}{2x}</span>","<span class='math'>\\dfrac{2}{x}</span>","<span class='math'>\\dfrac{3-2}{x}</span>","<span class='math'>\\dfrac{1}{x}</span>"],
+    correct:0,
+    steps:[
+      "LCD: 2x. Convert 1/x to 2/(2x).",
+      "Compute: 3/(2x) - 2/(2x) = 1/(2x)."
+    ], tags:["subtract"]},
+
+  // 7.5 Complex fractions
+  {id:"7.5-1", unit:"7.5", code:"Complex Fractions", stem:"Simplify: <span class='math'>\\dfrac{\\;\\dfrac{1}{x}+\\dfrac{1}{y}\\;}{\\dfrac{1}{xy}}</span> (x,y≠0).",
+    choices:["<span class='math'>x+y</span>","<span class='math'>\\dfrac{x+y}{xy}</span>","<span class='math'>\\dfrac{1}{x+y}</span>","<span class='math'>xy</span>"],
+    correct:0,
+    steps:[
+      "Multiply every term by LCD = xy.",
+      "Numerator: (xy)(1/x)+(xy)(1/y)= y + x. Denominator: (xy)(1/xy)=1.",
+      "Result: x + y."
+    ], tags:["complex"]},
+  {id:"7.5-2", unit:"7.5", code:"Complex Fractions", stem:"Simplify: <span class='math'>\\dfrac{\\;\\dfrac{a}{a+1}\\;}{\\dfrac{1}{a+1}}</span> (a≠-1).",
+    choices:["<span class='math'>a</span>","<span class='math'>\\dfrac{1}{a}</span>","<span class='math'>a+1</span>","<span class='math'>1</span>"],
+    correct:0,
+    steps:[
+      "LCD: (a+1). Multiply top and bottom by (a+1).",
+      "Top: a. Bottom: 1. → a."
+    ], tags:["complex"]},
+
+  // 7.7 Rational equations
+  {id:"7.7-1", unit:"7.7", code:"Solving Rational Equations", stem:"Solve: <span class='math'>\\dfrac{1}{x} + \\dfrac{1}{x+2} = \\dfrac{3}{4}</span>. Exclude x ≠ 0, -2.",
+    choices:["<span class='math'>x=2 \\text{ or } -\\dfrac{4}{3}</span>","<span class='math'>x=2 \\text{ or } -2</span>","<span class='math'>x=4 \\text{ or } -\\dfrac{1}{2}</span>","No real solution"],
+    correct:0,
+    steps:[
+      "Multiply both sides by 4x(x+2): 4(x+2)+4x = 3x(x+2).",
+      "Simplify: 8x+8 = 3x^2+6x ⇒ 0=3x^2 - 2x - 8.",
+      "Quadratic formula or factoring → (3x+4)(x-2)=0 ⇒ x=-4/3 or x=2. Check restrictions: both valid."
+    ], tags:["solve"]},
+  {id:"7.7-2", unit:"7.7", code:"Solving Rational Equations", stem:"Solve: <span class='math'>\\dfrac{x}{x-1} = 2</span>.",
+    choices:["<span class='math'>x=2</span>","<span class='math'>x=1/2</span>","No solution","<span class='math'>x=0</span>"],
+    correct:0,
+    steps:[
+      "Cross‑multiply: x = 2(x-1) ⇒ x = 2x - 2.",
+      "⇒ -x = -2 ⇒ x=2. Check restriction x≠1 → valid."
+    ], tags:["solve"]},
+
+  // 8.1 Square roots
+  {id:"8.1-1", unit:"8.1", code:"Radicals — Square Roots", stem:"Simplify: <span class='math'>\\sqrt{72}</span>.",
+    choices:["<span class='math'>6\\sqrt{2}</span>","<span class='math'>3\\sqrt{8}</span>","<span class='math'>12\\sqrt{0.5}</span>","<span class='math'>\\sqrt{36}</span>"],
+    correct:0,
+    steps:[
+      "Break perfect square: 72=36·2 ⇒ √72=√36·√2=6√2."
+    ], tags:["roots"]},
+  {id:"8.1-2", unit:"8.1", code:"Radicals — Square Roots", stem:"Simplify: <span class='math'>\\sqrt{50x^2}</span> (assume x≥0).",
+    choices:["<span class='math'>5x\\sqrt{2}</span>","<span class='math'>25x\\sqrt{2}</span>","<span class='math'>x\\sqrt{50}</span>","<span class='math'>10x\\sqrt{2}</span>"],
+    correct:0,
+    steps:[
+      "50x^2 = 25·2·x^2. √25=5, √x^2 = x (x≥0).",
+      "Result: 5x√2."
+    ], tags:["roots"]},
+
+  // 8.2 Higher roots
+  {id:"8.2-1", unit:"8.2", code:"Radicals — Higher Roots", stem:"Simplify: <span class='math'>\\sqrt[3]{54x^3}</span>.",
+    choices:["<span class='math'>3x\\sqrt[3]{2}</span>","<span class='math'>x\\sqrt[3]{54}</span>","<span class='math'>\\sqrt[3]{6x}</span>","<span class='math'>6x\\sqrt[3]{3}</span>"],
+    correct:0,
+    steps:[
+      "54x^3 = 27·2·x^3. Cube root of 27 is 3; of x^3 is x.",
+      "Result: 3x∛2."
+    ], tags:["roots"]},
+  {id:"8.2-2", unit:"8.2", code:"Radicals — Higher Roots", stem:"Simplify: <span class='math'>\\sqrt[4]{16a^4 b^2}</span> (assume a,b≥0).",
+    choices:["<span class='math'>2a\\sqrt{b}</span>","<span class='math'>4a\\sqrt[4]{b^2}</span>","<span class='math'>2a\\sqrt[4]{b^2}</span>","<span class='math'>2\\sqrt{ab}</span>"],
+    correct:0,
+    steps:[
+      "4th root: √[4]{16}=2; √[4]{a^4}=a; √[4]{b^2}=b^{1/2}=√b.",
+      "Result: 2a√b."
+    ], tags:["roots"]},
+
+  // 8.3 Adding radicals
+  {id:"8.3-1", unit:"8.3", code:"Adding Radicals", stem:"Compute: <span class='math'>3\\sqrt{5} + 2\\sqrt{5} - \\sqrt{5}</span>.",
+    choices:["<span class='math'>4\\sqrt{5}</span>","<span class='math'>0</span>","<span class='math'>\\sqrt{5}</span>","<span class='math'>6\\sqrt{25}</span>"],
+    correct:0,
+    steps:[
+      "Like radicals combine like like terms: 3+2-1=4 ⇒ 4√5."
+    ], tags:["add-rad"]},
+  {id:"8.3-2", unit:"8.3", code:"Adding Radicals", stem:"Simplify: <span class='math'>\\sqrt{18} + \\sqrt{8}</span>.",
+    choices:["<span class='math'>5\\sqrt{2}</span>","<span class='math'>\\sqrt{26}</span>","<span class='math'>\\sqrt{144}</span>","<span class='math'>\\sqrt{2}</span>"],
+    correct:0,
+    steps:[
+      "√18=3√2; √8=2√2. Sum: 5√2."
+    ], tags:["add-rad"]},
+
+  // 8.4 Multiplying radicals
+  {id:"8.4-1", unit:"8.4", code:"Multiplying Radicals", stem:"Compute: <span class='math'>\\sqrt{6}\\,\\sqrt{24}</span>.",
+    choices:["<span class='math'>12</span>","<span class='math'>\\sqrt{30}</span>","<span class='math'>\\sqrt{6/24}</span>","<span class='math'>6\\sqrt{4}</span>"],
+    correct:0,
+    steps:[
+      "√6·√24=√(6·24)=√144=12."
+    ], tags:["mult-rad"]},
+  {id:"8.4-2", unit:"8.4", code:"Multiplying Radicals", stem:"Compute: <span class='math'>(2\\sqrt{3})(3\\sqrt{12})</span>.",
+    choices:["<span class='math'>36</span>","<span class='math'>6\\sqrt{36}</span>","<span class='math'>18\\sqrt{36}</span>","<span class='math'>6\\sqrt{12}</span>"],
+    correct:0,
+    steps:[
+      "√12=2√3. Then (2√3)(3·2√3)= (2·3·2)(√3·√3)=12·3=36."
+    ], tags:["mult-rad"]},
+
+  // 8.5 Dividing / rationalizing
+  {id:"8.5-1", unit:"8.5", code:"Dividing Radicals (Rationalize)", stem:"Rationalize the denominator: <span class='math'>\\dfrac{5}{\\sqrt{2}}</span>.",
+    choices:["<span class='math'>\\dfrac{5\\sqrt{2}}{2}</span>","<span class='math'>\\dfrac{\\sqrt{2}}{5}</span>","<span class='math'>\\dfrac{5}{2\\sqrt{2}}</span>","<span class='math'>5\\sqrt{2}</span>"],
+    correct:0,
+    steps:[
+      "Multiply by √2/√2: 5√2 / (√2·√2) = 5√2 / 2."
+    ], tags:["rationalize"]},
+  {id:"8.5-2", unit:"8.5", code:"Dividing Radicals", stem:"Simplify: <span class='math'>\\dfrac{\\sqrt{8}}{\\sqrt{2}}</span>.",
+    choices:["<span class='math'>2</span>","<span class='math'>\\sqrt{4}</span>","<span class='math'>4</span>","<span class='math'>\\sqrt{16}</span>"],
+    correct:0,
+    steps:[
+      "Use √a/√b=√(a/b): √(8/2)=√4=2."
+    ], tags:["divide-rad"]},
+
+  // 9.1 Solving with radicals
+  {id:"9.1-1", unit:"9.1", code:"Quadratics — Solve with Radicals", stem:"Solve: <span class='math'>3x^2 = 48</span>.",
+    choices:["<span class='math'>x=\\pm 4</span>","<span class='math'>x=4</span>","<span class='math'>x=\\pm\\sqrt{48}</span>","<span class='math'>x=\\pm 8</span>"],
+    correct:0,
+    steps:[
+      "Divide by 3: x^2=16. Square‑root property ⇒ x=±4."
+    ], tags:["sqrt-prop"]},
+  {id:"9.1-2", unit:"9.1", code:"Quadratics — Solve with Radicals", stem:"Solve: <span class='math'>(x-1)^2 = 9</span>.",
+    choices:["<span class='math'>x=4 \\text{ or } -2</span>","<span class='math'>x=\\pm 3</span>","<span class='math'>x=3</span>","No real solution"],
+    correct:0,
+    steps:[
+      "Square‑root property: x-1=±3 ⇒ x=1±3 → {4, -2}."
+    ], tags:["sqrt-prop"]},
+
+  // 9.2 Square root property (w/ linear term)
+  {id:"9.2-1", unit:"9.2", code:"Square Root Property", stem:"Solve: <span class='math'>(2x+3)^2 = 20</span>.",
+    choices:["<span class='math'>x=\\dfrac{-3\\pm 2\\sqrt{5}}{2}</span>","<span class='math'>x=\\dfrac{3\\pm 2\\sqrt{5}}{2}</span>","<span class='math'>x= -3 \\pm 2\\sqrt{5}</span>","No real solution"],
+    correct:0,
+    steps:[
+      "Square‑root property: 2x+3=±√20=±2√5.",
+      "Solve: 2x = -3 ± 2√5 ⇒ x = (-3 ± 2√5)/2."
+    ], tags:["sqrt-prop"]},
+  {id:"9.2-2", unit:"9.2", code:"Square Root Property", stem:"Solve: <span class='math'>(x+2)^2 = 49</span>.",
+    choices:["<span class='math'>x=5 \\text{ or } -9</span>","<span class='math'>x=\\pm 7</span>","<span class='math'>x=9 \\text{ or } -5</span>","No real solution"],
+    correct:0,
+    steps:[
+      "x+2=±7 ⇒ x = -2 ± 7 → {5, -9}."
+    ], tags:["sqrt-prop"]},
+
+  // 9.3 Completing the square
+  {id:"9.3-1", unit:"9.3", code:"Completing the Square", stem:"Solve by completing the square: <span class='math'>x^2 + 6x + 5 = 0</span>.",
+    choices:["<span class='math'>x=-1 \\text{ or } -5</span>","<span class='math'>x=1 \\text{ or } 5</span>","<span class='math'>x=-3 \\pm 2i</span>","<span class='math'>x= -5 \\text{ or } 4</span>"],
+    correct:0,
+    steps:[
+      "Move constant: x^2+6x = -5.",
+      "Complete square: (b/2)^2=(6/2)^2=9. Add 9 both sides: x^2+6x+9 = 4.",
+      "(x+3)^2=4 ⇒ x+3=±2 ⇒ x=-1 or x=-5."
+    ], tags:["cts"]},
+  {id:"9.3-2", unit:"9.3", code:"Completing the Square", stem:"Solve by completing the square: <span class='math'>x^2 - 4x - 5 = 0</span>.",
+    choices:["<span class='math'>x=5 \\text{ or } -1</span>","<span class='math'>x=-5 \\text{ or } 1</span>","<span class='math'>x=2 \\pm \\sqrt{9}</span>","No real solution"],
+    correct:0,
+    steps:[
+      "x^2 - 4x = 5.",
+      "Complete square: (b/2)^2=(−4/2)^2=4. Add 4 both sides: x^2 - 4x + 4 = 9.",
+      "(x-2)^2=9 ⇒ x-2=±3 ⇒ x=5 or x=-1."
+    ], tags:["cts"]},
+
+  // 9.4 Quadratic Formula
+  {id:"9.4-1", unit:"9.4", code:"Quadratic Formula", stem:"Solve: <span class='math'>2x^2 - 3x - 2 = 0</span> using the quadratic formula.",
+    choices:["<span class='math'>x=2 \\text{ or } -\\tfrac{1}{2}</span>","<span class='math'>x= -2 \\text{ or } \\tfrac{1}{2}</span>","<span class='math'>x= \\tfrac{3\\pm 5}{2}</span>","No real solution"],
+    correct:0,
+    steps:[
+      "a=2, b=-3, c=-2. Discriminant: b^2-4ac = 9 + 16 = 25.",
+      "x = [3 ± √25]/(4) = (3 ± 5)/4 ⇒ {2, -1/2}."
+    ], tags:["qf"]},
+  {id:"9.4-2", unit:"9.4", code:"Quadratic Formula", stem:"Solve: <span class='math'>x^2 + x + 1 = 0</span>.",
+    choices:["No real solution","<span class='math'>x= -1 \\text{ or } 0</span>","<span class='math'>x=1 \\text{ or } -1</span>","<span class='math'>x=0</span>"],
+    correct:0,
+    steps:[
+      "a=1,b=1,c=1. Discriminant Δ=b^2-4ac=1-4=-3<0.",
+      "No real roots (complex conjugates)."
+    ], tags:["qf"]},
+];
+
+// --- Units & videos metadata ---
+const UNITS = [
+  {id:"6.1", title:"Factoring — Greatest Common Factor (GCF)"},
+  {id:"6.2", title:"Factoring — Grouping"},
+  {id:"6.3", title:"Factoring Trinomials (a = 1)"},
+  {id:"6.4", title:"Factoring Trinomials (a ≠ 1)"},
+  {id:"6.5", title:"Factoring Special Products"},
+  {id:"6.6", title:"Factoring Strategies"},
+  {id:"6.7", title:"Solve by Factoring"},
+
+  {id:"7.1", title:"Reduce Rational Expressions"},
+  {id:"7.2", title:"Multiply & Divide Rational Expressions"},
+  {id:"7.3", title:"Least Common Denominator (LCD)"},
+  {id:"7.4", title:"Add & Subtract Rational Expressions"},
+  {id:"7.5", title:"Complex Fractions"},
+  {id:"7.7", title:"Solving Rational Equations"},
+
+  {id:"8.1", title:"Radicals — Square Roots"},
+  {id:"8.2", title:"Radicals — Higher Roots"},
+  {id:"8.3", title:"Adding Radicals"},
+  {id:"8.4", title:"Multiplying Radicals"},
+  {id:"8.5", title:"Dividing Radicals / Rationalizing"},
+
+  {id:"9.1", title:"Quadratics — Solve with Radicals"},
+  {id:"9.2", title:"Quadratics — Square Root Property"},
+  {id:"9.3", title:"Quadratics — Completing the Square"},
+  {id:"9.4", title:"Quadratics — Quadratic Formula"},
+];
+
+// Videos as robust search links that work on any device
+const VIDEOS = {
+  "6.1":[
+    {t:"Factoring out the GCF (Khan Academy)", url:"https://www.youtube.com/results?search_query=factoring+greatest+common+factor+khan+academy"},
+    {t:"GCF of polynomials (practice walkthrough)", url:"https://www.youtube.com/results?search_query=factoring+GCF+polynomials+examples"}
+  ],
+  "6.2":[
+    {t:"Factor by grouping (Khan Academy)", url:"https://www.youtube.com/results?search_query=factor+by+grouping+khan+academy"}
+  ],
+  "6.3":[
+    {t:"Trinomials a=1 (ac method)", url:"https://www.youtube.com/results?search_query=factoring+trinomials+a+equals+1+ac+method"}
+  ],
+  "6.4":[
+    {t:"Trinomials a≠1 (ac method)", url:"https://www.youtube.com/results?search_query=factoring+trinomials+a+not+1+ac+method"}
+  ],
+  "6.5":[
+    {t:"Special products: squares & cubes", url:"https://www.youtube.com/results?search_query=difference+of+squares+sum+and+difference+of+cubes"}
+  ],
+  "6.6":[
+    {t:"How to choose a factoring strategy", url:"https://www.youtube.com/results?search_query=factoring+polynomials+strategy+guide"}
+  ],
+  "6.7":[
+    {t:"Solve equations by factoring", url:"https://www.youtube.com/results?search_query=solving+quadratic+equations+by+factoring"}
+  ],
+  "7.1":[
+    {t:"Simplifying rational expressions", url:"https://www.youtube.com/results?search_query=simplify+rational+expressions"}
+  ],
+  "7.2":[
+    {t:"Multiply & divide rational expressions", url:"https://www.youtube.com/results?search_query=multiply+divide+rational+expressions"}
+  ],
+  "7.3":[
+    {t:"Find LCD for rational expressions", url:"https://www.youtube.com/results?search_query=least+common+denominator+rational+expressions"}
+  ],
+  "7.4":[
+    {t:"Add & subtract rational expressions", url:"https://www.youtube.com/results?search_query=add+subtract+rational+expressions"}
+  ],
+  "7.5":[
+    {t:"Complex fractions (multiply by LCD)", url:"https://www.youtube.com/results?search_query=complex+fractions+multiply+by+LCD"}
+  ],
+  "7.7":[
+    {t:"Solve rational equations", url:"https://www.youtube.com/results?search_query=solving+rational+equations"}
+  ],
+  "8.1":[
+    {t:"Simplifying square roots", url:"https://www.youtube.com/results?search_query=simplifying+square+roots"}
+  ],
+  "8.2":[
+    {t:"Cube roots & higher roots", url:"https://www.youtube.com/results?search_query=simplifying+cube+roots+higher+roots"}
+  ],
+  "8.3":[
+    {t:"Adding radicals", url:"https://www.youtube.com/results?search_query=adding+radicals"}
+  ],
+  "8.4":[
+    {t:"Multiplying radicals", url:"https://www.youtube.com/results?search_query=multiplying+radicals"}
+  ],
+  "8.5":[
+    {t:"Rationalizing denominators", url:"https://www.youtube.com/results?search_query=rationalizing+the+denominator"}
+  ],
+  "9.1":[
+    {t:"Solve with radicals", url:"https://www.youtube.com/results?search_query=solve+quadratic+equations+with+radicals"}
+  ],
+  "9.2":[
+    {t:"Square root property", url:"https://www.youtube.com/results?search_query=square+root+property+quadratic+equations"}
+  ],
+  "9.3":[
+    {t:"Completing the square", url:"https://www.youtube.com/results?search_query=completing+the+square"}
+  ],
+  "9.4":[
+    {t:"Quadratic formula", url:"https://www.youtube.com/results?search_query=quadratic+formula"}
+  ]
+};
+
+// --- State ---
+let currentSet = [];   // array of questions for the running session
+let idx = 0;           // index inside currentSet
+let answered = 0;      // number answered
+let correct = 0;       // correct count
+let selectedChoice = null;
+
+// --- UI Rendering ---
+function renderUnitList(){
+  const list = $("#unitList");
+  const sel = $("#unitSelect");
+  list.innerHTML = "";
+  sel.innerHTML = "";
+  for(const u of UNITS){
+    const total = QUESTION_BANK.filter(q=>q.unit===u.id).length;
+    const btn = document.createElement("button");
+    btn.className = "unit-btn";
+    btn.innerHTML = `<span class="unit-code">Unit ${u.id}</span><span class="unit-title">${u.title}</span><span class="meta">${total} question${total!==1?"s":""}</span>`;
+    btn.addEventListener("click",()=>startStudy([u.id]));
+    list.appendChild(btn);
+
+    const lab = document.createElement("label");
+    lab.innerHTML = `<input type="checkbox" value="${u.id}" checked> <span class="mono">Unit ${u.id}</span>&nbsp;&middot;&nbsp;<span>${u.title}</span>`;
+    sel.appendChild(lab);
+  }
+}
+
+function renderVideoList(unitIds){
+  const container = $("#videoList");
+  container.innerHTML = "";
+  for(const id of unitIds || UNITS.map(u=>u.id)){
+    const u = UNITS.find(x=>x.id===id);
+    const wrap = document.createElement("details");
+    wrap.innerHTML = `<summary><span class="unit-code">Unit ${id}</span> — ${u.title}</summary>`;
+    const ul = document.createElement("ul");
+    ul.style.margin="8px 0 0 18px";
+    for(const v of (VIDEOS[id]||[])){
+      const li = document.createElement("li");
+      li.className = "video-item";
+      li.innerHTML = `<a href="${v.url}" target="_blank" rel="noopener">${v.t}</a>`;
+      ul.appendChild(li);
     }
-    return arr;
+    wrap.appendChild(ul);
+    container.appendChild(wrap);
   }
-  function sample(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-  function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){var t=a%b; a=b; b=t;} return a||1; }
-  function lcm(a,b){ return Math.abs(a*b)/gcd(a,b); }
-  function supSign(n){ return n>=0? '+'+n : ''+n; }
+}
 
-  // Normalize algebra strings for simple equivalence checks (not CAS, just practical)
-  function normalizeAnswer(s){
-    if(!s) return "";
-    s = s.trim().replace(/\s+/g,'')
-      .replace(/\*\*/g,'^')
-      .replace(/×/g,'*')
-      .replace(/·/g,'*')
-      .replace(/\u2212/g,'-');
-    // Sort factors within parenthesis for simple binomial order insensitivity
-    // e.g., (x-2)(x-3) vs (x-3)(x-2)
-    // We'll split at ')(' when fully factored, else return raw
-    return s;
-  }
+function startStudy(unitIds){
+  const shuffleQ = $("#shuffleOpt").checked;
+  $("#intro").hidden = true;
+  $("#actions").hidden = false;
+  $("#submitBtn").disabled = false;
+  $("#nextBtn").disabled = true;
+  currentSet = QUESTION_BANK.filter(q=>unitIds.includes(q.unit));
+  if(shuffleQ) shuffle(currentSet);
+  resetSessionCounters(currentSet.length);
+  idx = 0;
+  showQuestion();
+  const titles = unitIds.map(id=>`Unit ${id}`).join(", ");
+  $("#qUnit").textContent = titles;
+  renderVideoList(unitIds);
+}
 
-  // Compare two answers: exact (string) or one of aliases
-  function checkFreeEntry(user, correctAliases){
-    var u = normalizeAnswer(user);
-    for(var i=0;i<correctAliases.length;i++){
-      if(u === normalizeAnswer(correctAliases[i])) return true;
-    }
-    return false;
-  }
+function startExam(){
+  const chosen = $$("#unitSelect input[type=checkbox]:checked").map(c=>c.value);
+  const n = clamp(parseInt($("#numQuestions").value||"20",10), 5, 60);
+  let pool = QUESTION_BANK.filter(q=>chosen.includes(q.unit));
+  if($("#shuffleOpt").checked) shuffle(pool);
+  currentSet = pool.slice(0,n);
+  $("#intro").hidden = true;
+  $("#actions").hidden = false;
+  $("#submitBtn").disabled = false;
+  $("#nextBtn").disabled = true;
+  resetSessionCounters(currentSet.length);
+  idx = 0;
+  showQuestion();
+  $("#qUnit").textContent = `Mixed: ${chosen.length} unit(s)`;
+  renderVideoList(chosen);
+}
 
-  // ------- Problem generators -------
-  // Each generator returns:
-  // { q: "Question text", choices: [{t, correct, why}], steps: ["..."], mode: "mcq"|"free", aliases: ["(x-2)(x-3)"], skill: "Factoring" }
+function resetSession(){
+  currentSet = [];
+  idx = 0; answered = 0; correct = 0;
+  $("#qContainer").hidden = true;
+  $("#actions").hidden = true;
+  $("#intro").hidden = false;
+  $("#scoreMini").textContent = "Score: 0/0";
+  $("#barFill").style.width = "0%";
+  $("#qUnit").textContent = "—";
+  $("#qCounter").textContent = "Q 0/0";
+  $("#progressLabel").textContent = "Progress 0 of 0";
+  renderVideoList();
+}
 
-  function gcfProblem(){
-    // 6.1 Factor out GCF
-    // Build something like: 18x^3y^2 + 12x^2y
-    var a1 = 6 * (2+Math.floor(Math.random()*3)); // 12,18,24
-    var a2 = 6 * (1+Math.floor(Math.random()*3)); // 6,12,18
-    var x1 = 2 + Math.floor(Math.random()*3); // 2..4
-    var x2 = 1 + Math.floor(Math.random()*x1); // 1..x1-? ensure <= x1
-    var y1 = 1 + Math.floor(Math.random()*3); //1..3
-    var y2 = Math.floor(Math.random()*y1); //0..y1-1
+function resetSessionCounters(total){
+  answered = 0; correct = 0;
+  $("#scoreMini").textContent = `Score: ${correct}/${answered}`;
+  $("#barFill").style.width = "0%";
+  $("#qCounter").textContent = `Q 1/${total}`;
+  $("#progressLabel").textContent = `Progress 1 of ${total}`;
+}
 
-    var g = gcd(a1,a2);
-    var gx = Math.min(x1,x2);
-    var gy = Math.min(y1,y2);
-    function term(coef, px, py){
-      var t = ''+coef;
-      if(px>0) t+= 'x' + (px>1? '^'+px : '');
-      if(py>0) t+= 'y' + (py>1? '^'+py : '');
-      return t;
-    }
-    var Q = 'Factor the GCF: ' + term(a1,x1,y1) + ' + ' + term(a2,x2,y2);
-    var gcf = term(g, gx, gy);
-    // inside
-    function divideTerm(coef, px, py){
-      return term(coef/g, px-gx, py-gy);
-    }
-    var inside = divideTerm(a1,x1,y1) + ' + ' + divideTerm(a2,x2,y2);
-    var correct = gcf + '(' + inside + ')';
-
-    var wrong1 = '('+ inside + ')'; // forgot GCF outside
-    var wrong2 = term(g*2, gx, gy) + '(' + (divideTerm(a1,x1,y1)/2) + ' + ' + (divideTerm(a2,x2,y2)/2) + ')'; // doubled then halved inside incorrectly
-    var wrong3 = term(g, gx+1, gy) + '(' + divideTerm(a1,x1,y1).replace('x','') + ' + ' + divideTerm(a2,x2,y2).replace('x','') + ')';
-
-    var steps = [
-      'Find the numerical GCF of '+a1+' and '+a2+' → '+g+'.',
-      'For variables, take the smallest exponent in common: x^'+gx+', y^'+gy+'.',
-      'Factor the GCF '+gcf+' out of each term.',
-      'Divide each original term by the GCF to fill the parentheses: '+inside+'.',
-      'Result: <strong>'+correct+'</strong>.'
-    ];
-    var choices = shuffle([
-      {t: correct, correct:true, why:'Correct: GCF is factored and the inside multiplies back to the original expression.'},
-      {t: wrong1, correct:false, why:'Missing the factor outside. Factoring means writing as product GCF × (something).'},
-      {t: wrong2, correct:false, why:'You doubled the GCF and halved the inside — that changes the value unless done consistently for <em>every</em> term.'},
-      {t: wrong3, correct:false, why:'You took too many x’s in the GCF. The GCF must divide <em>every</em> original term.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'6.1 GCF'};
-  }
-
-  function groupingProblem(){
-    // 6.2 Factor by grouping like: 5xy + 15x + 2y + 6
-    var m = 2 + Math.floor(Math.random()*6); //2..7
-    var n = 2 + Math.floor(Math.random()*6);
-    var Q = 'Factor by grouping: ' + (m+'xy + '+(3*m)+'x + '+n+'y + '+(3*n));
-    var steps = [
-      'Group the first two and last two terms: ('+m+'xy + '+(3*m)+'x) + ('+n+'y + '+(3*n)+').',
-      'Factor each group: '+m+'x(y + 3) + '+n+'(y + 3).',
-      'Now (y + 3) is common; factor it out: (y + 3)('+m+'x + '+n+').'
-    ];
-    var correct = '(y + 3)('+m+'x + '+n+')';
-    var wrong1 = '('+m+'x + '+n+')(y + 3)'; // same
-    var wrong2 = '('+m+'xy + '+n+'y) + ('+(3*m)+'x + '+(3*n)+')'; // incorrect grouping
-    var wrong3 = '('+m+'x + '+n+')'; // only one factor
-    var choices = shuffle([
-      {t: correct, correct:true, why:'Correct: factor GCF in each group, then factor the common binomial.'},
-      {t: wrong3, correct:false, why:'Factoring by grouping should result in a product of <em>two binomials</em>.'},
-      {t: wrong2, correct:false, why:'Group 1st two and last two terms so that the binomials match.'},
-      {t: wrong1, correct:false, why:'This is correct but just with the factors reversed — multiplication is commutative. (This is still marked correct.)'}
-    ]);
-    // Mark the reversed form as also correct by alias
-    choices[1].correct = true; choices[1].why = 'Correct (same as the other answer, just reversed factors).';
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'6.2 Grouping'};
-  }
-
-  function trinomialA1(){
-    // 6.3 x^2 + bx + c with a=1; choose m,n such that m+n=b, mn=c
-    var m = sample([-9,-8,-7,-6,-5,-4,-3,-2,2,3,4,5,6,7,8,9]);
-    var n = sample([-9,-8,-7,-6,-5,-4,-3,-2,2,3,4,5,6,7,8,9]);
-    if(m===-n || m===n) n = n+1; // avoid 0 or double
-    var b = m+n, c = m*n;
-    var Q = 'Factor completely: x^2 '+supSign(b)+'x '+supSign(c);
-    var correct = '(x '+supSign(m)+')(x '+supSign(n)+')';
-    var steps = [
-      'We need two numbers that multiply to c='+c+' and add to b='+b+'.',
-      'Those numbers are '+m+' and '+n+' since '+m+'×'+n+'='+c+' and '+m+'+'+n+'='+b+'.',
-      'So the factorization is (x '+supSign(m)+')(x '+supSign(n)+').'
-    ];
-    var wrong1 = '(x '+supSign(b)+')(x '+supSign(1)+')';
-    var wrong2 = '(x '+supSign(m)+')(x '+supSign(-n)+')'; // sign mistake
-    var wrong3 = 'Prime';
-    var choices = shuffle([
-      {t: correct, correct:true, why:'Correct pairs multiply to '+c+' and add to '+b+'.'},
-      {t: wrong2, correct:false, why:'Sign error: you changed one sign, which changes the product and the middle term.'},
-      {t: wrong1, correct:false, why:'Using b and 1 almost never works unless c= b.'},
-      {t: wrong3, correct:false, why:'This trinomial is factorable because suitable integers exist.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'6.3 a=1'};
-  }
-
-  function trinomialAne1(){
-    // 6.4 ax^2+bx+c where a>1; use ac-method
-    var a = sample([2,3,4,5]);
-    var r = sample([-6,-5,-4,-3,-2,2,3,4,5,6]);
-    var s = sample([-6,-5,-4,-3,-2,2,3,4,5,6]);
-    if(r===0||s===0||r+s===0) s+=1;
-    // build via (ax + r)(x + s/a) but we want integer coefficients.
-    // Instead choose structure by ac method: pick two integers p,q such that p*q=a*c and p+q=b.
-    var x1 = sample([1,2,3]); // to form factors
-    var x2 = sample([1,2,3]);
-    var m = sample([-6,-5,-4,-3,-2,2,3,4,5,6]);
-    var n = sample([-6,-5,-4,-3,-2,2,3,4,5,6]);
-    // Build with (px + u)(qx + v) with p*q=a and u*v=c and b= pv+qu
-    var p = sample([1,a]); var q = a/p;
-    var u = sample([-6,-4,-3,-2,2,3,4,6]);
-    var v = sample([-6,-4,-3,-2,2,3,4,6]);
-    // ensure integers and moderate
-    var A = p*q;
-    var C = u*v;
-    var B = p*v + q*u;
-    var Q = 'Factor completely: '+A+'x^2 '+supSign(B)+'x '+supSign(C);
-    var steps = [
-      'Identify a='+A+', b='+B+', c='+C+'. Compute ac = '+(A*C)+'.',
-      'Find two integers that multiply to ac and add to b. Here, using the structure ('+p+'x '+supSign(u)+')('+q+'x '+supSign(v)+') works because '+p+'×'+q+'='+A+', '+u+'×'+v+'='+C+', and '+p+'×'+v+' + '+q+'×'+u+' = '+B+'.',
-      'Therefore, the factorization is ('+p+'x '+supSign(u)+')('+q+'x '+supSign(v)+').'
-    ];
-    var correct = '('+p+'x '+supSign(u)+')('+q+'x '+supSign(v)+')';
-    var wrong1 = '(x '+supSign(u)+')(x '+supSign(v)+')'; // forgot a
-    var wrong2 = '('+A+'x '+supSign(u)+')(x '+supSign(v)+')'; // messed coefficients
-    var wrong3 = 'Prime';
-    var choices = shuffle([
-      {t: correct, correct:true, why:'Correct: expands to '+A+'x^2 '+supSign(B)+'x '+supSign(C)+'.'},
-      {t: wrong1, correct:false, why:'You dropped the leading coefficient a='+A+'.'},
-      {t: wrong2, correct:false, why:'Middle term would not match b='+B+' with this pairing.'},
-      {t: wrong3, correct:false, why:'This one is factorable over integers.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'6.4 a≠1'};
-  }
-
-  function specialProducts(){
-    // 6.5 choose diff of squares / perfect square / sum/diff cubes
-    var type = sample(['dos','ps','sc','dc']);
-    if(type==='dos'){
-      var k = sample([2,3,4,5,6,7,8,9]);
-      var Q = 'Factor: x^2 - '+(k*k);
-      var correct='(x+'+k+')(x-'+k+')';
-      var steps=['Recognize a difference of squares: a^2 - b^2 = (a+b)(a-b).',
-                 'Here, a=x and b='+k+'. Result: '+correct+'.'];
-      var wrong1='(x-'+k+')(x-'+k+')';
-      var wrong2='(x+'+(k*k)+')(x-1)';
-      var wrong3='Prime';
-      var why2='You tried to split '+(k*k)+' into '+k+' and 1 — that does not match the identity.';
-    }else if(type==='ps'){
-      var k = sample([2,3,4,5]);
-      var Q='Factor: x^2 + '+(2*k)+'x + '+(k*k);
-      var correct='(x+'+k+')^2';
-      var steps=['Perfect square trinomial: a^2+2ab+b^2=(a+b)^2.",
-                 "Here, a=x, b='+k+', so (x+'+k+')^2.'];
-      var wrong1='(x+'+k+')(x+'+(k+1)+')';
-      var wrong2='(x+'+(2*k)+')(x+'+1+')';
-      var wrong3='(x+'+k+')(x-'+k+')';
-      var why2='The numbers inside must multiply to '+(k*k)+' and double their product must be '+(2*k)+'x.';
-    }else if(type==='sc'){ // sum cubes
-      var k = sample([2,3,4]);
-      var Q='Factor: x^3 + '+(k*k*k);
-      var correct='(x+'+k+')(x^2 - '+k+'x + '+(k*k)+')';
-      var steps=['Use sum of cubes: a^3+b^3=(a+b)(a^2-ab+b^2).',
-        'Here a=x, b='+k+'.'];
-      var wrong1='(x+'+k+')(x^2 + '+k+'x + '+(k*k)+')';
-      var wrong2='(x+'+k+')^3';
-      var wrong3='Prime';
-      var why2='Middle term of the quadratic should be -ab, not +ab, for sum of cubes.';
-    }else{ // dc difference cubes
-      var k = sample([2,3,4]);
-      var Q='Factor: x^3 - '+(k*k*k);
-      var correct='(x-'+k+')(x^2 + '+k+'x + '+(k*k)+')';
-      var steps=['Use difference of cubes: a^3-b^3=(a-b)(a^2+ab+b^2).',
-                 'Here a=x, b='+k+'.'];
-      var wrong1='(x-'+k+')(x^2 - '+k+'x + '+(k*k)+')';
-      var wrong2='(x-'+k+')^3';
-      var wrong3='Prime';
-      var why2='For a^3-b^3, the quadratic is a^2 + ab + b^2 (all plus).'];
-    }
-    var choices = shuffle([
-      {t: correct, correct:true, why:'Correct application of the identity.'},
-      {t: wrong1, correct:false, why:'Sign error in one factor.'},
-      {t: wrong2, correct:false, why:(why2||'Numbers chosen do not follow the special product identity.')},
-      {t: wrong3, correct:false, why:'This special form is always factorable.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'6.5 Special Products'};
-  }
-
-  function strategyMix(){
-    // 6.6 choose type; ask which method to use (conceptual)
-    var pick = sample(['dos','trin','group']);
-    var Q,choices,correct,why;
-    if(pick==='dos'){
-      Q='Choose the best first method to factor: 25x^2 - 100';
-      correct='Factor out GCF then use difference of squares.';
-      choices=shuffle([
-        {t: correct, correct:true, why:'Take out 25 first → 25(x^2-4), then (x+2)(x-2).'},
-        {t: 'ac method directly', correct:false, why:'That’s for trinomials, not two-term expressions.'},
-        {t: 'Prime (cannot factor)', correct:false, why:'It is factorable.'},
-        {t: 'Group the middle terms', correct:false, why:'There are only two terms.'}
-      ]);
-    }else if(pick==='trin'){
-      Q='Choose the best method to factor: 6x^2 + 11x + 3';
-      correct='ac method (then group).';
-      choices=shuffle([
-        {t: correct, correct:true, why:'Because a≠1; ac=18, split to 9 and 2.'},
-        {t: 'Difference of squares', correct:false, why:'There are three terms, not a^2-b^2.'},
-        {t: 'Sum/diff cubes', correct:false, why:'Not of the form a^3±b^3.'},
-        {t: 'Prime', correct:false, why:'It factors as (3x+1)(2x+3).'}]);
-    }else{
-      Q='Choose the best method to factor: 5xy + 15x + 2y + 6';
-      correct='Grouping (four-term).';
-      choices=shuffle([
-        {t: correct, correct:true, why:'Group to 5x(y+3)+2(y+3).'},
-        {t: 'Difference of squares', correct:false, why:'Not two squares.'},
-        {t: 'ac method', correct:false, why:'That’s for trinomials.'},
-        {t: 'Prime', correct:false, why:'This one is factorable.'}]);
-    }
-    return {q:Q, choices:choices, steps:[choices.filter(c=>c.correct)[0].why], mode:'mcq', skill:'6.6 Strategy'};
-  }
-
-  function solveByFactoring(){
-    // 6.7 Solve quadratic by factoring
-    // Build with roots r and s
-    var r = sample([-5,-4,-3,-2,-1,1,2,3,4,5]);
-    var s = sample([-6,-5,-4,-3,-2,-1,1,2,3,4,5]);
-    if(s===r) s += (s>0?1:-1);
-    var b = -(r+s), c = r*s;
-    var Q='Solve by factoring: x^2 '+supSign(b)+'x '+supSign(c)+' = 0';
-    var correctSol='x = '+r+' or x = '+s;
-    var steps=[
-      'Factor the trinomial: (x '+supSign(-r)+')(x '+supSign(-s)+') = 0.',
-      'Zero‑product rule: set each factor to zero.',
-      'x '+supSign(-r)+' = 0 → x = '+r+';   x '+supSign(-s)+' = 0 → x = '+s+'.'
-    ];
-    var choices = shuffle([
-      {t: correctSol, correct:true, why:'Correct by zero‑product rule.'},
-      {t: 'x = '+(-r)+' or x = '+(-s), correct:false, why:'Sign mix‑up when solving factors.'},
-      {t: 'x = '+(r+s), correct:false, why:'Sum of roots is not a solution; that’s -b for a=1.'},
-      {t: 'No real solution', correct:false, why:'This quadratic has two real roots.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'6.7 Solve by factoring'};
-  }
-
-  // ----- Unit 7: RATIONAL EXPRESSIONS -----
-  function reduceRational(){
-    // 7.1 simplify and state excluded values implicitly via choices explanation
-    // Example: (x^2 - 9)/(x^2 - 3x) = (x+3)(x-3)/(x(x-3)) -> (x+3)/x, x≠0,3
-    var a = sample([2,3,4,5]);
-    var b = sample([1,2,3,4,5]);
-    var Q = 'Reduce the rational expression: (x^2 - '+(a*a)+') / (x^2 - '+(a)+'x)';
-    var correct = '(x+'+a+')/x,  x ≠ 0, '+a;
-    var steps=[
-      'Factor numerator and denominator.',
-      'Numerator: x^2 - '+(a*a)+' = (x+'+a+')(x-'+a+').',
-      'Denominator: x^2 - '+a+'x = x(x-'+a+').',
-      'Cancel the common factor (x-'+a+'). Remember domain restrictions from the denominator: x ≠ 0 and x ≠ '+a+'.',
-      'Result: <strong>(x+'+a+')/x</strong> with x ≠ 0, '+a+'.'
-    ];
-    var wrong1='(x+'+a+')/x,  no restrictions';
-    var wrong2='(x+'+a+')(x-'+a+') / (x(x-'+a+'))';
-    var wrong3='(x-'+a+')/x,  x ≠ 0, '+a;
-    var choices = shuffle([
-      {t: correct, correct:true, why:'Correct simplification and excluded values.'},
-      {t: wrong1, correct:false, why:'Always state restrictions: values that make any denominator 0 are excluded.'},
-      {t: wrong3, correct:false, why:'You cancelled the wrong factor; after cancelling (x-'+a+'), the remaining numerator is (x+'+a+').'},
-      {t: wrong2, correct:false, why:'Not simplified; you should cancel common factors.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'7.1 Reduce rationals'};
-  }
-
-  function multDivRational(){
-    // 7.2 Multiply/divide rationals with cross-cancel
-    // (2x^2/3y) * (9y^2/4x) = ?
-    var a1=2, a2=9, b1=3, b2=4;
-    var Q='Multiply and simplify: (2x^2 / 3y) · (9y^2 / 4x)';
-    var steps=[
-      'Rewrite as one fraction and cross‑cancel factors.',
-      '(2×9) / (3×4) · (x^2/x) · (y^2/y) = (18/12) · x · y = (3/2)xy.',
-      'Result: <strong>(3/2)xy</strong>. (Any equivalent simplified form is OK.)'
-    ];
-    var choices = shuffle([
-      {t:'(3/2)xy', correct:true, why:'Correct after cancelling common factors.'},
-      {t:'(3/2)x^2y^2', correct:false, why:'You multiplied but did not reduce x^2/x and y^2/y.'},
-      {t:'(18/12)xy', correct:false, why:'Reduce 18/12 to 3/2.'},
-      {t:'(2/3)xy', correct:false, why:'You inverted the wrong fraction or cancelled incorrectly.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'7.2 Multiply/Divide rationals'};
-  }
-
-  function lcdProblem(){
-    // 7.3 Find LCD for denominators like: x^2(x+1), 3x(x+1)^2, 9x^3
-    var choice = sample([1,2,3]);
-    var d1='x(x+1)', d2='3x^2(x+1)', d3='9x^3';
-    var Q='Find the least common denominator (LCD) for 1/'+d1+' and 1/'+d2+'.';
-    var correct='3x^2(x+1)';
-    var steps=[
-      'Factor each denominator completely: '+d1+' and '+d2+'.',
-      'Take the highest power of each distinct factor present.',
-      'x appears up to x^2; (x+1) appears to the 1st power; 3 is a numeric factor in the second but not the first.',
-      'LCD = 3·x^2·(x+1).'
-    ];
-    var choices = shuffle([
-      {t:correct, correct:true, why:'Correct highest powers of each factor.'},
-      {t:'x^2(x+1)', correct:false, why:'Missing the numeric factor 3.'},
-      {t:'3x(x+1)', correct:false, why:'x must be squared because one denominator has x^2.'},
-      {t:'9x^3(x+1)', correct:false, why:'This is a common multiple but not the least.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'7.3 LCD'};
-  }
-
-  function addSubtractRational(){
-    // 7.4 Add rationals: 1/x + 1/(x+2)
-    var Q='Add and simplify: 1/x + 1/(x+2)';
-    var steps=[
-      'LCD is x(x+2).',
-      'Write each over the LCD: (x+2)/[x(x+2)] + x/[x(x+2)] = (2x+2)/[x(x+2)].',
-      'Factor numerator: 2(x+1)/[x(x+2)]. No common factor cancels with denominator.',
-      'Result: <strong>2(x+1) / (x(x+2))</strong> with x ≠ 0, -2.'
-    ];
-    var choices = shuffle([
-      {t:'2(x+1)/(x(x+2))', correct:true, why:'Correct final form.'},
-      {t:'(2x+2)/(x+2)', correct:false, why:'You changed the denominator; it should stay the LCD.'},
-      {t:'(2x+2)/(x(x+2))', correct:false, why:'Close—factor the 2 out in the numerator.'},
-      {t:'2/(x+1)', correct:false, why:'That would require cancelling across addition (not allowed).'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'7.4 Add/Subtract rationals'};
-  }
-
-  function complexFractions(){
-    // 7.5 Simplify complex fraction: (1/x + 1/y) / (1/x)
-    var Q='Simplify the complex fraction: (1/x + 1/y) ÷ (1/x)';
-    var steps=[
-      'Multiply numerator and denominator by the LCD (xy).',
-      'Top: (xy)(1/x + 1/y) = y + x. Bottom: (xy)(1/x) = y.',
-      'Simplify: (x + y) / y.'
-    ];
-    var choices = shuffle([
-      {t:'(x+y)/y', correct:true, why:'Correct after multiplying by the LCD.'},
-      {t:'(x+y)/xy', correct:false, why:'You multiplied only the numerator.'},
-      {t:'x/y + 1', correct:false, why:'Rewriting incorrectly; treat the whole numerator and denominator.'},
-      {t:'(x+y)/x', correct:false, why:'You used the wrong denominator after clearing fractions.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'7.5 Complex fractions'};
-  }
-
-  function solveRationalEq(){
-    // 7.7 Solve 1/(x-2) = 3/x, note restrictions
-    var Q='Solve the rational equation: 1/(x-2) = 3/x';
-    var steps=[
-      'Domain restrictions: x ≠ 0 and x ≠ 2.',
-      'Cross‑multiply: x = 3(x-2).',
-      'Solve: x = 3x - 6 → -2x = -6 → x = 3.',
-      'Check: x=3 is allowed (not 0 or 2).'
-    ];
-    var choices = shuffle([
-      {t:'x = 3', correct:true, why:'Correct after cross‑multiplying and solving.'},
-      {t:'x = -3', correct:false, why:'Sign error when isolating x.'},
-      {t:'x = 0 or 2', correct:false, why:'Those make the denominators zero (excluded).'},
-      {t:'No solution', correct:false, why:'There is a valid solution x=3.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'7.7 Rational equations'};
-  }
-
-  // ----- Unit 8: RADICALS -----
-  function squareRoots(){
-    // 8.1 Simplify sqrt(72x^2y)
-    var Q='Simplify: √(72x^2y)';
-    var steps=[
-      'Factor inside the radical: 72x^2y = 36·2 · x^2 · y.',
-      '√(36)=6 and √(x^2)=|x| (assume x≥0 for algebra practice), so pull them out: 6x√(2y).',
-      'Result: <strong>6x√(2y)</strong>.'
-    ];
-    var choices = shuffle([
-      {t:'6x√(2y)', correct:true, why:'Correct by pulling perfect squares.'},
-      {t:'6√(2x^2y)', correct:false, why:'x^2 should come out as x, not stay inside.'},
-      {t:'√(72)x^2y', correct:false, why:'√ distributes over multiplication only—not over a sum/product incorrectly arranged.'},
-      {t:'12x√(y/2)', correct:false, why:'Not a valid simplification of √72.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'8.1 Roots'};
-  }
-
-  function addRadicals(){
-    // 8.2 Add: 3√8 + 2√18 = 3*2√2 + 2*3√2 = 12√2
-    var Q='Add and simplify: 3√8 + 2√18';
-    var steps=[
-      'Simplify each radical: √8 = 2√2, √18 = 3√2.',
-      'Expression becomes 3·2√2 + 2·3√2 = 6√2 + 6√2 = 12√2.'
-    ];
-    var choices = shuffle([
-      {t:'12√2', correct:true, why:'Combine like radicals after simplifying.'},
-      {t:'√(8+18) = √26', correct:false, why:'You cannot add numbers inside radicals like that.'},
-      {t:'9√2', correct:false, why:'Coefficients add to 12, not 9.'},
-      {t:'(3+2)√(8+18)', correct:false, why:'Both steps misuse radical properties.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'8.2 Add radicals'};
-  }
-
-  function multiplyRadicals(){
-    // 8.3 Multiply: √(12)·√(8) = √(96) = 4√6
-    var Q='Multiply and simplify: √12 · √8';
-    var steps=[
-      'Combine under one radical: √(12·8) = √96.',
-      'Simplify √96 = √(16·6) = 4√6.'
-    ];
-    var choices = shuffle([
-      {t:'4√6', correct:true, why:'Correct after combining and simplifying.'},
-      {t:'√20', correct:false, why:'12+8=20 (addition), but we must multiply under a single radical.'},
-      {t:'√96 (do not simplify)', correct:false, why:'Always extract perfect squares when possible.'},
-      {t:'8√(3/2)', correct:false, why:'This is not a correct simplification.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'8.3 Multiply radicals'};
-  }
-
-  function divideRadicals(){
-    // 8.5 Rationalize: 5/(2√3) = (5√3)/(2·3) = (5√3)/6
-    var Q='Rationalize the denominator: 5/(2√3)';
-    var steps=[
-      'Multiply numerator & denominator by √3.',
-      'Result: (5√3) / (2·3) = (5√3)/6.'
-    ];
-    var choices = shuffle([
-      {t:'(5√3)/6', correct:true, why:'Correct: denominator is rational.'},
-      {t:'(5√3)/(2√3)', correct:false, why:'You multiplied top but not bottom; multiply both.'},
-      {t:'(5√3)/2', correct:false, why:'You forgot that √3·√3=3 in the denominator.'},
-      {t:'5/(2√3) (already rational)', correct:false, why:'Denominator contains √3; rationalize it.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'8.5 Rationalizing'};
-  }
-
-  // ----- Unit 9: QUADRATICS -----
-  function solvingWithRadicals(){
-    // 9.1 Solve by taking sqrt: x^2 = k
-    var k = sample([9,16,25,36,49]);
-    var Q='Solve: x^2 = '+k;
-    var r = Math.round(Math.sqrt(k));
-    var steps=[
-      'Take square roots of both sides and include ±: x = ±√'+k+' = ±'+r+'.'
-    ];
-    var choices = shuffle([
-      {t:'x = '+r+' or x = -'+r, correct:true, why:'Include both positive and negative roots.'},
-      {t:'x = '+r, correct:false, why:'Forgot the negative root.'},
-      {t:'x = ±'+k, correct:false, why:'√'+k+' = '+r+', not '+k+'.'},
-      {t:'No real solution', correct:false, why:'k>0 so there are two real solutions.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'9.1 With radicals'};
-  }
-
-  function squareRootProperty(){
-    // 9.2 (x + d)^2 = k
-    var d = sample([-5,-4,-3,-2,2,3,4,5]);
-    var k = sample([9,16,25,36]);
-    var Q='Solve using the square‑root property: (x '+supSign(d)+')^2 = '+k;
-    var r = Math.round(Math.sqrt(k));
-    var steps=[
-      'Square‑root property: x '+supSign(d)+' = ±√'+k+' = ±'+r+'.',
-      'So x = '+(-d)+' ± '+r+' → x = '+(-d+r)+' or x = '+(-d-r)+'.'
-    ];
-    var choices = shuffle([
-      {t:'x = '+(-d+r)+' or x = '+(-d-r), correct:true, why:'Correct by square‑root property.'},
-      {t:'x = '+(-d+r), correct:false, why:'Forgot the negative branch.'},
-      {t:'x = '+(-d)+' ± '+k, correct:false, why:'√'+k+' = '+r+', not '+k+'.'},
-      {t:'x = '+(d+r)+' or '+(d-r), correct:false, why:'Sign error when isolating x.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'9.2 Square‑root property'};
-  }
-
-  function completingSquare(){
-    // 9.3 Solve x^2 + bx + c = 0 by completing the square; choose nice numbers
-    var m = sample([-6,-4,-2,2,4,6]);
-    var n = sample([1,4,9,16]);
-    // (x+m)^2 = n → x^2 + 2mx + m^2 - n = 0; set b, c
-    var b = 2*m, c = m*m - n;
-    var Q='Solve by completing the square: x^2 '+supSign(b)+'x '+supSign(c)+' = 0';
-    var steps=[
-      'Move constant to the other side: x^2 '+supSign(b)+'x = '+(-c)+'.',
-      'Half the coefficient of x and square it: (b/2)^2 = ('+(b/2)+')^2 = '+(m*m)+'.',
-      'Add '+(m*m)+' to both sides: (x '+supSign(m)+')^2 = '+(m*m - c)+' = '+n+'.',
-      'Take square roots: x '+supSign(m)+' = ±√'+n+' = ±'+Math.sqrt(n)+'.',
-      'Solutions: x = '+(-m+Math.sqrt(n))+' or x = '+(-m-Math.sqrt(n))+'.'
-    ];
-    var choices = shuffle([
-      {t:'x = '+(-m+Math.sqrt(n))+' or x = '+(-m-Math.sqrt(n)), correct:true, why:'Correct via completing the square.'},
-      {t:'x = '+(-m+Math.sqrt(n)), correct:false, why:'Missed one of the two roots.'},
-      {t:'x = '+(-b/2)+' ± '+Math.sqrt(n), correct:false, why:'Center is -b/2='+(-b/2)+' but we must also shift by completing square value.'},
-      {t:'No real solution', correct:false, why:'n is a perfect square here, so there are 2 real solutions.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'9.3 Complete the square'};
-  }
-
-  function quadraticFormula(){
-    // 9.4 Solve ax^2+bx+c=0 via formula with nice discriminant
-    var a = sample([1,2,3]);
-    var r = sample([-5,-4,-3,-2,2,3,4,5]);
-    var s = sample([-6,-5,-4,-3,-2,2,3,4,5,6]);
-    if(s===r) s += (s>0?1:-1);
-    // Build from roots r & s so discriminant is perfect square
-    var b = -a*(r+s);
-    var c = a*r*s;
-    var Q='Solve with the quadratic formula: '+a+'x^2 '+supSign(b)+'x '+supSign(c)+' = 0';
-    var D = b*b - 4*a*c;
-    var sqrtD = Math.round(Math.sqrt(D));
-    var steps=[
-      'Identify a='+a+', b='+b+', c='+c+'.',
-      'Discriminant: Δ = b^2 − 4ac = '+b+'^2 − 4·'+a+'·'+c+' = '+D+' = '+sqrtD+'^2.',
-      'x = [−b ± √Δ] / (2a) = ('+(-b)+' ± '+sqrtD+') / '+(2*a)+'.',
-      'This simplifies to x = '+r+' or x = '+s+'.'
-    ];
-    var choices = shuffle([
-      {t:'x = '+r+' or x = '+s, correct:true, why:'Correct from quadratic formula.'},
-      {t:'x = '+(-b/(2*a)), correct:false, why:'That is only the vertex’s x‑coordinate, not the solutions.'},
-      {t:'x = '+r*s, correct:false, why:'Product of roots is c/a, not the roots themselves.'},
-      {t:'No real solution', correct:false, why:'Discriminant is positive, so there are two real solutions.'}
-    ]);
-    return {q:Q, choices:choices, steps:steps, mode:'mcq', skill:'9.4 Quadratic formula'};
-  }
-
-  var CURRENT_TOPIC = '6.1';
-  var SCORE = {right:0, total:0};
-  var LAST = null;
-
-  var TOPICS = {
-    '6.1': gcfProblem,
-    '6.2': groupingProblem,
-    '6.3': trinomialA1,
-    '6.4': trinomialAne1,
-    '6.5': specialProducts,
-    '6.6': strategyMix,
-    '6.7': solveByFactoring,
-    '7.1': reduceRational,
-    '7.2': multDivRational,
-    '7.3': lcdProblem,
-    '7.4': addSubtractRational,
-    '7.5': complexFractions,
-    '7.7': solveRationalEq,
-    '8.1': squareRoots,
-    '8.2': addRadicals,
-    '8.3': multiplyRadicals,
-    '8.5': divideRadicals,
-    '9.1': solvingWithRadicals,
-    '9.2': squareRootProperty,
-    '9.3': completingSquare,
-    '9.4': quadraticFormula
-  };
-
-  function render(q){
-    LAST = q;
-    document.getElementById('question').innerHTML = q.q;
-    var tag = document.getElementById('skillTag');
-    tag.textContent = q.skill || '';
-    tag.classList.toggle('hide', !q.skill);
-    var options = document.getElementById('options');
-    options.innerHTML='';
-    document.getElementById('explain').style.display='none';
-    document.getElementById('steps').style.display='none';
-    document.getElementById('correctness').classList.add('hide');
-    document.getElementById('answerInput').value='';
-    var mode = document.getElementById('mode').value;
-    document.getElementById('freeEntry').classList.toggle('hide', mode!=='scratch');
-    options.classList.toggle('hide', mode==='scratch');
-
-    if(mode==='mcq'){
-      for(var i=0;i<q.choices.length;i++){
-        var c = q.choices[i];
-        var id='opt'+i;
-        var lab=document.createElement('label');
-        lab.innerHTML = '<input type="radio" name="opt" id="'+id+'" value="'+i+'"><span>'+c.t+'</span>';
-        options.appendChild(lab);
-      }
-    }else{
-      // nothing; free entry input is shown
-    }
-    var steps = document.getElementById('steps');
-    var html = '<ol>';
-    for(var s=0;s<q.steps.length;s++){ html += '<li>'+q.steps[s]+'</li>'; }
-    html += '</ol>';
-    steps.innerHTML = html;
-  }
-
-  function pickNew(){
-    var gen = TOPICS[CURRENT_TOPIC] || gcfProblem;
-    render(gen());
-  }
-
-  // Controls
-  var navButtons = document.querySelectorAll('.nav button[data-topic]');
-  for(var i=0;i<navButtons.length;i++){
-    navButtons[i].addEventListener('click', (function(btn){
-      return function(){
-        CURRENT_TOPIC = btn.getAttribute('data-topic');
-        // highlight active
-        for(var j=0;j<navButtons.length;j++) navButtons[j].style.outline='none';
-        btn.style.outline='2px solid var(--accent)';
-        pickNew();
-      };
-    })(navButtons[i]));
-  }
-
-  document.getElementById('newQuestion').addEventListener('click', pickNew);
-  document.getElementById('showSteps').addEventListener('click', function(){
-    document.getElementById('steps').style.display='block';
+function showQuestion(){
+  const q = currentSet[idx];
+  const cont = $("#qContainer");
+  cont.hidden = false;
+  const orderChoices = q.choices.map((c,i)=>({i,c}));
+  if($("#shuffleChoices").checked) shuffle(orderChoices);
+  cont.innerHTML = `
+    <div class="q-head">
+      <div>
+        <div class="q-id">Unit ${q.unit} • ${q.code}</div>
+        <h3 class="title">Question ${idx+1}</h3>
+      </div>
+    </div>
+    <div class="q-body">${q.stem}</div>
+    <form id="answerForm" class="choices" aria-label="choices">
+      ${orderChoices.map(({i,c},k)=>`
+        <label class="choice">
+          <input type="radio" name="choice" value="${i}" aria-label="choice ${k+1}">
+          <span>${c}</span>
+        </label>
+      `).join("")}
+    </form>
+    <div id="feedback" class="feedback" hidden aria-live="polite"></div>
+  `;
+  selectedChoice = null;
+  cont.querySelectorAll("input[name=choice]").forEach(inp=>{
+    inp.addEventListener("change",()=>{ selectedChoice = parseInt(inp.value,10); $("#submitBtn").disabled=false; $("#nextBtn").disabled=true; $("#feedback").hidden=true; });
   });
-  document.getElementById('revealAnswer').addEventListener('click', function(){
-    if(!LAST) return;
-    document.getElementById('steps').style.display='block';
-    document.getElementById('explain').style.display='block';
-    // show which option is correct
-    var mode = document.getElementById('mode').value;
-    var msg = '';
-    if(mode==='mcq'){
-      var correct = (LAST.choices||[]).filter(function(c){ return c.correct; }).map(function(c){ return c.t; });
-      msg = '<div>Correct choice(s): <span class="ok">'+correct.join('  •  ')+'</span></div>';
-    }else{
-      msg = '<div>Expected answer (one acceptable form): <span class="ok">'+((LAST.aliases && LAST.aliases[0]) || 'See steps for final form')+'</span></div>';
-    }
-    document.getElementById('explain').innerHTML = msg;
-  });
+  $("#submitBtn").disabled = true;
+  $("#nextBtn").disabled = true;
+}
 
-  document.getElementById('showExplain').addEventListener('click', function(){
-    var el=document.getElementById('explain');
-    if(!LAST){ el.style.display='none'; return; }
-    // If MCQ and user selected a wrong one, show its why text.
-    var mode=document.getElementById('mode').value;
-    var msg='';
-    if(mode==='mcq'){
-      var selectedIndex=-1;
-      var radios=document.querySelectorAll('input[name=opt]');
-      for(var i=0;i<radios.length;i++){ if(radios[i].checked){ selectedIndex=+radios[i].value; break; } }
-      if(selectedIndex===-1){ msg='Select an option first.'; }
-      else{
-        var ch=LAST.choices[selectedIndex];
-        msg = ch.correct? 'Nice! That choice is correct.' : '<div><span class="bad">Why that choice is wrong:</span> '+(ch.why||'')+'</div>';
-      }
-    }else{
-      msg='Enter your best final form, then press “Check answer.” If marked wrong, show steps and compare.';
-    }
-    el.innerHTML=msg;
-    el.style.display='block';
-  });
+function checkAnswer(){
+  if(selectedChoice===null) return;
+  const q = currentSet[idx];
+  const isCorrect = (selectedChoice===q.correct);
+  answered++;
+  if(isCorrect) correct++;
+  const fb = $("#feedback");
+  fb.hidden = false;
+  fb.className = "feedback " + (isCorrect?"correct":"wrong");
+  const letter = i => ["A","B","C","D","E","F","G","H"][i]||"";
+  const stepList = q.steps.map((s,i)=>`Step ${i+1}. ${s}`).join("\n");
+  fb.innerHTML = `
+    <div><strong>${isCorrect?"Correct! ✅":"Not quite."}</strong> ${isCorrect?"":"Review the steps below."}</div>
+    <div class="steps mono" style="margin-top:8px; white-space:pre-wrap;">${stepList}</div>
+  `;
+  $("#submitBtn").disabled = true;
+  $("#nextBtn").disabled = false;
+  $("#scoreMini").textContent = `Score: ${correct}/${answered}`;
+}
 
-  document.getElementById('mode').addEventListener('change', function(){
-    if(LAST) render(LAST);
-  });
+function nextQuestion(){
+  if(idx < currentSet.length-1){
+    idx++;
+    showQuestion();
+    const total = currentSet.length;
+    $("#qCounter").textContent = `Q ${idx+1}/${total}`;
+    $("#progressLabel").textContent = `Progress ${idx+1} of ${total}`;
+    $("#barFill").style.width = `${Math.round((idx)/(total)*100)}%`;
+  }else{
+    $("#qContainer").innerHTML = `
+      <h3 class="title">Session complete</h3>
+      <p class="sub">You answered <strong>${correct}</strong> out of <strong>${answered}</strong> correctly.</p>
+      <div class="controls">
+        <button class="btn primary" id="restartBtn">Restart Exam</button>
+        <button class="btn" id="reviewBtn">Review missed (show steps)</button>
+      </div>
+    `;
+    $("#submitBtn").disabled = true;
+    $("#nextBtn").disabled = true;
+    $("#qCounter").textContent = `Done`;
+    $("#barFill").style.width = "100%";
+    // Build review if clicked
+    $("#qContainer").querySelector("#reviewBtn").addEventListener("click", ()=>{
+      $("#qContainer").innerHTML = currentSet.map(q=>{
+        const correctHTML = q.choices[q.correct];
+        const steps = q.steps.map((s,i)=>`Step ${i+1}. ${s}`).join("\n");
+        return `<details open><summary><strong>Unit ${q.unit}</strong> — ${q.code}<br><span class="muted">${q.stem}</span></summary>
+          <div class="hr"></div>
+          <div><strong>Answer:</strong> ${correctHTML}</div>
+          <pre class="steps mono" style="margin-top:8px">${steps}</pre>
+        </details>`;
+      }).join("<div class='hr'></div>");
+    });
+    $("#qContainer").querySelector("#restartBtn").addEventListener("click", ()=>{
+      resetSession(); window.scrollTo({top:0,behavior:'smooth'});
+    });
+  }
+}
 
-  document.getElementById('checkAnswer').addEventListener('click', function(){
-    if(!LAST) return;
-    var correct = false;
-    var mode = document.getElementById('mode').value;
-    var why = '';
-    if(mode==='mcq'){
-      var selectedIndex=-1;
-      var radios=document.querySelectorAll('input[name=opt]');
-      for(var i=0;i<radios.length;i++){ if(radios[i].checked){ selectedIndex=+radios[i].value; break; } }
-      if(selectedIndex===-1){ alert('Choose an option first.'); return; }
-      correct = !!LAST.choices[selectedIndex].correct;
-      why = LAST.choices[selectedIndex].why || '';
-    }else{
-      var v = document.getElementById('answerInput').value;
-      var aliases = LAST.aliases || [];
-      // fallback: if no aliases defined, accept exact final string that appears bold in last step (simple heuristic)
-      if(!aliases.length){
-        var lastStep = LAST.steps[LAST.steps.length-1] || '';
-        var m = /<strong>(.*?)<\/strong>/.exec(lastStep);
-        if(m) aliases = [m[1]];
-      }
-      correct = checkFreeEntry(v, aliases);
-      why = correct? 'Correct.' : 'Compare to the final simplified form in the steps. If your equivalent form should be accepted, switch to multiple‑choice for now.';
-    }
-    SCORE.total++;
-    if(correct) SCORE.right++;
-    document.getElementById('score').textContent='Score: '+SCORE.right+' / '+SCORE.total;
-    var tag=document.getElementById('correctness');
-    tag.textContent = correct? 'Correct ✔' : 'Not quite ✘';
-    tag.classList.remove('hide');
-    tag.style.background = correct? 'rgba(58,163,115,.2)' : 'rgba(255,107,107,.18)';
-    tag.style.borderColor = correct? '#2a7d51' : '#7d2a2a';
-  });
+// --- Events ---
+$("#startExamBtn").addEventListener("click", startExam);
+$("#selectAllBtn").addEventListener("click", ()=> $$("#unitSelect input").forEach(i=>i.checked=true));
+$("#clearAllBtn").addEventListener("click", ()=> $$("#unitSelect input").forEach(i=>i.checked=false));
+$("#submitBtn").addEventListener("click", checkAnswer);
+$("#nextBtn").addEventListener("click", nextQuestion);
+$("#resetBtn").addEventListener("click", resetSession);
 
-  // initial render
-  render({q:'Select a topic and press “New Question.”', choices:[], steps:['Pick any unit from the left.'], mode:'mcq'});
-})();
+// Initialize UI
+renderUnitList();
+renderVideoList();
+resetSession();
 </script>
 </body>
 </html>

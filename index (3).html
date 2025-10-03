@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MA025 Algebra Study Hub</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Interactive, step‑by‑step algebra practice for Units 0–9 with mobile‑friendly design.">
+  <style>
+    /* ====== Reset & basic typography ====== */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji;
+      -webkit-font-smoothing:antialiased;
+      color:#111;
+      background:#fff;
+    }
+    a{color:#0366d6;text-decoration:none}
+    a:focus,button:focus{outline:2px solid #1a73e8;outline-offset:2px}
+    button{font:inherit}
+    /* ====== Layout ====== */
+    .wrap{display:flex;flex-direction:column;min-height:100%}
+    header{
+      position:sticky;top:0;z-index:1;
+      backdrop-filter:saturate(140%) blur(6px);
+      background:rgba(255,255,255,.9);
+      border-bottom:1px solid #eee;
+    }
+    .bar{
+      max-width:1100px;margin:0 auto;
+      padding:12px 16px; display:flex;align-items:center;gap:12px;flex-wrap:wrap
+    }
+    .title{font-weight:700;letter-spacing:.3px;margin-right:auto}
+    main{flex:1}
+    .container{max-width:1100px;margin:0 auto;padding:16px}
+    .grid{
+      display:grid;gap:12px;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    }
+    .card{
+      border:1px solid #e6e6e6;border-radius:10px;padding:12px;
+      background:#fafafa;
+    }
+    .card h3{margin:.2rem 0 .2rem;font-size:1.05rem}
+    .card p{margin:.2rem 0}
+    .btn{
+      display:inline-block;border:1px solid #1f6feb;background:#1f6feb;color:white;
+      padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer
+    }
+    .btn.secondary{background:white;color:#1f6feb}
+    .btn-group{display:flex;gap:8px;flex-wrap:wrap}
+    .frameWrap{border:1px solid #e6e6e6;border-radius:12px;overflow:hidden;background:white}
+    iframe{width:100%;border:0;display:block}
+    .notice{background:#fff8e1;border:1px solid #ffe08a;color:#6b4f00;padding:10px;border-radius:8px}
+    footer{border-top:1px solid #eee}
+    footer .container{padding:20px 16px;font-size:.9rem;color:#444}
+    /* Dark mode (respects device setting) */
+    @media (prefers-color-scheme:dark){
+      body{background:#0b0c10;color:#eee}
+      header{background:rgba(14,16,20,.85);border-bottom-color:#222}
+      .card{background:#12151b;border-color:#222}
+      .frameWrap{border-color:#222;background:#0b0c10}
+      a{color:#8ab4ff}
+      .btn{background:#2b67f6;border-color:#2b67f6}
+      .btn.secondary{background:transparent;color:#8ab4ff;border-color:#2a3a57}
+      footer{border-top-color:#222}
+      .notice{background:#2b2111;border-color:#5c3b10;color:#ffdca8}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="bar">
+      <div class="title">MA025 Algebra Study Hub</div>
+      <a class="btn secondary" href="references.html">📚 References & Videos</a>
+      <a class="btn secondary" href="https://github.com/xatusbetazx17/Math">GitHub</a>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <p class="notice">Tip: Rotate your phone to landscape for more writing space. Everything runs in your browser—no logins, no ads, and works on iOS, Android, Windows, macOS, Linux, and Steam Deck.</p>
+
+      <h2>Choose a practice app</h2>
+      <div class="grid" role="list">
+        <div class="card" role="listitem">
+          <h3>Units 0–5 • Foundations</h3>
+          <p>Arithmetic & algebra basics, linear equations, graphing, systems, and polynomials.</p>
+          <div class="btn-group">
+            <button class="btn" data-target="algebra_quiz_notebook.html">Open in the page</button>
+            <a class="btn secondary" href="algebra_quiz_notebook.html" target="_blank" rel="noopener">Open in new tab</a>
+          </div>
+        </div>
+        <div class="card" role="listitem">
+          <h3>Units 6–9 • Factoring → Quadratics</h3>
+          <p>Factoring, rational expressions, radicals, and quadratics with step‑by‑step notes.</p>
+          <div class="btn-group">
+            <button class="btn" data-target="algebra_units6_9_quiz.html">Open in the page</button>
+            <a class="btn secondary" href="algebra_units6_9_quiz.html" target="_blank" rel="noopener">Open in new tab</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="margin-top:20px">Practice Area</h2>
+      <div id="frameRegion" class="frameWrap" hidden>
+        <iframe id="quizFrame" title="Algebra practice" loading="eager" allowtransparency="true" referrerpolicy="no-referrer"></iframe>
+      </div>
+
+      <noscript>
+        <p><strong>JavaScript is disabled.</strong> You can still use the apps by opening them in a new tab:
+          <a href="algebra_quiz_notebook.html">Units 0–5</a> or
+          <a href="algebra_units6_9_quiz.html">Units 6–9</a>.
+        </p>
+      </noscript>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      Built by Marcelo Collado. Learning content is aligned with Beginning Algebra (OTC, Chapters 0–9). 
+      See “References & Videos” for textbook mapping and review sheets.
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const region = document.getElementById('frameRegion');
+  const frame = document.getElementById('quizFrame');
+
+  function resize(){
+    const headerHeight = document.querySelector('header').offsetHeight;
+    const footerHeight = document.querySelector('footer').offsetHeight;
+    const margin = 20; // breathing room
+    const h = Math.max(300, window.innerHeight - headerHeight - footerHeight - margin*2);
+    frame.style.height = h + 'px';
+  }
+  window.addEventListener('resize', resize);
+  document.querySelectorAll('button[data-target]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const src = btn.getAttribute('data-target');
+      region.hidden = false;
+      if(frame.getAttribute('src') !== src){ frame.setAttribute('src', src); }
+      resize();
+      // move focus for accessibility
+      frame.setAttribute('tabindex','-1'); frame.focus({preventScroll:true});
+      window.scrollTo({top:region.offsetTop - 8, behavior:'smooth'});
+    });
+  });
+})();
+</script>
+</body>
+</html>

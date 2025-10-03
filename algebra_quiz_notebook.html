@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Algebra Practice & Exam — Step‑by‑Step Notebook</title>
+<style>
+  :root{
+    --bg:#0b0e11;
+    --panel:#12161c;
+    --ink:#e9eef5;
+    --muted:#9fb3c8;
+    --accent:#5aa9ff;
+    --good:#3ccf4e;
+    --bad:#ff6b6b;
+    --warn:#f7c948;
+    --paper:#fcfcfd;
+    --line:#e9edf3;
+  }
+  [data-theme="light"]{
+    --bg:#f7f8fb;
+    --panel:#ffffff;
+    --ink:#0b1220;
+    --muted:#45607a;
+    --accent:#0066ff;
+    --good:#1a9b3a;
+    --bad:#cc0033;
+    --warn:#a06300;
+    --paper:#fffffe;
+    --line:#e8eef8;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    background: var(--bg);
+    color: var(--ink);
+    line-height:1.45;
+  }
+  header{
+    position:sticky;top:0;z-index:10;
+    background: linear-gradient(180deg,var(--panel),rgba(0,0,0,0));
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .wrap{max-width:1100px;margin:0 auto;padding:12px 16px}
+  h1{font-size:clamp(20px,3vw,28px);margin:0 0 6px 0}
+  .sub{color:var(--muted);font-size:14px}
+  main .wrap{display:grid;grid-template-columns:320px 1fr;gap:18px}
+  @media (max-width: 920px){
+    main .wrap{grid-template-columns:1fr}
+  }
+  .card{
+    background: var(--panel);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:12px;
+    padding:14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  }
+  .controls label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px}
+  select,input[type=number]{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--ink)}
+  button{
+    appearance:none;border:0;border-radius:10px;padding:10px 14px;
+    background:var(--accent);color:white;font-weight:600;cursor:pointer
+  }
+  button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  button.alt{background:var(--panel);border:1px solid rgba(255,255,255,.15);color:var(--ink)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .stack{display:flex;gap:8px;flex-wrap:wrap}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+  .hint{color:var(--muted);font-size:12px}
+  .kbd{padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+  .sep{height:1px;background:rgba(255,255,255,.08);margin:10px 0}
+  .paper{
+    background:
+      repeating-linear-gradient(#c8d6f52a 0 2px, transparent 2px 34px),
+      var(--paper);
+    color:#111; border-radius:10px; padding:14px; border:1px solid #dde6f7
+  }
+  .paper h3{margin:0 0 4px 0}
+  .paper .noteline{
+    border-top:2px solid #e1e8f9;margin:10px -14px 10px -14px
+  }
+  .question{font-size:18px;margin:6px 0 8px}
+  .answer-slot{display:flex;gap:8px;margin:8px 0;align-items:center}
+  .answer-slot input[type=text]{flex:1;padding:10px;border-radius:8px;border:1px solid #d8e1f8}
+  .stat{font-size:12px;color:var(--muted)}
+  .status{font-weight:700}
+  .good{color:var(--good)}
+  .bad{color:var(--bad)}
+  .warn{color:var(--warn)}
+  .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0}
+  .choices button{background:#eef4ff;color:#0b1220;border:1px solid #cfe0ff}
+  .choices button.correct{background:#dff7e4;border-color:#b4efc1}
+  .choices button.wrong{background:#ffe2e2;border-color:#ffc2c2}
+  .show-steps{margin-top:6px}
+  .steps pre{
+    background:#f9fbff;border:1px dashed #cfe0ff;color:#0b1220;
+    border-radius:10px;padding:12px;white-space:pre-wrap;overflow-wrap:anywhere;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+  details{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px}
+  details > summary{cursor:pointer;font-weight:600}
+  .mini{font-size:12px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#ecf2ff;color:#0b1220;border:1px solid #cfe0ff;font-size:12px}
+  .footer{color:var(--muted);font-size:12px;margin-top:12px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body data-theme="dark">
+<header>
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div>
+        <h1>Algebra Practice & Exam — Step‑by‑Step</h1>
+        <div class="sub">Interactive, offline, single‑file site. Works on iOS, Android, macOS, Windows, Linux, and Steam Deck.</div>
+      </div>
+      <div class="row">
+        <button id="themeBtn" class="alt" title="Toggle light/dark theme">☾/☀</button>
+        <a id="printBtn" class="pill" href="#" onclick="window.print();return false;">🖨 Print</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="card controls" aria-label="Controls">
+      <label for="topic">Topic</label>
+      <select id="topic">
+        <!-- topics populated by JS -->
+      </select>
+
+      <div class="row" style="margin-top:10px">
+        <div style="flex:1">
+          <label for="mode">Mode</label>
+          <select id="mode">
+            <option value="practice">Practice (untimed)</option>
+            <option value="exam">Exam (timed)</option>
+          </select>
+        </div>
+        <div style="flex:1">
+          <label for="count"># Questions (exam)</label>
+          <input id="count" type="number" min="3" max="50" value="10"/>
+        </div>
+      </div>
+
+      <div class="stack" style="margin-top:12px">
+        <button id="newQuestionBtn">New Question</button>
+        <button id="startExamBtn" class="ghost">Start Exam</button>
+        <button id="resetBtn" class="alt">Reset</button>
+      </div>
+      <div class="sep"></div>
+      <details>
+        <summary>References & Videos (per topic)</summary>
+        <div id="refs"></div>
+        <p class="hint mini">Tip: these links open in a new tab. You can edit/extend the list by opening this HTML file and searching for <span class="kbd">VIDEO_REFS</span>.</p>
+      </details>
+      <div class="sep"></div>
+      <details>
+        <summary>About this site</summary>
+        <p class="mini">This quiz generator intentionally mirrors the notebook‑style solving taught in your course (GCF first, “ac method”, grouping, difference of squares/cubes, solving by factoring, rational expressions, linear equations, inequalities, slope from two points, and more). It saves nothing to any server and runs fully offline.</p>
+        <p class="mini">Keyboard: press <span class="kbd">N</span> for new question, <span class="kbd">S</span> to reveal next step, <span class="kbd">A</span> to check your answer.</p>
+      </details>
+      <div class="footer">
+        <div>© You. MIT‑style code; open to remix.</div>
+        <div>Notebook explanations align with “Beginning Algebra — Part I & II” worksheets/chapters and MA025 practice reviews. See attribution at the end of this page.</div>
+      </div>
+    </section>
+
+    <section class="card" aria-live="polite">
+      <div class="paper" id="workspace" role="region" aria-label="Notebook workspace">
+        <h3 id="topicLabel">Topic: —</h3>
+        <div class="noteline"></div>
+
+        <div id="question" class="question">Click “New Question”.</div>
+
+        <div id="mc" class="choices" style="display:none"></div>
+
+        <div class="answer-slot" id="answerSlot" style="display:none">
+          <label for="answer" class="sr-only">Your answer</label>
+          <input id="answer" type="text" placeholder="Type your answer… e.g. (x+2)(x-3) or 7/3" autocomplete="off" />
+          <button id="checkBtn">Check</button>
+        </div>
+
+        <div id="result" class="stat"></div>
+
+        <div class="stack show-steps">
+          <button id="stepBtn" class="alt" disabled>Show next step</button>
+          <button id="allStepsBtn" class="ghost" disabled>Show all steps</button>
+          <span id="timer" class="badge" style="display:none">00:00</span>
+        </div>
+
+        <div id="steps" class="steps" aria-live="polite" style="margin-top:8px"></div>
+      </div>
+
+      <div style="margin-top:12px" class="row">
+        <button id="prevBtn" class="alt">⟵ Previous</button>
+        <div class="stat" id="progress">—</div>
+        <button id="nextBtn">Next ⟶</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<section class="wrap" style="margin-bottom:90px">
+  <div class="card">
+    <h3>Credits & License</h3>
+    <p class="mini">
+      Explanations and skill breakdowns follow the same sequence and language used in
+      the open‑education workbooks “Beginning Algebra: Part I” and “Beginning Algebra: Part II”
+      and MA025 final review materials (review sessions & worksheets), which are openly licensed for non‑commercial use with attribution.
+      This single‑file app is an original teaching aid that <em>summarizes</em> those methods and generates fresh randomized practice with step‑by‑step solutions.
+    </p>
+    <ul class="mini">
+      <li>Beginning Algebra (Part II): Factoring, Rational Expressions, Radicals, and Quadratics — Open Textbook Collaborative, 2022.</li>
+      <li>Beginning Algebra (Part I): Arithmetic, Linear Equations & Inequalities, Graphing, Systems, and Polynomials — Open Textbook Collaborative, 2022.</li>
+      <li>MA025 Review & Practice documents (selected items).</li>
+    </ul>
+    <p class="mini">See top of app for quick video references and how to add your own links.</p>
+  </div>
+</section>
+
+<script>
+// ---------- Utilities ----------
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+const randInt = (a,b)=> Math.floor(Math.random()*(b-a+1))+a;
+const choose = arr => arr[randInt(0, arr.length-1)];
+const gcd = (a,b)=>{a=Math.abs(a);b=Math.abs(b); while(b){[a,b]=[b,a%b]} return a||1}
+const lcm = (a,b)=> Math.abs(a*b)/gcd(a,b);
+const simplifyFraction = (num, den)=>{
+  if(den===0) return {num,den};
+  const neg = (num<0) ^ (den<0);
+  num=Math.abs(num); den=Math.abs(den);
+  const g=gcd(num,den);
+  num/=g; den/=g;
+  return {num:neg?-num:num, den};
+};
+const formatFrac = (num,den)=> den===1 ? String(num) : (num+'/'+den);
+
+// parse answer tokens in very limited way for numeric/fracs
+function normalizeNumeric(input){
+  input = input.trim();
+  // handle mixed whitespace
+  if(/^\(?-?\d+\s*\/\s*-?\d+\)?$/.test(input)){
+    const parts=input.replace(/[()]/g,'').split('/').map(s=>parseInt(s.trim(),10));
+    const fr=simplifyFraction(parts[0], parts[1]);
+    return formatFrac(fr.num, fr.den);
+  }
+  // decimals or ints
+  const asNum = Number(input);
+  if(!Number.isNaN(asNum)){
+    // show as integer or decimal
+    if(Number.isInteger(asNum)) return String(asNum);
+    return String(asNum);
+  }
+  return input.replace(/\s+/g,''); // e.g. (x+2)(x-3)
+}
+
+// polynomial helpers (tiny)
+const polyToString = (coeffs)=>{
+  // coeffs as array highest degree to constant, e.g. [1,2,-24] => x^2+2x-24
+  let out='';
+  const n = coeffs.length-1;
+  coeffs.forEach((c,i)=>{
+    const pow = n-i;
+    if(c===0) return;
+    const sign = c<0 ? '-' : (out ? '+' : '');
+    const abs = Math.abs(c);
+    if(pow===0){
+      out += sign + abs;
+    }else if(pow===1){
+      out += sign + (abs===1?'':'') + 'x';
+    }else{
+      out += sign + (abs===1?'':'') + 'x^'+pow;
+    }
+    if(abs!==1 && pow!==0){
+      // Insert coefficient when needed (we delayed above)
+      out = out.replace(/([+\-])(?=x)/, (m)=> m + abs);
+    }
+  });
+  return out || '0';
+};
+
+// tiny formatter for binomials
+const binom = (a,b)=> `(${a>=0?'x+'+a:'x'+a})`;
+
+// ---------- Topic Generators ----------
+const Topics = {};
+
+// 0.1 Integers - add/sub/mul/div
+Topics['0.1 Integers — add/subtract/multiply/divide'] = ()=>{
+  const ops = choose(['+','-','×','÷']);
+  let a = randInt(-20,20), b = randInt(-20,20);
+  if(ops==='÷'){ b = choose([-10,-8,-5,-4,-2,2,4,5,8,10]); if(a % b !== 0) a = b*randInt(-9,9); }
+  const question = `${a} ${ops} ${b}`;
+  let ans;
+  switch(ops){
+    case '+': ans = a + b; break;
+    case '-': ans = a - b; break;
+    case '×': ans = a * b; break;
+    case '÷': ans = a / b; break;
+  }
+  const steps=[];
+  if(ops==='+'||ops==='-'){
+    const sa = Math.sign(a), sb=Math.sign(b);
+    if(sa===sb){
+      steps.push(`Same signs: add absolute values and keep the sign: |${a}| + |${b}| = ${Math.abs(a)+Math.abs(b)}; sign: ${sa>=0?'+':'−'}.`);
+    }else{
+      const big = Math.max(Math.abs(a), Math.abs(b));
+      const small = Math.min(Math.abs(a), Math.abs(b));
+      steps.push(`Opposite signs: subtract smaller absolute value from larger: ${big} − ${small} = ${big-small}. Keep sign of the number with larger absolute value.`);
+    }
+  }
+  steps.push(`Compute: ${question} = ${ans}.`);
+  return {
+    prompt: `Compute: <strong>${question}</strong>`,
+    type: 'open',
+    answer: String(ans),
+    steps
+  };
+};
+
+// Fractions basic add/sub/mul/div with small denominators
+Topics['0.2 Fractions — add/subtract/multiply/divide'] = ()=>{
+  const ops = choose(['+','-','×','÷']);
+  let a=randInt(1,9), b=randInt(2,9), c=randInt(1,9), d=randInt(2,9);
+  // reduce starting fractions sometimes
+  const r1=simplifyFraction(a,b); a=r1.num; b=r1.den;
+  const r2=simplifyFraction(c,d); c=r2.num; d=r2.den;
+  let ansNum, ansDen, steps=[];
+  if(ops==='×'){
+    steps.push(`Multiply numerators and denominators: (${a}/${b})×(${c}/${d}) = ${(a*c)}/${(b*d)} then reduce.`);
+    const r = simplifyFraction(a*c, b*d); ansNum=r.num; ansDen=r.den;
+  }else if(ops==='÷'){
+    steps.push(`Division is multiply by the reciprocal: (${a}/${b})÷(${c}/${d}) = (${a}/${b})×(${d}/${c}).`);
+    const r = simplifyFraction(a*d, b*c); ansNum=r.num; ansDen=r.den;
+  }else{
+    const L = lcm(b,d);
+    steps.push(`Find LCD of ${b} and ${d}: LCD = ${L}.`);
+    const a1=a*(L/b), c1=c*(L/d);
+    steps.push(`Rewrite: ${a}/${b} = ${a1}/${L}, ${c}/${d} = ${c1}/${L}.`);
+    const num = ops==='+' ? a1+c1 : a1-c1;
+    steps.push(`${ops==='+'?'Add':'Subtract'} numerators, keep denominator ${L}: ${num}/${L}. Reduce.`);
+    const r=simplifyFraction(num, L); ansNum=r.num; ansDen=r.den;
+  }
+  return {
+    prompt: `Compute: <strong>${a}/${b} ${ops} ${c}/${d}</strong> (simplify)`, 
+    type:'open',
+    answer: formatFrac(ansNum, ansDen),
+    steps: steps.concat([`Answer: ${formatFrac(ansNum, ansDen)}.`])
+  }
+};
+
+// 6.1 GCF factoring
+Topics['6.1 Factoring — Greatest Common Factor'] = ()=>{
+  const g = choose([2,3,4,5,6,7,8,9]);
+  const basePow = randInt(1,3);
+  const a1=randInt(2,9), a2=randInt(2,9), a3=randInt(2,9);
+  const p1=randInt(0,3), p2=randInt(0,3), p3=randInt(0,3);
+  const t1 = g*a1, t2 = g*a2, t3 = g*a3;
+  const e1 = basePow+p1, e2 = basePow+p2, e3 = basePow+p3;
+  const expr = `${t1}x^${e1} + ${t2}x^${e2} + ${t3}x^${e3}`;
+  const steps = [
+    `Look for the GCF among coefficients and variables.`,
+    `Coefficients share factor ${g}. Variables share x^${basePow}.`,
+    `Factor out ${g}x^${basePow}.`,
+    `Result: ${g}x^${basePow}(${a1}x^${p1} + ${a2}x^${p2} + ${a3}x^${p3}).`
+  ];
+  const answer = `${g}x^${basePow}(${a1}x^${p1} + ${a2}x^${p2} + ${a3}x^${p3})`;
+  return {prompt:`Factor: <strong>${expr}</strong>`, type:'open', answer: answer.replace(/\s+/g,''), steps};
+};
+
+// 6.2 Grouping factoring (constructed to work)
+Topics['6.2 Factoring — Grouping (4 terms)'] = ()=>{
+  const A=randInt(1,7), B=randInt(-9,9) || 2; // avoid 0
+  const C=randInt(2,9), D=randInt(-9,9) || 3;
+  // expand: C(Ax+B) + D(Ax+B) = (C+D)Ax + (C+D)B
+  const t1 = C*A, t2 = C*B, t3 = D*A, t4 = D*B;
+  const expr = `${t1}x + ${t2} + ${t3}x + ${t4}`;
+  const steps=[
+   `Split into two groups: <em>${t1}x + ${t2}</em> and <em>${t3}x + ${t4}</em>.`,
+   `Factor each group: ${C}( ${A}x + ${B} ) and ${D}( ${A}x + ${B} ).`,
+   `Common binomial ( ${A}x + ${B} ). Factor it out.`,
+   `Result: ( ${A}x + ${B} ) ( ${C} + ${D} ).`
+  ];
+  const answer = `(${A}x+${B})(${C+D})`;
+  return {prompt:`Factor by grouping: <strong>${expr}</strong>`, type:'open', answer:answer.replace(/\s+/g,''), steps};
+};
+
+// 6.3 Trinomials a=1 (x^2 + bx + c)
+Topics['6.3 Factor trinomials where a=1'] = ()=>{
+  let r = choose([-9,-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9]);
+  let s = choose([-9,-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9]);
+  // Avoid zero; ensure nice
+  const b = r + s, c = r*s;
+  const steps = [
+    `We want numbers that multiply to c=${c} and add to b=${b}.`,
+    `Those numbers are r=${r} and s=${s}.`,
+    `Rewrite and factor: x^2 + ${b}x + ${c} = (x + ${r})(x + ${s}).`
+  ];
+  const coeffs = [1, b, c];
+  const prompt = `Factor: <strong>x² ${b>=0?'+':''}${b}x ${c>=0?'+':''}${c}</strong>`;
+  // Provide multiple choice to avoid parsing issues
+  const answer = `(x+${r})(x+${s})`;
+  const choices = [];
+  choices.push(answer);
+  choices.push(`(x+${r})(x${s>=0?'-':'+'}${Math.abs(s)})`);
+  choices.push(`(x${r>=0?'-':'+'}${Math.abs(r)})(x+${s})`);
+  choices.push(`(x${r>=0?'-':'+'}${Math.abs(r)})(x${s>=0?'-':'+'}${Math.abs(s)})`);
+  return {prompt, type:'mc', answer:answer.replace(/\s+/g,''), steps, choices};
+};
+
+// 6.4 Trinomials a≠1 using ac method
+Topics['6.4 Factor trinomials where a≠1 (ac method)'] = ()=>{
+  const a = randInt(2,5);
+  const b1 = randInt(1,5);
+  const m = choose([-6,-5,-4,-3,-2,-1,1,2,3,4,5,6]);
+  const n = choose([-6,-5,-4,-3,-2,-1,1,2,3,4,5,6]);
+  const b = a*n + b1*m;
+  const A = a*b1;
+  const c = m*n;
+  const ac = A*c;
+  const p = a*n, q=b1*m; // split numbers
+  const steps=[
+    `Identify a=${A}, b=${b}, c=${c}. Compute ac = ${A}·${c} = ${ac}.`,
+    `Find two integers p and q with p·q = ac and p+q = b. Here p=${p}, q=${q}.`,
+    `Split middle term: ${A}x² ${b>=0?'+':''}${b}x ${c>=0?'+':''}${c} = ${A}x² ${p>=0?'+':''}${p}x ${q>=0?'+':''}${q}x ${c>=0?'+':''}${c}.`,
+    `Group and factor: ${A}x² ${p>=0?'+':''}${p}x + ${q}x ${c>=0?'+':''}${c} = ${a}x(${b1}x ${n>=0?'+':''}${n}) + ${m}(${b1}x ${n>=0?'+':''}${n}).`,
+    `Factor common binomial: (${b1}x ${n>=0?'+':''}${n})(${a}x ${m>=0?'+':''}${m}).`
+  ];
+  const prompt = `Factor completely: <strong>${A}x² ${b>=0?'+':''}${b}x ${c>=0?'+':''}${c}</strong>`;
+  const correct = `(${b1}x${n>=0?'+':''}${n})(${a}x${m>=0?'+':''}${m})`;
+  const distractors = [
+    `(${a}x${n>=0?'+':''}${n})(${b1}x${m>=0?'+':''}${m})`,
+    `(${b1}x${-n>=0?'+':''}${-n})(${a}x${m>=0?'+':''}${m})`,
+    `(${b1}x${n>=0?'+':''}${n})(x${m>=0?'+':''}${m})`
+  ];
+  const choices = [correct, ...distractors].sort(()=>Math.random()-0.5);
+  return {prompt, type:'mc', answer:correct.replace(/\s+/g,''), steps, choices};
+};
+
+// 6.5 Special products
+Topics['6.5 Special products (squares & cubes)'] = ()=>{
+  const type = choose(['diffSquares','sumCubes','diffCubes','perfectSquare']);
+  let prompt, steps, answer, choices;
+  if(type==='diffSquares'){
+    const a=randInt(2,9), b=randInt(2,9);
+    prompt = `Factor: <strong>${a*a}x² − ${b*b}</strong>`;
+    steps=[`Recognize a difference of squares: a²−b²=(a+b)(a−b). Here a=${a}x, b=${b}.`,
+           `Answer: (${a}x+${b})(${a}x−${b}).`];
+    answer = `(${a}x+${b})(${a}x-${b})`;
+  }else if(type==='sumCubes'){
+    const a=randInt(1,5), b=randInt(1,5);
+    prompt = `Factor: <strong>${a*a*a} + ${b*b*b}</strong>`;
+    steps=[`Use sum of cubes: a³+b³=(a+b)(a²−ab+b²). Here a=${a}, b=${b}.`,
+           `Result: (${a}+${b})(${a*a} − ${a*b} + ${b*b}).`];
+    answer = `(${a}+${b})(${a*a}-${a*b}+${b*b})`;
+  }else if(type==='diffCubes'){
+    const a=randInt(1,5), b=randInt(1,5);
+    prompt = `Factor: <strong>${a*a*a}x³ − ${b*b*b}</strong>`;
+    steps=[`Use difference of cubes: a³−b³=(a−b)(a²+ab+b²). Here a=${a}x, b=${b}.`,
+           `Result: (${a}x−${b})(${a*a}x²+${a*b}x+${b*b}).`];
+    answer = `(${a}x-${b})(${a*a}x^2+${a*b}x+${b*b})`;
+  }else{
+    const a=randInt(1,9), b=randInt(1,9), sign=choose([1,-1]);
+    const mid = 2*a*b*sign;
+    prompt = `Factor: <strong>${a*a}x² ${mid>=0?'+':''}${mid}x + ${b*b}</strong>`;
+    steps=[`Check perfect square form a²x² ± 2abx + b² = (ax ± b)². Here a=${a}, b=${b}.`,
+           `Since middle term is ${mid}, sign is ${sign===1?'+':'−'}.`,
+           `Answer: (${a}x ${sign===1?'+':'−'} ${b})².`];
+    answer = `(${a}x${sign===1?'+':'-'}${b})^2`;
+  }
+  choices=[answer, 'Prime', '(x+1)(x+1)', '(x−1)(x+1)'].sort(()=>Math.random()-0.5);
+  return {prompt, type:'mc', answer:answer.replace(/\s+/g,''), steps, choices};
+};
+
+// 6.7 Solve by factoring
+Topics['6.7 Solve a quadratic by factoring'] = ()=>{
+  const a = randInt(1,5), b1=randInt(1,5), m=choose([-6,-5,-4,-3,-2,-1,1,2,3,4,5,6]), n=choose([-6,-5,-4,-3,-2,-1,1,2,3,4,5,6]);
+  const A = a*b1, B = a*n + b1*m, C = m*n;
+  const prompt = `Solve: <strong>${A}x² ${B>=0?'+':''}${B}x ${C>=0?'+':''}${C} = 0</strong>`;
+  const steps=[
+    `Factor the quadratic by the ac method.`,
+    `(${b1}x ${n>=0?'+':''}${n})(${a}x ${m>=0?'+':''}${m}) = 0.`,
+    `Use Zero Product Rule: set each factor to 0.`,
+    `${b1}x ${n>=0?'+':''}${n} = 0 ⇒ x = ${-n}/${b1}.  ${a}x ${m>=0?'+':''}${m} = 0 ⇒ x = ${-m}/${a}.`,
+  ];
+  const r1 = simplifyFraction(-n, b1), r2 = simplifyFraction(-m, a);
+  const ans = `{ ${formatFrac(r1.num,r1.den)}, ${formatFrac(r2.num,r2.den)} }`;
+  steps.push(`Solution set: ${ans}.`);
+  return {prompt, type:'open', answer: ans.replace(/\s+/g,''), steps};
+};
+
+// 7.1 Reduce Rational Expressions (monomial numerator/denominator)
+Topics['7.1 Reduce Rational Expressions (monomials)'] = ()=>{
+  const a=randInt(2,12), b=randInt(2,12);
+  const p=randInt(1,5), q=randInt(0,4);
+  const num=`${a}x^${p}`, den=`${b}x^${q}`;
+  const g=gcd(a,b), c1=a/g, c2=b/g;
+  const pow=p-q;
+  const steps=[
+    `Factor coefficients: ${a}/${b} reduces by gcd ${g} to ${c1}/${c2}.`,
+    `Subtract exponents: x^${p} / x^${q} = x^${p-q}.`,
+  ];
+  let answer;
+  if(pow>=0){
+    answer = `${c1}${pow===0?'':'x^'+pow}/${c2}`;
+  }else{
+    answer = `${c1}/${c2}x^${-pow}`;
+  }
+  steps.push(`Answer: ${answer}. (Assume x ≠ 0)`);
+  return {prompt:`Simplify: <strong>(${num}) / (${den})</strong>`, type:'open', answer:answer.replace(/\s+/g,''), steps};
+};
+
+// 7.2 Multiply/Divide Rational Expressions (monomial factors & linear binomials)
+Topics['7.2 Multiply/Divide Rational Expressions'] = ()=>{
+  const type=choose(['mult','div']);
+  // Build (ax)/(by) * (cy)/(dx) using x as variable; maybe include (x+1) factors
+  const a=randInt(2,9), b=randInt(2,9), c=randInt(2,9), d=randInt(2,9);
+  const includeBin = Math.random()<0.5;
+  let prompt, steps=[], answer;
+  if(!includeBin){
+    prompt = `${a}x/${b} · ${type==='mult'? '': '÷ '+c+'x/'+d}`;
+  }
+  if(type==='mult'){
+    steps.push(`Multiply numerators and denominators: (${a}x/${b})·(${c}x/${d}) = ${(a*c)}x²/${(b*d)}. Reduce.`);
+    const r=simplifyFraction(a*c, b*d);
+    answer = `${r.num}x^2/${r.den}`;
+  }else{
+    steps.push(`Division: multiply by reciprocal: (${a}x/${b}) ÷ (${c}x/${d}) = (${a}x/${b})·(${d}/${c}x).`);
+    const num=a*d, den=b*c;
+    const r=simplifyFraction(num, den);
+    steps.push(`Now reduce coefficients: ${num}/${den} → ${r.num}/${r.den}. Cancel x.`);
+    answer = `${r.num}/${r.den}`;
+  }
+  prompt = `Simplify: <strong>${a}x/${b} ${type==='mult'?'×':'÷'} ${c}x/${d}</strong>`;
+  return {prompt, type:'open', answer:answer.replace(/\s+/g,''), steps};
+};
+
+// 1.1 One-step equations
+Topics['1.1 One‑step equations'] = ()=>{
+  const type=choose(['add','sub','mul','div']);
+  let x=randInt(-12,12);
+  if(type==='add'){
+    const n=randInt(-10,10) || 5;
+    const rhs=x+n;
+    return {
+      prompt: `Solve: <strong>x ${n>=0?'+':''}${n} = ${rhs}</strong>`,
+      type:'open',
+      answer:String(x),
+      steps:[`Undo addition by subtracting ${n} from both sides.`, `x = ${rhs} ${n>=0?'-':''} ${Math.abs(n)} = ${x}.`]
+    }
+  }else if(type==='sub'){
+    const n=randInt(-10,10) || 3;
+    const rhs=x-n;
+    return {
+      prompt:`Solve: <strong>x ${n>=0?'-+'[0]:'+?'}${Math.abs(n)} = ${rhs}</strong>`.replace('?',''),
+      type:'open',
+      answer:String(x),
+      steps:[`Undo subtraction by adding ${n>=0?Math.abs(n):'('+n+')'} to both sides.`,`x = ${rhs} + ${n} = ${x}.`]
+    }
+  }else if(type==='mul'){
+    const k=choose([-7,-5,-4,-3,-2,2,3,4,5,7]);
+    const rhs=k*x;
+    return {
+      prompt:`Solve: <strong>${k}x = ${rhs}</strong>`,
+      type:'open',
+      answer:String(x),
+      steps:[`Undo multiply by dividing by ${k}.`, `x = ${rhs}/${k} = ${x}.`]
+    }
+  }else{
+    const k=choose([-7,-5,-4,-3,-2,2,3,4,5,7]);
+    const rhs=x/k;
+    return {
+      prompt:`Solve: <strong>x/${k} = ${rhs}</strong>`,
+      type:'open',
+      answer:String(x),
+      steps:[`Undo division by multiplying both sides by ${k}.`, `x = ${rhs}·${k} = ${x}.`]
+    }
+  }
+};
+
+// 1.2 Two‑step equations
+Topics['1.2 Two‑step equations'] = ()=>{
+  const m=choose([-5,-4,-3,-2,2,3,4,5]); const x=randInt(-6,6); const b=randInt(-8,8);
+  const rhs = m*x + b;
+  const prompt = `Solve: <strong>${m}x ${b>=0?'+':''}${b} = ${rhs}</strong>`;
+  const steps=[
+    `Isolate the term with x: subtract ${b} from both sides ⇒ ${m}x = ${rhs} ${b>=0?'-':''}${Math.abs(b)} = ${m}x.`,
+    `Undo multiplication by dividing both sides by ${m}. x = ${m}x/${m} = ${x}.`
+  ];
+  return {prompt, type:'open', answer:String(x), steps};
+};
+
+// 1.3 Multi‑step equations with distribution both sides
+Topics['1.3 Multi‑step equations (distribute/combine)'] = ()=>{
+  const a=randInt(2,5), b=randInt(-6,6), c=randInt(2,5), d=randInt(-6,6), x=randInt(-5,5);
+  // build equation: a(x+b) + k = c(x+d) + h and ensure solution x
+  const k = randInt(-5,5), h = randInt(-5,5);
+  // compute rhs and then adjust h so solution is x
+  // a(x+b)+k = c(x+d) + h ⇒ ax+ab+k = cx+cd+h ⇒ (a−c)x = cd+h − ab − k
+  // choose h to make (a−c)x = cd+h − ab − k
+  const left=(a-c)*x;
+  const rhs_need = c*d + 0 - a*b - k; // leaving h unspecified
+  const h_final = left + a*b + k - c*d;
+  const prompt = `Solve: <strong>${a}(x ${b>=0?'+':''}${b}) ${k>=0?'+':''}${k} = ${c}(x ${d>=0?'+':''}${d}) ${h_final>=0?'+':''}${h_final}</strong>`;
+  const steps=[
+    `Distribute: ${a}x ${a*b>=0?'+':''}${a*b} ${k>=0?'+':''}${k} = ${c}x ${c*d>=0?'+':''}${c*d} ${h_final>=0?'+':''}${h_final}.`,
+    `Combine constants: ${a}x ${a*b+k>=0?'+':''}${a*b+k} = ${c}x ${c*d+h_final>=0?'+':''}${c*d+h_final}.`,
+    `Move x terms to one side: subtract ${c}x ⇒ ${(a-c)}x ${a*b+k>=0?'+':''}${a*b+k} = ${c*d+h_final}.`,
+    `Subtract ${a*b+k} from both sides ⇒ ${(a-c)}x = ${c*d+h_final - (a*b+k)}.`,
+    `Divide by ${(a-c)} ⇒ x = ${x}.`
+  ];
+  return {prompt, type:'open', answer:String(x), steps};
+};
+
+// 1.10 Inequalities linear
+Topics['1.10 Linear inequalities (solve & interval)'] = ()=>{
+  // Build inequality ax + b <= cx + d; ensure coefficient requires flipping sometimes
+  const a=choose([-6,-5,-4,-3,-2]), c=choose([2,3,4,5,6]);
+  const x=randInt(-6,6);
+  const b=randInt(-8,8), d = a*x + b - c*x + randInt(-5,5); // approximate ensure solution near x
+  // We'll solve for x and return interval
+  // Move: ax+ b <= cx + d ⇒ (a-c)x <= d-b ⇒ x <= (d-b)/(a-c) if a-c>0 else flip
+  const lhs=a-c, rhs=d-b;
+  const flip = lhs<0;
+  const frac=simplifyFraction(rhs, lhs);
+  const boundary = rhs/lhs; // numeric
+  let relation = flip ? '≥' : '≤';
+  const interval = (relation==='≤') ? `(-∞, ${boundary}]` : `[${boundary}, ∞)`;
+  const prompt = `Solve and give interval notation: <strong>${a}x ${b>=0?'+':''}${b} ≤ ${c}x ${d>=0?'+':''}${d}</strong>`;
+  const steps=[
+    `Move x terms: ${(a-c)}x ${b>=0?'+':''}${b} ≤ ${d}.`,
+    `Subtract ${b}: ${(a-c)}x ≤ ${d-b}.`,
+    `${flip?'Divide by a negative, so flip the symbol. ':''}Divide by ${lhs}: x ${relation} ${formatFrac(frac.num, frac.den)}.`,
+    `Interval notation: ${interval}.`
+  ];
+  return {prompt, type:'open', answer: interval.replace(/\s+/g,''), steps};
+};
+
+// 2.2 Slope from two points
+Topics['2.2 Slope from two points'] = ()=>{
+  let x1=randInt(-9,9), y1=randInt(-9,9), x2=randInt(-9,9), y2=randInt(-9,9);
+  if(x1===x2){ x2+= (x2===9?-1:1) } // avoid vertical slope undefined
+  const num = y2 - y1, den = x2 - x1;
+  const fr = simplifyFraction(num, den);
+  const prompt = `Find the slope m through points <strong>(${x1}, ${y1})</strong> and <strong>(${x2}, ${y2})</strong>.`;
+  const steps=[
+    `Slope formula: m = (y₂ − y₁) / (x₂ − x₁).`,
+    `Compute differences: y₂ − y₁ = ${y2} − ${y1} = ${num};  x₂ − x₁ = ${x2} − ${x1} = ${den}.`,
+    `Reduce the fraction: ${num}/${den} → ${formatFrac(fr.num, fr.den)}.`
+  ];
+  return {prompt, type:'open', answer: formatFrac(fr.num, fr.den), steps};
+};
+
+// Map topics to references (editable by user)
+const VIDEO_REFS = {
+  "0.1 Integers — add/subtract/multiply/divide": [
+    {title:"Khan Academy — Integers intro & arithmetic", url:"https://www.khanacademy.org/math/arithmetic/arith-review-negative-numbers"},
+    {title:"MathIsPower4U — Integer operations (playlist)", url:"https://www.youtube.com/results?search_query=mathispower4u+integer+operations"}
+  ],
+  "0.2 Fractions — add/subtract/multiply/divide": [
+    {title:"Khan Academy — Fractions intro", url:"https://www.khanacademy.org/math/arithmetic/fraction-arithmetic"},
+    {title:"The Organic Chemistry Tutor — Fractions", url:"https://www.youtube.com/results?search_query=organic+chemistry+tutor+fractions"}
+  ],
+  "6.1 Factoring — Greatest Common Factor": [
+    {title:"Khan Academy — Factor with GCF", url:"https://www.khanacademy.org/math/algebra/introduction-to-polynomial-expressions#gcf-factoring"},
+    {title:"MathIsPower4U — Factor out GCF", url:"https://www.youtube.com/results?search_query=mathispower4u+factoring+gcf"}
+  ],
+  "6.2 Factoring — Grouping (4 terms)": [
+    {title:"Khan Academy — Factor by grouping", url:"https://www.khanacademy.org/math/algebra/polynomial-factorization/factoring-polynomials-by-grouping"},
+    {title:"PatrickJMT — Factoring by grouping", url:"https://www.youtube.com/results?search_query=patrickjmt+factoring+by+grouping"}
+  ],
+  "6.3 Factor trinomials where a=1": [
+    {title:"Khan Academy — Factor x²+bx+c", url:"https://www.khanacademy.org/math/algebra/polynomial-factorization/factoring-quadratics-1"},
+    {title:"Eddie Woo — Factoring trinomials a=1", url:"https://www.youtube.com/results?search_query=eddie+woo+factoring+trinomials+a%3D1"}
+  ],
+  "6.4 Factor trinomials where a≠1 (ac method)": [
+    {title:"Khan Academy — Factor ax²+bx+c", url:"https://www.khanacademy.org/math/algebra/polynomial-factorization/factoring-quadratics-2"},
+    {title:"MathBFF — ac method", url:"https://www.youtube.com/results?search_query=mathbff+ac+method"}
+  ],
+  "6.5 Special products (squares & cubes)": [
+    {title:"Khan Academy — Special products", url:"https://www.khanacademy.org/math/algebra/polynomial-factorization/special-products-of-polynomials"},
+    {title:"3Blue1Brown — Visual factoring (intuitive)", url:"https://www.youtube.com/results?search_query=3blue1brown+factoring+visual"}
+  ],
+  "6.7 Solve a quadratic by factoring": [
+    {title:"Khan Academy — Solve by factoring", url:"https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:quadratics-multiplying-factoring#x2f8bb11595b61c86:solve-by-factoring"},
+    {title:"Professor Leonard — Quadratics by factoring", url:"https://www.youtube.com/results?search_query=professor+leonard+solve+quadratic+factoring"}
+  ],
+  "7.1 Reduce Rational Expressions (monomials)": [
+    {title:"Khan Academy — Simplify rational expressions", url:"https://www.khanacademy.org/math/algebra/rational-expressions-functions"},
+    {title:"MathIsPower4U — Simplifying rational expressions", url:"https://www.youtube.com/results?search_query=mathispower4u+simplifying+rational+expressions"}
+  ],
+  "7.2 Multiply/Divide Rational Expressions": [
+    {title:"Khan Academy — Multiply & divide rational expressions", url:"https://www.khanacademy.org/math/algebra/rational-expressions-functions/multiplying-and-dividing-rational-expressions"},
+    {title:"Tyler DeWitt — Multiply & divide rational expressions", url:"https://www.youtube.com/results?search_query=tyler+dewitt+multiplying+dividing+rational+expressions"}
+  ],
+  "1.1 One‑step equations": [
+    {title:"Khan Academy — One-step equations", url:"https://www.khanacademy.org/math/algebra/one-variable-linear-equations/alg1-one-step-eq"},
+    {title:"Mashup Math — One-step equations", url:"https://www.youtube.com/results?search_query=mashup+math+one+step+equations"}
+  ],
+  "1.2 Two‑step equations": [
+    {title:"Khan Academy — Two-step equations", url:"https://www.khanacademy.org/math/algebra/one-variable-linear-equations/alg1-two-step-equations"},
+    {title:"The Organic Chemistry Tutor — Two-step equations", url:"https://www.youtube.com/results?search_query=organic+chemistry+tutor+two+step+equations"}
+  ],
+  "1.3 Multi‑step equations (distribute/combine)": [
+    {title:"Khan Academy — Multi-step linear equations", url:"https://www.khanacademy.org/math/algebra/one-variable-linear-equations/multi-step-linear-equations"},
+    {title:"Eddie Woo — Solving multi-step equations", url:"https://www.youtube.com/results?search_query=eddie+woo+multi+step+equations"}
+  ],
+  "1.10 Linear inequalities (solve & interval)": [
+    {title:"Khan Academy — Linear inequalities", url:"https://www.khanacademy.org/math/algebra/one-variable-linear-inequalities"},
+    {title:"Mathispower4u — Solving inequalities", url:"https://www.youtube.com/results?search_query=mathispower4u+linear+inequalities"}
+  ],
+  "2.2 Slope from two points": [
+    {title:"Khan Academy — Slope from two points", url:"https://www.khanacademy.org/math/algebra/two-var-linear-equations/slope-from-points"},
+    {title:"Patricia Valoy — Slope basics", url:"https://www.youtube.com/results?search_query=slope+from+two+points"}
+  ]
+};
+
+// ---------- State ----------
+let current = null;
+let stepIndex = 0;
+let history = [];
+let exam = null;
+let clock = null;
+
+// ---------- UI handlers ----------
+function populateTopics(){
+  const sel = $('#topic');
+  Object.keys(Topics).forEach(t=>{
+    const o = document.createElement('option');
+    o.value=t; o.textContent=t;
+    sel.appendChild(o);
+  });
+  sel.selectedIndex = 0;
+  $('#topicLabel').innerHTML = 'Topic: '+sel.value;
+  refreshRefs();
+}
+function refreshRefs(){
+  const t = $('#topic').value;
+  const box = $('#refs'); box.innerHTML='';
+  (VIDEO_REFS[t]||[]).forEach(v=>{
+    const a=document.createElement('a');
+    a.href=v.url; a.textContent='↗ '+v.title; a.target='_blank'; a.rel='noopener';
+    const p=document.createElement('div'); p.appendChild(a); box.appendChild(p);
+  });
+}
+
+function askNewQuestion(topic=null){
+  if(!topic) topic = $('#topic').value;
+  current = Topics[topic]();
+  stepIndex = 0;
+  $('#topicLabel').innerHTML = 'Topic: '+topic;
+  $('#question').innerHTML = current.prompt;
+  $('#result').textContent='';
+  $('#steps').innerHTML='';
+  $('#stepBtn').disabled = false;
+  $('#allStepsBtn').disabled = false;
+  $('#mc').style.display = 'none';
+  $('#answerSlot').style.display = 'none';
+  if(current.type==='mc'){
+    const mc = $('#mc'); mc.innerHTML=''; mc.style.display = 'grid';
+    const shuffled = (current.choices||[]).slice().sort(()=>Math.random()-0.5);
+    shuffled.forEach(choice=>{
+      const btn=document.createElement('button');
+      btn.textContent=choice;
+      btn.onclick=()=>{
+        const given = choice.replace(/\s+/g,'');
+        const correct = current.answer;
+        if(given===correct){
+          btn.classList.add('correct');
+          $('#result').innerHTML = '<span class="status good">Correct.</span>';
+        }else{
+          btn.classList.add('wrong');
+          $('#result').innerHTML = '<span class="status bad">Not quite.</span> Tap “Show next step” to study the notebook solution.';
+        }
+      };
+      mc.appendChild(btn);
+    });
+  }else{
+    $('#answerSlot').style.display = 'flex';
+    $('#answer').value='';
+    $('#answer').focus();
+  }
+  history.push(current);
+  updateProgress();
+}
+
+function updateProgress(){
+  $('#progress').textContent = `Questions this session: ${history.length}`;
+}
+
+function showNextStep(){
+  if(!current) return;
+  const s=current.steps[stepIndex++];
+  if(!s) return;
+  const pre=document.createElement('pre'); pre.textContent = s;
+  $('#steps').appendChild(pre);
+}
+
+function showAllSteps(){
+  if(!current) return;
+  $('#steps').innerHTML='';
+  current.steps.forEach(s=>{
+    const pre=document.createElement('pre'); pre.textContent=s; $('#steps').appendChild(pre);
+  });
+}
+
+function checkAnswer(){
+  if(!current || current.type!=='open') return;
+  const normalized = normalizeNumeric($('#answer').value);
+  const correct = normalizeNumeric(current.answer);
+  const ok = normalized === correct;
+  $('#result').innerHTML = ok ? '<span class="status good">Correct!</span>' :
+     `<span class="status bad">Not yet.</span> Your input: <code>${normalized}</code>. Expected: <code>${correct}</code>.`;
+}
+
+function startExam(){
+  const total = Math.max(3, Math.min(50, Number($('#count').value)||10));
+  const topic = $('#topic').value;
+  exam = { total, index: 0, correct: 0, topic, start: Date.now() };
+  $('#mode').value = 'exam';
+  $('#timer').style.display = 'inline-block';
+  if(clock) clearInterval(clock);
+  clock = setInterval(()=>{
+    const t = Date.now()-exam.start;
+    const m = Math.floor(t/60000).toString().padStart(2,'0');
+    const s = Math.floor((t%60000)/1000).toString().padStart(2,'0');
+    $('#timer').textContent = `${m}:${s}`;
+  }, 500);
+  exam.index = 0;
+  nextExamQuestion();
+}
+
+function nextExamQuestion(){
+  if(!exam) return;
+  if(exam.index >= exam.total){
+    clearInterval(clock);
+    $('#question').innerHTML = `Exam complete. Score: <strong>${exam.correct}/${exam.total}</strong>. Time: <strong>${$('#timer').textContent}</strong>.`;
+    $('#mc').style.display='none';
+    $('#answerSlot').style.display='none';
+    $('#stepBtn').disabled = true;
+    $('#allStepsBtn').disabled = true;
+    $('#timer').style.display='none';
+    exam=null;
+    return;
+  }
+  askNewQuestion(exam.topic);
+  // in exam, immediate checking will increment score
+  $('#result').textContent='';
+  exam.index++;
+}
+
+function prevQuestion(){
+  if(history.length<=1) return;
+  history.pop();
+  current = history.pop();
+  askNewQuestion($('#topic').value);
+}
+
+function resetAll(){
+  current=null; history=[]; stepIndex=0; exam=null;
+  $('#question').innerHTML = 'Click “New Question”.';
+  $('#steps').innerHTML = '';
+  $('#result').textContent='';
+  $('#progress').textContent='—';
+  $('#mc').style.display='none';
+  $('#answerSlot').style.display='none';
+  $('#timer').style.display='none';
+  if(clock) clearInterval(clock);
+}
+
+// ---------- Events ----------
+document.addEventListener('DOMContentLoaded', ()=>{
+  populateTopics();
+  $('#newQuestionBtn').onclick = ()=> askNewQuestion();
+  $('#startExamBtn').onclick = ()=> startExam();
+  $('#stepBtn').onclick = ()=> showNextStep();
+  $('#allStepsBtn').onclick = ()=> showAllSteps();
+  $('#checkBtn').onclick = ()=>{
+    const before = $('#result').textContent;
+    checkAnswer();
+    if(exam){
+      if($('#result').textContent.includes('Correct')) exam.correct++;
+      setTimeout(nextExamQuestion, 350);
+    }
+  };
+  $('#nextBtn').onclick = ()=> askNewQuestion();
+  $('#prevBtn').onclick = ()=> prevQuestion();
+  $('#resetBtn').onclick = ()=> resetAll();
+  $('#topic').onchange = ()=>{ $('#topicLabel').innerHTML = 'Topic: '+$('#topic').value; refreshRefs(); };
+  $('#themeBtn').onclick = ()=>{
+    const cur=document.body.getAttribute('data-theme');
+    document.body.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  };
+  document.addEventListener('keydown', (e)=>{
+    if(e.key==='n' || e.key==='N') askNewQuestion();
+    if(e.key==='s' || e.key==='S') showNextStep();
+    if(e.key==='a' || e.key==='A') checkAnswer();
+  });
+});
+</script>
+</body>
+</html>

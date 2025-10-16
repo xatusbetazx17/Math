@@ -1,84 +1,83 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>MA025 References & Videos</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <style>
-    body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    a{color:#0366d6;text-decoration:none}
-    header{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee}
-    .container{max-width:1100px;margin:0 auto;padding:16px}
-    h1{margin:.6rem 0}
-    details{border:1px solid #e6e6e6;border-radius:10px;margin:10px 0;background:#fafafa}
-    summary{cursor:pointer;padding:10px 12px;font-weight:700}
-    .content{padding:0 12px 12px 12px}
-    ul{margin:.2rem 0 .2rem 1.2rem}
-    .back{display:inline-block;margin:10px 0}
-    @media (prefers-color-scheme:dark){
-      body{background:#0b0c10;color:#eee}
-      header{background:#0f1217;border-bottom-color:#222}
-      a{color:#8ab4ff}
-      details{background:#12151b;border-color:#222}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<title>References & Videos</title>
+<style>
+/* shared styles */
+:root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--shadow:0 6px 20px rgba(0,0,0,.25)}
+@media (prefers-color-scheme: light){:root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--shadow:0 10px 25px rgba(0,0,0,.08)}}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);background:linear-gradient(180deg,var(--bg),#111b2e)}
+.container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+.brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
+nav a{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;box-shadow:var(--shadow)}
+.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.small{font-size:.925rem}.muted{color:var(--muted)}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <a class="back" href="index.html">← Back to Study Hub</a>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
       <h1>References & Videos</h1>
-      <p>Each unit below maps the study apps to open educational resources (OER) and video review links. All videos open in a new tab so they’ll play on any device.</p>
     </div>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="unit5_quick_review.html">📘 Unit 5 Review</a>
+      <a href="unit5_polynomials_quiz.html">📝 Unit 5 Practice</a>
+    </nav>
   </header>
-  <main>
-    <div class="container">
-      <details open>
-        <summary>Units 0–5 • Foundations</summary>
-        <div class="content">
-          <p><strong>Textbook (OER):</strong> <em>Beginning Algebra – Part I (OTC)</em>, Chapters 0–5. See integers, fractions, order of operations, properties, linear equations, graphing, systems, and polynomials.</p>
-          <ul>
-            <li>Chapter 0: Arithmetic basics</li>
-            <li>Chapter 1: Solving linear equations & inequalities</li>
-            <li>Chapter 2: Graphing lines & slope</li>
-            <li>Chapter 4: Systems of equations</li>
-            <li>Chapter 5: Polynomials (exponents, operations)</li>
-          </ul>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=Algebra%20integers%20fractions%20order%20of%20operations" target="_blank" rel="noopener">Video search: integers, fractions, order of operations</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=solve%20linear%20equations%20one%20two%20step" target="_blank" rel="noopener">Video search: solving linear equations</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=graphing%20lines%20slope" target="_blank" rel="noopener">Video search: graphing lines &amp; slope</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=systems%20of%20equations%20substitution%20elimination" target="_blank" rel="noopener">Video search: systems (substitution &amp; elimination)</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=polynomials%20add%20subtract%20multiply%20divide%20exponents" target="_blank" rel="noopener">Video search: polynomials &amp; exponent rules</a></p>
-        </div>
-      </details>
 
-      <details open>
-        <summary>Units 6–9 • Factoring → Quadratics</summary>
-        <div class="content">
-          <p><strong>Textbook (OER):</strong> <em>Beginning Algebra – Part II (OTC)</em>, Chapters 6–9: factoring (GCF, grouping, trinomials, special products, strategies), rational expressions (reduce, multiply/divide, LCD, add/subtract, complex fractions, equations), radicals (roots, operations, rationalizing), and quadratics (square root method, completing the square, quadratic formula).</p>
-          <ul>
-            <li>6.1–6.7: Factoring &amp; solving by factoring</li>
-            <li>7.1–7.7: Rational expressions &amp; equations</li>
-            <li>8.x: Radicals (roots, adding/multiplying/dividing)</li>
-            <li>9.1–9.4: Quadratic equations</li>
-          </ul>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=factoring%20polynomials%20GCF%20grouping%20trinomials" target="_blank" rel="noopener">Video search: factoring (GCF, grouping, trinomials)</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=rational%20expressions%20simplify%20LCD%20add%20subtract" target="_blank" rel="noopener">Video search: rational expressions</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=radicals%20simplify%20rationalize%20roots" target="_blank" rel="noopener">Video search: radicals &amp; rationalizing</a></p>
-          <p><a href="https://www.khanacademy.org/search?page_search_query=quadratic%20formula%20completing%20the%20square%20square%20root%20property" target="_blank" rel="noopener">Video search: quadratics (3 methods)</a></p>
-        </div>
-      </details>
-
-      <details>
-        <summary>Review Sheets (optional)</summary>
-        <div class="content">
-          <ul>
-            <li>MA025 Final Review – practice sets with answer keys (scanned handouts).</li>
-            <li>Use them to build additional quizzes or for paper practice.</li>
-          </ul>
-        </div>
-      </details>
+  <section class="card" id="unit5">
+    <h2>Unit 5 — Polynomials (Chapter 5)</h2>
+    <p>Primary text: <em>Beginning Algebra — Part I</em>, Chapter 5: Sections 5.1–5.7 (Open Textbook Collaborative OER).</p>
+    <ul>
+      <li>5.1 Exponent Properties, 5.2 Negative Exponents, 5.3 Scientific Notation, 5.4 Intro to Polynomials, 5.5 Multiply Polynomials, 5.6 Special Products, 5.7 Divide Polynomials.</li>
+    </ul>
+    <h3>Helpful video searches</h3>
+    <p>Tap to open a curated YouTube search in a new tab:</p>
+    <div class="grid">
+      <a class="card" href="https://www.youtube.com/results?search_query=exponent+rules+algebra" target="_blank" rel="noopener">Exponent Rules</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=negative+exponents+algebra" target="_blank" rel="noopener">Negative Exponents</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=scientific+notation+examples" target="_blank" rel="noopener">Scientific Notation</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=polynomials+introduction" target="_blank" rel="noopener">Intro to Polynomials</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=FOIL+multiply+binomials" target="_blank" rel="noopener">FOIL / Multiply Binomials</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=special+products+algebra" target="_blank" rel="noopener">Special Products</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=divide+polynomials+by+monomials" target="_blank" rel="noopener">Divide by Monomials</a>
     </div>
-  </main>
+    <p class="small muted">For full notes and worksheets, use your included OER PDFs.</p>
+  </section>
+
+  <section class="card">
+    <h2>Units 6–9 (Factoring, Rationals, Radicals, Quadratics)</h2>
+    <p>Primary text: <em>Beginning Algebra — Part II</em>, Chapters 6–9 (Open Textbook Collaborative OER).</p>
+    <ul>
+      <li>Ch. 6 Factoring (GCF, grouping, trinomials, special products, strategy, solving by factoring)</li>
+      <li>Ch. 7 Rational Expressions (reduce, multiply/divide, LCD, add/subtract, complex fractions, rational equations)</li>
+      <li>Ch. 8 Radicals (square & higher roots, add/multiply/divide, rationalize)</li>
+      <li>Ch. 9 Quadratics (radicals, square root property, completing the square, quadratic formula)</li>
+    </ul>
+    <div class="grid">
+      <a class="card" href="https://www.youtube.com/results?search_query=factoring+trinomials" target="_blank" rel="noopener">Factoring Trinomials</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=reduce+rational+expressions" target="_blank" rel="noopener">Rational Expressions</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=radical+expressions+algebra" target="_blank" rel="noopener">Radicals</a>
+      <a class="card" href="https://www.youtube.com/results?search_query=quadratic+formula+examples" target="_blank" rel="noopener">Quadratic Formula</a>
+    </div>
+  </section>
+
+  <section class="card small">
+    <h2>Sources (OER)</h2>
+    <p>Unit 5 aligns with <em>Beginning Algebra — Part I</em>, Chapter 5 (Sections 5.1–5.7). Units 6–9 align with <em>Beginning Algebra — Part II</em>, Chapters 6–9. See your repo PDFs.</p>
+  </section>
+
+  <footer class="card small muted">Pages cache for offline use after first visit.</footer>
+</div>
+<script>if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}</script>
 </body>
 </html>

@@ -1,153 +1,82 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>MA025 Algebra Study Hub</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Interactive, step‑by‑step algebra practice for Units 0–9 with mobile‑friendly design.">
-  <style>
-    /* ====== Reset & basic typography ====== */
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji;
-      -webkit-font-smoothing:antialiased;
-      color:#111;
-      background:#fff;
-    }
-    a{color:#0366d6;text-decoration:none}
-    a:focus,button:focus{outline:2px solid #1a73e8;outline-offset:2px}
-    button{font:inherit}
-    /* ====== Layout ====== */
-    .wrap{display:flex;flex-direction:column;min-height:100%}
-    header{
-      position:sticky;top:0;z-index:1;
-      backdrop-filter:saturate(140%) blur(6px);
-      background:rgba(255,255,255,.9);
-      border-bottom:1px solid #eee;
-    }
-    .bar{
-      max-width:1100px;margin:0 auto;
-      padding:12px 16px; display:flex;align-items:center;gap:12px;flex-wrap:wrap
-    }
-    .title{font-weight:700;letter-spacing:.3px;margin-right:auto}
-    main{flex:1}
-    .container{max-width:1100px;margin:0 auto;padding:16px}
-    .grid{
-      display:grid;gap:12px;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    }
-    .card{
-      border:1px solid #e6e6e6;border-radius:10px;padding:12px;
-      background:#fafafa;
-    }
-    .card h3{margin:.2rem 0 .2rem;font-size:1.05rem}
-    .card p{margin:.2rem 0}
-    .btn{
-      display:inline-block;border:1px solid #1f6feb;background:#1f6feb;color:white;
-      padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer
-    }
-    .btn.secondary{background:white;color:#1f6feb}
-    .btn-group{display:flex;gap:8px;flex-wrap:wrap}
-    .frameWrap{border:1px solid #e6e6e6;border-radius:12px;overflow:hidden;background:white}
-    iframe{width:100%;border:0;display:block}
-    .notice{background:#fff8e1;border:1px solid #ffe08a;color:#6b4f00;padding:10px;border-radius:8px}
-    footer{border-top:1px solid #eee}
-    footer .container{padding:20px 16px;font-size:.9rem;color:#444}
-    /* Dark mode (respects device setting) */
-    @media (prefers-color-scheme:dark){
-      body{background:#0b0c10;color:#eee}
-      header{background:rgba(14,16,20,.85);border-bottom-color:#222}
-      .card{background:#12151b;border-color:#222}
-      .frameWrap{border-color:#222;background:#0b0c10}
-      a{color:#8ab4ff}
-      .btn{background:#2b67f6;border-color:#2b67f6}
-      .btn.secondary{background:transparent;color:#8ab4ff;border-color:#2a3a57}
-      footer{border-top-color:#222}
-      .notice{background:#2b2111;border-color:#5c3b10;color:#ffdca8}
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<title>MA025B — Algebra Study Hub</title>
+<style>
+/* --- shared styles (mobile-first, high-contrast) --- */
+:root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--danger:#ff6b6b;--ok:#2ecc71;--warn:#ffd166;--shadow:0 6px 20px rgba(0,0,0,.25)}
+@media (prefers-color-scheme: light){
+  :root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--warn:#a97300;--shadow:0 10px 25px rgba(0,0,0,.08)}
+}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);
+  background:linear-gradient(180deg,var(--bg),#111b2e);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+.brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
+nav a,.btn,button{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease}
+nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn:active,button:active{transform:translateY(0)}
+.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.footer{color:var(--muted);text-align:center;margin:30px 0 40px}
+.tag{display:inline-block;padding:.2rem .6rem;border-radius:20px;background:rgba(255,255,255,.12);margin-right:6px}
+</style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="bar">
-      <div class="title">MA025 Algebra Study Hub</div>
-      <a class="btn secondary" href="references.html">📚 References & Videos</a>
-      <a class="btn secondary" href="https://github.com/xatusbetazx17/Math">GitHub</a>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>MA025B — Algebra Study Hub</h1>
     </div>
+    <nav aria-label="Primary">
+      <a href="references.html">🎥 References</a>
+    </nav>
   </header>
-  <main>
-    <div class="container">
-      <p class="notice">Tip: Rotate your phone to landscape for more writing space. Everything runs in your browser—no logins, no ads, and works on iOS, Android, Windows, macOS, Linux, and Steam Deck.</p>
 
-      <h2>Choose a practice app</h2>
-      <div class="grid" role="list">
-        <div class="card" role="listitem">
-          <h3>Units 0–5 • Foundations</h3>
-          <p>Arithmetic & algebra basics, linear equations, graphing, systems, and polynomials.</p>
-          <div class="btn-group">
-            <button class="btn" data-target="algebra_quiz_notebook.html">Open in the page</button>
-            <a class="btn secondary" href="algebra_quiz_notebook.html" target="_blank" rel="noopener">Open in new tab</a>
-          </div>
-        </div>
-        <div class="card" role="listitem">
-          <h3>Units 6–9 • Factoring → Quadratics</h3>
-          <p>Factoring, rational expressions, radicals, and quadratics with step‑by‑step notes.</p>
-          <div class="btn-group">
-            <button class="btn" data-target="algebra_units6_9_quiz.html">Open in the page</button>
-            <a class="btn secondary" href="algebra_units6_9_quiz.html" target="_blank" rel="noopener">Open in new tab</a>
-          </div>
-        </div>
-      </div>
-
-      <h2 style="margin-top:20px">Practice Area</h2>
-      <div id="frameRegion" class="frameWrap" hidden>
-        <iframe id="quizFrame" title="Algebra practice" loading="eager" allowtransparency="true" referrerpolicy="no-referrer"></iframe>
-      </div>
-
-      <noscript>
-        <p><strong>JavaScript is disabled.</strong> You can still use the apps by opening them in a new tab:
-          <a href="algebra_quiz_notebook.html">Units 0–5</a> or
-          <a href="algebra_units6_9_quiz.html">Units 6–9</a>.
-        </p>
-      </noscript>
+  <section class="card">
+    <h2>Pick a Unit</h2>
+    <div class="grid">
+      <a class="card" href="unit5_quick_review.html">
+        <h3>Unit 5: Polynomials</h3>
+        <p>Quick Review ➜ notes + examples</p>
+      </a>
+      <a class="card" href="unit5_polynomials_quiz.html">
+        <h3>Unit 5 Practice</h3>
+        <p>Interactive, step‑by‑step notebook mode</p>
+      </a>
+      <a class="card" href="algebra_quiz_notebook.html">
+        <h3>Units 0–4 Review</h3>
+        <p>General algebra foundations</p>
+      </a>
+      <a class="card" href="algebra_units6_9_quiz.html">
+        <h3>Units 6–9 Practice</h3>
+        <p>Factoring, rationals, radicals, quadratics</p>
+      </a>
     </div>
-  </main>
-  <footer>
-    <div class="container">
-      Built by Marcelo Collado. Learning content is aligned with Beginning Algebra (OTC, Chapters 0–9). 
-      See “References & Videos” for textbook mapping and review sheets.
-    </div>
-  </footer>
+  </section>
+
+  <section class="card">
+    <h2>Audio/Class Review</h2>
+    <p>Put your <code>.m4a</code> files in an <code>audio/</code> folder. Open <a href="unit5_quick_review.html">Unit 5 Quick Review</a> to auto‑load players.</p>
+  </section>
+
+  <section class="card">
+    <h2>Tips</h2>
+    <ul>
+      <li><span class="tag">Mobile‑first</span> Works on iOS, Android, desktop, and Steam Deck.</li>
+      <li><span class="tag">Offline</span> After first load, pages work without internet.</li>
+      <li><span class="tag">No dependencies</span> Pure HTML/CSS/JS — easy to host on GitHub Pages.</li>
+    </ul>
+  </section>
+
+  <footer class="footer">Built for maximum compatibility.</footer>
 </div>
-
-<script>
-(function(){
-  const region = document.getElementById('frameRegion');
-  const frame = document.getElementById('quizFrame');
-
-  function resize(){
-    const headerHeight = document.querySelector('header').offsetHeight;
-    const footerHeight = document.querySelector('footer').offsetHeight;
-    const margin = 20; // breathing room
-    const h = Math.max(300, window.innerHeight - headerHeight - footerHeight - margin*2);
-    frame.style.height = h + 'px';
-  }
-  window.addEventListener('resize', resize);
-  document.querySelectorAll('button[data-target]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const src = btn.getAttribute('data-target');
-      region.hidden = false;
-      if(frame.getAttribute('src') !== src){ frame.setAttribute('src', src); }
-      resize();
-      // move focus for accessibility
-      frame.setAttribute('tabindex','-1'); frame.focus({preventScroll:true});
-      window.scrollTo({top:region.offsetTop - 8, behavior:'smooth'});
-    });
-  });
-})();
-</script>
+<script>if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}</script>
 </body>
 </html>

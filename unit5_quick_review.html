@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Unit 5 Quick Review — Polynomials</title>
+<style>
+/* (same shared styles as index) */
+:root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--danger:#ff6b6b;--ok:#2ecc71;--warn:#ffd166;--shadow:0 6px 20px rgba(0,0,0,.25)}
+@media (prefers-color-scheme: light){:root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--warn:#a97300;--shadow:0 10px 25px rgba(0,0,0,.08)}}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);background:linear-gradient(180deg,var(--bg),#111b2e);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+.brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
+nav a,.btn,button{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease}
+.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.small{font-size:.925rem}.muted{color:var(--muted)}.step{background:rgba(0,0,0,.14);padding:.6rem .8rem;border-radius:8px;margin:.5rem 0}
+.footer{color:var(--muted);text-align:center;margin:30px 0 40px}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>Unit 5 Quick Review — Polynomials</h1>
+    </div>
+    <nav aria-label="Primary">
+      <a href="index.html">🏠 Home</a>
+      <a href="unit5_polynomials_quiz.html">📝 Practice</a>
+      <a href="references.html#unit5">🎥 References</a>
+    </nav>
+  </header>
+
+  <section class="card">
+    <h2>What’s in Unit 5</h2>
+    <p>This unit covers exponent rules, negative exponents, scientific notation, defining & classifying polynomials, multiplying (FOIL and distribution), special products, and dividing polynomials by monomials and simple binomials.</p>
+    <p class="small muted">These topics map to Chapter 5 of the Beginning Algebra OER (Sections 5.1–5.7). See <a href="references.html#unit5">References</a> for links.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>5.1 Exponent Properties</h3>
+        <ul>
+          <li>Product: a<sup>m</sup>a<sup>n</sup> = a<sup>m+n</sup></li>
+          <li>Power: (a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></li>
+          <li>Power of product: (ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup></li>
+          <li>Quotient: a<sup>m</sup>/a<sup>n</sup> = a<sup>m−n</sup>, a ≠ 0</li>
+          <li>Zero exponent: a<sup>0</sup> = 1 (a ≠ 0)</li>
+        </ul>
+        <details><summary>Example</summary>
+          <div class="step">(x<sup>3</sup>y)(x<sup>2</sup>y<sup>5</sup>) = x<sup>5</sup>y<sup>6</sup></div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h3>5.2 Negative Exponents</h3>
+        <p>a<sup>−n</sup> = 1/a<sup>n</sup>; move across the fraction bar to make exponents positive.</p>
+        <details><summary>Example</summary>
+          <div class="step">x<sup>−3</sup>y<sup>2</sup> / x = y<sup>2</sup> / x<sup>4</sup>.</div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h3>5.3 Scientific Notation</h3>
+        <p>c × 10<sup>n</sup> where 1 ≤ c &lt; 10 and n ∈ ℤ. Move decimal left → n positive; right → n negative.</p>
+        <details><summary>Example</summary>
+          <div class="step">0.00056 = 5.6 × 10<sup>−4</sup>.</div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h3>5.4 Intro to Polynomials</h3>
+        <ul>
+          <li>Monomial / binomial / trinomial</li>
+          <li>Degree of a term & overall degree</li>
+          <li>Standard form: descending powers</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>5.5 Multiply Polynomials</h3>
+        <details><summary>Example</summary>
+          <div class="step">(2x + 3)(x − 5) = 2x² − 7x − 15</div>
+        </details>
+      </div>
+
+      <div class="card">
+        <h3>5.6 Special Products</h3>
+        <ul>
+          <li>(a + b)² = a² + 2ab + b²</li>
+          <li>(a − b)² = a² − 2ab + b²</li>
+          <li>(a + b)(a − b) = a² − b²</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>5.7 Divide Polynomials</h3>
+        <details><summary>Example</summary>
+          <div class="step">(6x³ − 9x²)/3x = 2x² − 3x</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Audio/Class Review (optional)</h2>
+    <p>Place recordings in an <code>audio/</code> folder (same level as this file). If they exist, players appear below.</p>
+    <div id="audioList" class="grid" role="list" aria-label="Audio recordings"></div>
+    <p class="muted small">Recognized names: <code>Math025*.m4a</code> or <code>Math 025*.m4a</code>.</p>
+  </section>
+
+  <footer class="footer">Works offline after first load.</footer>
+</div>
+<script>
+// Show audio players for known filenames if they exist
+(async function(){
+  const files = [
+    'Math025b class day01.m4a','Math 025b class day 02.m4a','Math 025 B class day 03.m4a',
+    'Math 025 b class day 04.m4a','Math 025 b Class das 05.m4a'
+  ];
+  const list = document.getElementById('audioList');
+  for(const f of files){
+    try{
+      const head = await fetch('audio/'+encodeURIComponent(f),{method:'HEAD'});
+      if(head.ok){
+        const card=document.createElement('div');card.className='card';card.setAttribute('role','listitem');
+        card.innerHTML='<h3>'+f+'</h3><audio controls preload="none" style="width:100%"><source src="audio/'+encodeURIComponent(f)+'" type="audio/mp4">Audio not supported.</audio>';
+        list.appendChild(card);
+      }
+    }catch(e){}
+  }
+})();
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
+</body>
+</html>

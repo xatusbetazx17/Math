@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Unit 5 — Polynomials: Interactive Notebook Quiz</title>
+<style>
+/* same shared styles */
+:root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--danger:#ff6b6b;--ok:#2ecc71;--warn:#ffd166;--shadow:0 6px 20px rgba(0,0,0,.25)}
+@media (prefers-color-scheme: light){:root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--warn:#a97300;--shadow:0 10px 25px rgba(0,0,0,.08)}}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);background:linear-gradient(180deg,var(--bg),#111b2e);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+.brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
+nav a,.btn,button{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease}
+.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.small{font-size:.925rem}.muted{color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:.25rem .6rem;border-radius:999px;background:rgba(255,255,255,.12)}
+.answer{background:rgba(0,0,0,.2);padding:.6rem .8rem;border-radius:8px}
+.step{background:rgba(0,0,0,.14);padding:.6rem .8rem;border-radius:8px;margin:.5rem 0}
+.correct{color:var(--ok);font-weight:700}.incorrect{color:var(--danger);font-weight:700}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>Unit 5 — Polynomials: Interactive Notebook Quiz</h1>
+    </div>
+    <nav aria-label="Primary">
+      <a href="index.html">🏠 Home</a>
+      <a href="unit5_quick_review.html">📘 Quick Review</a>
+      <a href="references.html#unit5">🎥 References</a>
+    </nav>
+  </header>
+
+  <section class="card">
+    <h2>Practice Mode</h2>
+    <p>Pick a topic and click <strong>New Problem</strong>. Type answers with ASCII math (e.g., <span class="kbd">x^2</span>, <span class="kbd">5.6e-4</span>). Use <strong>Next step</strong> to reveal the solution just like a paper notebook.</p>
+    <div class="grid">
+      <div class="card">
+        <label for="topicSelect"><strong>Topic</strong></label>
+        <select id="topicSelect" aria-label="Select topic">
+          <option value="5.1">5.1 Exponent Properties</option>
+          <option value="5.2">5.2 Negative Exponents</option>
+          <option value="5.3">5.3 Scientific Notation</option>
+          <option value="5.4">5.4 Intro to Polynomials</option>
+          <option value="5.5">5.5 Multiply Polynomials</option>
+          <option value="5.6">5.6 Special Products</option>
+          <option value="5.7">5.7 Divide Polynomials</option>
+        </select>
+        <div class="small muted" style="margin-top:6px">Tip: tap <em>New Problem</em> to randomize.</div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button id="btnNew" class="btn">🎲 New Problem</button>
+          <button id="btnReset" class="btn" style="background:var(--accent-2)">↺ Reset</button>
+        </div>
+      </div>
+      <div class="card">
+        <div id="questionPanel"><div class="muted">Select a topic and click <strong>New Problem</strong>.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Unit 5 Mini–Mock Exam</h2>
+    <p>Ten mixed questions from 5.1–5.7 with step‑by‑step reveals.</p>
+    <button id="btnStartExam" class="btn">Start 10‑Question Exam</button>
+    <div id="examPanel" class="card" style="display:none"></div>
+  </section>
+
+  <footer class="card small muted">
+    Designed for mobile/desktop and Steam Deck browsers. Pages cache for offline use after first load.
+  </footer>
+</div>
+
+<script>
+function byId(id){return document.getElementById(id);}
+function normAns(s){return (s||'').toString().trim().toLowerCase().replace(/\\s+/g,'');}
+function show(el){el.style.display='';}function hide(el){el.style.display='none';}
+function choice(a){return a[Math.floor(Math.random()*a.length)];}
+
+/* Question bank per section (prompt, answer, steps[], optional hint) */
+const BANK={
+ "5.1":[
+  {prompt:"Simplify: (x^3 y)*(x^2 y^5)",answer:"x^5 y^6",steps:[
+    "Use product rule a^m a^n = a^(m+n) for same base.",
+    "x^3 * x^2 = x^(3+2) = x^5.",
+    "y * y^5 = y^(1+5) = y^6.",
+    "<strong>Answer:</strong> x^5 y^6"
+  ],hint:"Use ^ for exponents; include both x and y."},
+  {prompt:"Simplify: (a^4)^3",answer:"a^12",steps:[
+    "Power rule: (a^m)^n = a^(m·n).",
+    "=> a^(4·3) = a^12."
+  ]},
+  {prompt:"Simplify: (2x^2 y)^3",answer:"8 x^6 y^3",steps:[
+    "Power of a product: (ab)^n = a^n b^n.",
+    "2^3 = 8, (x^2)^3 = x^6, y^3 stays.",
+    "<strong>Answer:</strong> 8 x^6 y^3"
+  ]},
+  {prompt:"Simplify: x^7 / x^3",answer:"x^4",steps:[
+    "Quotient rule: a^m / a^n = a^(m−n).",
+    "=> x^(7−3) = x^4."
+  ]},
+  {prompt:"Evaluate & simplify: (3^4)(3^2)/(3^3)",answer:"3^3",steps:[
+    "(3^4)(3^2) = 3^(6) by product rule.",
+    "3^6 / 3^3 = 3^(3) by quotient rule."
+  ]}
+ ],
+ "5.2":[
+  {prompt:"Rewrite with positive exponents: x^-3",answer:"1/x^3",steps:[
+    "a^-n = 1/a^n ⇒ x^-3 = 1/x^3."
+  ],hint:"Write as a fraction."},
+  {prompt:"Simplify: x^2 * x^-5",answer:"1/x^3",steps:[
+    "x^(2-5) = x^-3 = 1/x^3."
+  ]},
+  {prompt:"Simplify: (a b^-2)^-1",answer:"a^-1 b^2",steps:[
+    "(ab^-2)^-1 = a^-1 (b^-2)^-1 = a^-1 b^2 (or b^2/a)."
+  ]},
+  {prompt:"Rewrite with positive exponents: (x^-2 y^3)/y^-1",answer:"y^4/x^2",steps:[
+    "Dividing by y^-1 = multiply by y^1.",
+    "x^-2 y^(3+1) = x^-2 y^4 = y^4/x^2."
+  ]}
+ ],
+ "5.3":[
+  {prompt:"Scientific notation: 0.00056",answer:"5.6e-4",steps:[
+    "Move decimal 4 places right ⇒ 5.6.",
+    "Right move ⇒ exponent negative ⇒ 10^-4.",
+    "Answer: 5.6 × 10^-4 (type: 5.6e-4)."
+  ],hint:"Use e for ×10^n"},
+  {prompt:"Scientific notation: 4820000",answer:"4.82e6",steps:[
+    "Move decimal 6 left ⇒ 4.82.",
+    "Left move ⇒ exponent positive ⇒ 10^6.",
+    "Answer: 4.82e6."
+  ]},
+  {prompt:"Multiply: (3.2e4)(5e-3) in sci. notation",answer:"1.6e2",steps:[
+    "(3.2×10^4)(5×10^-3) = (3.2×5)×10^(4−3) = 16×10^1 = 1.6×10^2."
+  ]}
+ ],
+ "5.4":[
+  {prompt:"Classify & degree: 7x^3y^2 - 4x + 9",answer:"trinomial, degree 5",steps:[
+    "3 terms ⇒ trinomial. Degrees: 3+2=5, 1, 0 ⇒ overall 5."
+  ]},
+  {prompt:"Standard form: 6 - 2x^3 + 5x",answer:"-2x^3 + 5x + 6",steps:[
+    "Descending powers: -2x^3, +5x, +6."
+  ]}
+ ],
+ "5.5":[
+  {prompt:"Expand: (2x + 3)(x − 5)",answer:"2x^2 - 7x - 15",steps:[
+    "2x·x + 2x·(-5) + 3·x + 3·(-5) = 2x^2 - 10x + 3x - 15.",
+    "Combine like terms ⇒ 2x^2 - 7x - 15."
+  ]},
+  {prompt:"Expand: (x − 4)(x − 6)",answer:"x^2 - 10x + 24",steps:[
+    "x·x + x·(-6) + (-4)·x + (-4)(-6) ⇒ x^2 - 6x - 4x + 24 = x^2 - 10x + 24."
+  ]},
+  {prompt:"Expand: (3x − 2y)(x + y)",answer:"3x^2 + x y - 2y^2",steps:[
+    "(3x)(x)+(3x)(y)+(-2y)(x)+(-2y)(y) ⇒ 3x^2 + 3xy - 2xy - 2y^2 = 3x^2 + xy - 2y^2."
+  ]}
+ ],
+ "5.6":[
+  {prompt:"Formula: (x + 5)^2",answer:"x^2 + 10x + 25",steps:[
+    "(a+b)^2 = a^2+2ab+b^2 ⇒ x^2+10x+25."
+  ]},
+  {prompt:"Formula: (2x − 3)^2",answer:"4x^2 - 12x + 9",steps:[
+    "(a-b)^2 = a^2−2ab+b^2 ⇒ (2x)^2 − 2(2x)3 + 9."
+  ]},
+  {prompt:"Diff. of squares: (3x + 4)(3x − 4)",answer:"9x^2 - 16",steps:[
+    "(a+b)(a-b)=a^2−b^2 ⇒ (3x)^2 − 4^2."
+  ]}
+ ],
+ "5.7":[
+  {prompt:"Divide: (6x^3 − 9x^2 + 12x) / 3x",answer:"2x^2 - 3x + 4",steps:[
+    "Term‑by‑term: 6x^3/3x=2x^2; −9x^2/3x=−3x; 12x/3x=4."
+  ]},
+  {prompt:"Divide: (8x^2y − 4xy^2) / (4xy)",answer:"2x - y",steps:[
+    "8x^2y/(4xy)=2x; −4xy^2/(4xy)=−y."
+  ]},
+  {prompt:"Simplify: (x^2 − 25)/(x − 5), x ≠ 5",answer:"x + 5",steps:[
+    "Factor top: (x−5)(x+5). Cancel (x−5) (x≠5)."
+  ]}
+ ]
+};
+
+/* Render one problem */
+function renderProblem(q, container){
+  container.innerHTML='';
+  const el=document.createElement('div');
+  el.innerHTML=`
+    <div class="badge">Problem</div>
+    <div style="margin:.4rem 0 1rem;font-size:1.1rem">${q.prompt}</div>
+    <label for="ans"><strong>Your answer</strong> ${q.hint?`<span class="small muted">(hint: ${q.hint})</span>`:''}</label>
+    <input id="ans" type="text" inputmode="text" autocomplete="off" placeholder="Type answer (e.g., x^2, 5.6e-4)">
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button id="btnCheck" class="btn">Check</button>
+      <button id="btnStep" class="btn" style="background:var(--accent-2)">Next step</button>
+      <button id="btnReveal" class="btn" style="background:#444">Reveal answer</button>
+    </div>
+    <div id="feedback" style="margin-top:10px"></div>
+    <details style="margin-top:10px"><summary>Solution steps</summary><div id="steps"></div></details>
+  `;
+  container.appendChild(el);
+  const ans=byId('ans'),fb=byId('feedback'),steps=byId('steps');
+  let shown=0;
+  function addStep(){
+    if(!q.steps || shown>=q.steps.length) return;
+    const s=document.createElement('div');s.className='step';s.innerHTML=q.steps[shown++];steps.appendChild(s);
+  }
+  byId('btnStep').addEventListener('click',addStep);
+  byId('btnReveal').addEventListener('click',()=>{fb.innerHTML=`<div class="answer"><strong>Answer:</strong> ${q.answer}</div>`;});
+  byId('btnCheck').addEventListener('click',()=>{
+    const user=normAns(ans.value), target=normAns(q.answer);
+    const ok = (user===target)||(user===target.replace(/\\s+/g,'')); // forgiving about spaces
+    fb.innerHTML = ok ? '<div class="correct">✓ Correct!</div>' : '<div class="incorrect">✗ Not quite. Check format and try again.</div>';
+  });
+}
+
+/* Practice Mode */
+byId('btnNew').addEventListener('click',()=>{
+  const t=byId('topicSelect').value;
+  const q=choice(BANK[t]); renderProblem(q, byId('questionPanel'));
+});
+byId('btnReset').addEventListener('click',()=>{byId('questionPanel').innerHTML='<div class="muted">Select a topic and click <strong>New Problem</strong>.</div>';});
+
+/* Mini Exam (10 mixed) */
+byId('btnStartExam').addEventListener('click',()=>{
+  const all=[...Object.values(BANK)].flat(); const sample=[];
+  while(sample.length<10){const q=choice(all); if(!sample.includes(q)) sample.push(q);}
+  const panel=byId('examPanel'); panel.innerHTML=''; panel.style.display='';
+  sample.forEach((q,i)=>{
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML='<h3>Q'+(i+1)+'</h3>'; panel.appendChild(card);
+    const inner=document.createElement('div'); card.appendChild(inner);
+    renderProblem(q, inner);
+  });
+});
+
+/* Offline */
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
+</body>
+</html>

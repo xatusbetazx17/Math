@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio Lectures — MA025 Algebra</title>
+<style>
+:root{--max:900px}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;margin:0;line-height:1.5}
+a{color:inherit}
+header{padding:1rem;border-bottom:1px solid #ddd}
+header nav a{text-decoration:none}
+main{max-width:var(--max);margin:0 auto;padding:1rem}
+.grid{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+.card{border:1px solid #e2e2e2;border-radius:.5rem;padding:1rem}
+.card h3{margin:.25rem 0 .5rem}
+audio{width:100%}
+small{display:block;color:#666}
+</style>
+</head>
+<body>
+<header>
+  <nav><a href="index.html">← Back to Home</a></nav>
+  <h1>Audio Lectures — MA025 Algebra</h1>
+  <p>Tap a play button. Autoplay is disabled on mobile, so you must press play.</p>
+</header>
+<main>
+  <section id="audio-list" class="grid" aria-label="List of audio lectures">
+    <p>Loading…</p>
+  </section>
+</main>
+<script>
+(async function(){
+  const list = document.getElementById('audio-list');
+  try {
+    const res = await fetch('audio/manifest.json', {cache:'no-store'});
+    const items = await res.json();
+    list.innerHTML = '';
+    const basePath = 'audio/'; // relative path works on GitHub Pages
+    for (const item of items) {
+      const card = document.createElement('article'); card.className = 'card';
+      const h = document.createElement('h3'); h.textContent = item.title || item.basename;
+      const p = document.createElement('small'); p.textContent = (item.note || 'M4A with MP3 fallback') + (item.date ? ' • ' + item.date : '');
+      const a = document.createElement('audio');
+      a.setAttribute('controls',''); a.setAttribute('preload','metadata'); a.setAttribute('playsinline','');
+
+      // Prefer MP3 for maximum compatibility; Safari/iOS also plays M4A
+      if (item.mp3) {
+        const s1 = document.createElement('source');
+        s1.src = basePath + item.mp3;
+        s1.type = 'audio/mpeg';
+        a.appendChild(s1);
+      }
+      const s2 = document.createElement('source');
+      s2.src = basePath + item.m4a;
+      s2.type = 'audio/mp4'; // m4a (AAC)
+      a.appendChild(s2);
+
+      const nosup = document.createElement('p');
+      nosup.innerHTML = 'Your browser cannot play this file. <a target="_blank" rel="noopener" href="'+ basePath + (item.mp3 || item.m4a) +'">Download</a>.';
+      card.append(h,p,a,nosup);
+      list.appendChild(card);
+    }
+  } catch (err) {
+    list.innerHTML = '<p>Could not load the audio manifest. Check that <code>audio/manifest.json</code> exists.</p>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>

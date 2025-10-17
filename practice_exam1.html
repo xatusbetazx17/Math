@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MA 25B — Practice Exam 1 (Interactive)</title>
+  <meta name="description" content="Interactive Practice Exam 1 with step-by-step notebook-style solutions. Works on all devices and browsers." />
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root {
+      --bg:#0b0e11; --card:#12161c; --ink:#e9edf1; --muted:#b8c1cc; --accent:#4da3ff; --ok:#19c37d; --bad:#ff5c5c; --line:#1f2a36;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    header,main,footer{max-width:980px;margin:auto;padding:16px}
+    header h1{font-size:1.4rem;margin:0 0 6px}
+    header p{margin:0 0 12px;color:var(--muted)}
+    nav a{display:inline-block;margin-right:12px;color:var(--accent);text-decoration:none}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+    .q-index{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+    .pill{display:inline-flex;min-width:34px;justify-content:center;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);cursor:pointer;text-decoration:none}
+    .pill.active{background:var(--accent);border-color:transparent;color:#031a33}
+    .choices{display:grid;gap:8px;margin:10px 0}
+    label.choice{display:flex;gap:10px;align-items:flex-start;background:#0f141a;border:1px solid var(--line);border-radius:8px;padding:10px;cursor:pointer}
+    input[type="radio"]{transform:scale(1.2);margin-top:2px}
+    button{appearance:none;border:1px solid var(--line);background:#0e3a66;color:#eaf3ff;border-radius:8px;padding:10px 14px;cursor:pointer}
+    button:hover{filter:brightness(1.08)}
+    .result{margin-top:8px;font-weight:600}
+    .ok{color:var(--ok)}
+    .bad{color:var(--bad)}
+    details{background:#0f141a;border:1px dashed var(--line);border-radius:10px;padding:10px}
+    details summary{cursor:pointer;color:var(--accent);outline:none}
+    code,kbd{background:#0c1218;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .sticky{position:sticky;top:0;background:linear-gradient(180deg,#0b0e11 90%,#0b0e1100);padding-top:10px;z-index:99}
+    footer{color:var(--muted);font-size:.95rem}
+    .grid2{display:grid;grid-template-columns:1fr;gap:10px}
+    @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+<header class="sticky">
+  <h1>MA 25B — Practice Exam 1 (Interactive)</h1>
+  <p>Multiple‑choice with notebook‑style solutions. Select a question below or take the full exam.</p>
+  <div class="toolbar">
+    <button id="startExamBtn" aria-label="Start full exam">Start Full Exam</button>
+    <button id="resetBtn" aria-label="Reset all answers">Reset</button>
+    <a href="random_practice.html" class="pill">Random Practice</a>
+    <a href="index.html" class="pill">Home</a>
+  </div>
+  <div id="scorebar" class="q-index" aria-live="polite"></div>
+</header>
+
+<main id="container"></main>
+
+<footer class="card" role="contentinfo">
+  <p><strong>Sources & Alignment</strong>: Item wording adapted from your uploaded <em>MA 25B Practice Exam 1</em>. Skills/steps follow <em>Beginning Algebra</em> OER (Units 5–9: polynomials, factoring, rationals, radicals, quadratics). Please include proper attribution in your README/license page. </p>
+  <p>OER references: factoring (Ch. 6), rational expressions (Ch. 7), radicals (Ch. 8), quadratics (Ch. 9). </p>
+</footer>
+
+<script>
+/* ---------- Exam Data (adapted from your “MA 25B Practice Exam 1”) ---------- */
+const examItems = [
+  {
+    id: 1, topic: "Properties",
+    q: "Use a property of multiplication to complete: -2 · 5 = 5 · ____ . State the property.",
+    type: "mc",
+    choices: ["-2; associative property","2; associative property","2; commutative property","-2; commutative property"],
+    correctIndex: 3,
+    steps: [
+      "Commutative property of multiplication lets us reverse factor order: a·b = b·a.",
+      "So -2·5 = 5·(-2).",
+      "Answer: -2; commutative property."
+    ]
+  },
+  {
+    id: 2, topic: "Formulas",
+    q: "Perimeter of a rectangle: P = 2L + 2W. Solve for L.",
+    type: "mc",
+    choices: ["L = d - 2W","L = P - W","L = (P - 2W)/2","L = (P - W)/2"],
+    correctIndex: 2,
+    steps: [
+      "P = 2L + 2W → subtract 2W: P - 2W = 2L.",
+      "Divide by 2: L = (P - 2W)/2 = P/2 − W."
+    ]
+  },
+  {
+    id: 3, topic: "Percent word problem",
+    q: "A store gives a 9% cash discount. If the discount was $52, what was the total before discount? (nearest dollar)",
+    type: "mc",
+    choices: ["$6","$578","$5","$500"],
+    correctIndex: 1,
+    steps: [
+      "Let T be the total. Discount = 0.09·T = 52.",
+      "T = 52 / 0.09 = 577.777… ≈ $578."
+    ]
+  },
+  {
+    id: 4, topic: "Integers / net change",
+    q: "Runs: +5, +5, −3, −3, −3, −8, +2, +2, +2, +2 (10 games). Net difference?",
+    type: "mc",
+    choices: ["1 run","2 runs","17 runs","−4 runs"],
+    correctIndex: 0,
+    steps: [
+      "Wins by 5 (twice): +10; losses by 3 (thrice): −9; one loss by 8: −8; four wins by 2: +8.",
+      "Total = 10 − 9 − 8 + 8 = +1 run."
+    ]
+  },
+  {
+    id: 5, topic: "Graphing",
+    q: "Which line is y + 4 = 0?",
+    type: "mc",
+    choices: ["A","B","C","D"],
+    correctIndex: 0,
+    steps: [
+      "y + 4 = 0 → y = −4 is a horizontal line crossing the y‑axis at −4.",
+      "Choose the horizontal line at y = −4."
+    ]
+  },
+  {
+    id: 6, topic: "Slope",
+    q: "Find the slope through (−9, 3) and (6, 8).",
+    type: "mc",
+    choices: ["6","1/6","3","1/3"],
+    correctIndex: 3,
+    steps: [
+      "Slope m = (y2 − y1) / (x2 − x1) = (8 − 3) / (6 − (−9)) = 5/15 = 1/3."
+    ]
+  },
+  {
+    id: 7, topic: "Inequalities",
+    q: "Solve: −7x ≤ 21. Write interval notation.",
+    type: "mc",
+    choices: ["[3, ∞)","[−3, ∞)","(−∞, −3]","(−∞, 3]"],
+    correctIndex: 1,
+    steps: [
+      "Divide both sides by −7 (flip inequality): x ≥ −3.",
+      "Interval: [−3, ∞)."
+    ]
+  },
+  {
+    id: 8, topic: "Systems (elimination/substitution)",
+    q: "Solve the system: x + 9y = 9, 7x − 5y = −5.",
+    type: "mc",
+    choices: ["(1, 0)","(0, 1)","(1, 1)","(0, 0)"],
+    correctIndex: 1,
+    steps: [
+      "From x + 9y = 9 → x = 9 − 9y.",
+      "Substitute: 7(9 − 9y) − 5y = −5 → 63 − 63y − 5y = −5 → −68y = −68 → y = 1.",
+      "Then x = 9 − 9(1) = 0. Solution (0, 1)."
+    ]
+  },
+  {
+    id: 9, topic: "Rational equations",
+    q: "Solve: (x − 7)/4 = (x + 8)/7.",
+    type: "mc",
+    choices: ["81/28","7/4","{8}","27"],
+    correctIndex: 3,
+    steps: [
+      "Cross‑multiply: 7(x − 7) = 4(x + 8).",
+      "7x − 49 = 4x + 32 → 3x = 81 → x = 27."
+    ]
+  },
+  {
+    id: 10, topic: "Multi‑step equations",
+    q: "Solve: 6w + 9 = 10 − 7w − 6w.",
+    type: "mc",
+    choices: ["−19","1/19","19","−1/13"],
+    correctIndex: 1,
+    steps: [
+      "Right side: 10 − 13w.",
+      "6w + 9 = 10 − 13w → add 13w: 19w + 9 = 10.",
+      "19w = 1 → w = 1/19."
+    ]
+  },
+  {
+    id: 11, topic: "Identities",
+    q: "Solve: −4(x + 5) = −(4x + 20).",
+    type: "mc",
+    choices: ["all real numbers","∅","{5}","{0}"],
+    correctIndex: 0,
+    steps: [
+      "Expand both sides: −4x − 20 = −4x − 20.",
+      "Always true → infinitely many solutions (all real numbers)."
+    ]
+  },
+  {
+    id: 12, topic: "Fraction coefficients",
+    q: "Solve: (2/5)x − (1/3)x = 2.",
+    type: "mc",
+    choices: ["{−60}","{60}","{−30}","{30}"],
+    correctIndex: 3,
+    steps: [
+      "(2/5 − 1/3)x = (6/15 − 5/15)x = (1/15)x.",
+      "(1/15)x = 2 → x = 30."
+    ]
+  },
+  {
+    id: 13, topic: "Quadratics",
+    q: "Solve: x² − x = 56.",
+    type: "mc",
+    choices: ["{1, 56}","{−7, −8}","{−7, 8}","{7, 8}"],
+    correctIndex: 2,
+    steps: [
+      "x² − x − 56 = 0.",
+      "Factor: (x − 8)(x + 7) = 0 → x = 8 or x = −7."
+    ]
+  },
+  {
+    id: 14, topic: "Lines from two points",
+    q: "Find the slope‑intercept form through (−7, 1) and (10, −5).",
+    type: "mc",
+    choices: ["y = (8/15)x + 1/3","y = −(8/15)x + 1/3","y = −(6/17)x − 25/17","y = (6/17)x − 25/17"],
+    correctIndex: 2,
+    steps: [
+      "m = (−5 − 1)/(10 − (−7)) = −6/17.",
+      "Use y = mx + b with (−7,1): 1 = (−6/17)(−7) + b = 42/17 + b → b = −25/17.",
+      "Equation: y = −(6/17)x − 25/17."
+    ]
+  },
+  {
+    id: 15, topic: "Factoring trinomials",
+    q: "Factor completely: x² + 43x + 44.",
+    type: "mc",
+    choices: ["(x + 44)(x − 1)","(x − 11)(x + 4)","(x + 11)(x − 4)","Prime"],
+    correctIndex: 3,
+    steps: [
+      "We need two integers with product 44 and sum 43.",
+      "Pairs: 1·44 (sum 45), 2·22 (24), 4·11 (15) → none sum to 43 → prime over ℤ."
+    ]
+  },
+  {
+    id: 16, topic: "Evaluate expressions",
+    q: "Evaluate (3x + 7)/(14 − 2y) for x = 9, y = 6.",
+    type: "mc",
+    choices: ["39","34","14","17"],
+    correctIndex: 3,
+    steps: [
+      "Numerator: 3·9 + 7 = 34.",
+      "Denominator: 14 − 2·6 = 2.",
+      "Value: 34/2 = 17."
+    ]
+  },
+  {
+    id: 17, topic: "Evaluate with exponents",
+    q: "Evaluate 9x − 2y² for x = 3, y = −4.",
+    type: "mc",
+    choices: ["59","−5","11","19"],
+    correctIndex: 1,
+    steps: [
+      "9·3 − 2·(−4)² = 27 − 2·16 = 27 − 32 = −5."
+    ]
+  },
+  {
+    id: 18, topic: "Systems (substitution)",
+    q: "Solve: x − 5y = 15,  −4x − 4y = 12.",
+    type: "mc",
+    choices: ["(3, 0)","(1, −4)","(0, −3)","No solution"],
+    correctIndex: 2,
+    steps: [
+      "x = 15 + 5y.",
+      "Plug: −4(15 + 5y) − 4y = 12 → −60 − 20y − 4y = 12 → −24y = 72 → y = −3.",
+      "x = 15 + 5(−3) = 0 → (0, −3)."
+    ]
+  },
+  {
+    id: 19, topic: "Polynomial division",
+    q: "Compute (y² + 18y + 81) ÷ (y + 9).",
+    type: "mc",
+    choices: ["y − 9","y + 9","(y + 9)/(y + 9)","y² + 9"],
+    correctIndex: 1,
+    steps: [
+      "y² + 18y + 81 = (y + 9)².",
+      "Divide by (y + 9): result y + 9 (for y ≠ −9)."
+    ]
+  },
+  {
+    id: 20, topic: "Factoring completion",
+    q: "Complete: x² − 13x + 42 = (x − 7)(  ?  ).",
+    type: "mc",
+    choices: ["x − 6","7 − x","x + 6","x² + 7"],
+    correctIndex: 0,
+    steps: [
+      "42 = 7·6 and 7 + 6 = 13.",
+      "Factor: (x − 7)(x − 6)."
+    ]
+  },
+  {
+    id: 21, topic: "Translate phrase",
+    q: "Write and simplify: “the product of −9 and 1, subtracted from −5”.",
+    type: "mc",
+    choices: ; 4"],
+    correctIndex: 2,
+    steps: [
+      "‘Subtracted from −5’ means: −5 − [ (−9)·1 ].",
+      "Compute: −5 − (−9) = −5 + 9 = 4."
+    ]
+  },
+  {
+    id: 22, topic: "Reduce rational expressions",
+    q: "Reduce: (16x + 20) / (20x + 25).",
+    type: "mc",
+    choices: ["5/4","1","4/5","4"],
+    correctIndex: 2,
+    steps: [
+      "Factor: 4(4x + 5) / 5(4x + 5).",
+      "Cancel (4x + 5) (x ≠ −5/4): result 4/5."
+    ]
+  },
+  {
+    id: 23, topic: "Reduce rational expressions",
+    q: "Reduce: (a² − 6a) / [(a + 9)(a − 6)].",
+    type: "mc",
+    choices: ["1/(a + 9)","(a − 6)/(a + 9)","a/(a + 9)","a²/(a + 9)"],
+    correctIndex: 2,
+    steps: [
+      "Factor numerator: a(a − 6).",
+      "Cancel (a − 6) (a ≠ 6): result a/(a + 9)."
+    ]
+  },
+  {
+    id: 24, topic: "Binomial square",
+    q: "Expand: (7t + r)².",
+    type: "mc",
+    choices: ["49t² + 2·7tr + r²","7t + 2·7tr + r","7t + 7tr + r","49t² + 7tr + r²"],
+    correctIndex: 0,
+    steps: [
+      "(a + b)² = a² + 2ab + b².",
+      "Here a=7t, b=r → 49t² + 14tr + r² (choice shown as 2·7tr)."
+    ]
+  },
+  {
+    id: 25, topic: "Polynomial add/subtract",
+    q: "Simplify: (7x + 30xy − 28y) − (14x − 29xy − 25y).",
+    type: "mc",
+    choices: ["−7x + 59xy − 3y","−7x − 59xy − 53y","49xy","−23x + 7xy + 53"],
+    correctIndex: 0,
+    steps: [
+      "Subtract termwise: (7x−14x)=−7x; 30xy−(−29xy)=59xy; (−28y)−(−25y)=−3y."
+    ]
+  },
+  {
+    id: 26, topic: "Special products",
+    q: "Find the product: (5a + 6c)(5a − 6c).",
+    type: "mc",
+    choices: ["25a² + 36c²","25a² − 36c²","10a − 36c","(5a − 6c)²"],
+    correctIndex: 1,
+    steps: [
+      "(A+B)(A−B) = A² − B².",
+      "A=5a,B=6c → 25a² − 36c²."
+    ]
+  }
+];
+
+/* ---------- Rendering ---------- */
+const container = document.getElementById('container');
+const scorebar = document.getElementById('scorebar');
+let userAnswers = {}; // id -> index
+let showMode = 'list';
+
+function renderScore() {
+  const answered = Object.keys(userAnswers).length;
+  const correct = Object.entries(userAnswers).filter(([id, idx]) => examItems.find(x=>x.id==id).correctIndex===idx).length;
+  scorebar.innerHTML = `
+    <span class="pill active">Answered ${answered}/${examItems.length}</span>
+    <span class="pill">Correct ${correct}</span>
+  `;
+}
+
+function oneQuestionCard(item) {
+  const idx = userAnswers[item.id];
+  const checked = typeof idx === 'number' ? idx : -1;
+  const choice = (text, i) => `
+    <label class="choice">
+      <input type="radio" name="q${item.id}" value="${i}" ${checked===i?'checked':''} />
+      <span>${String.fromCharCode(65+i)}. ${text}</span>
+    </label>`;
+  return `
+    <section class="card" id="q${item.id}">
+      <h2 style="margin:0 0 6px;font-size:1.05rem">Q${item.id}. ${item.topic}</h2>
+      <p>${item.q}</p>
+      <div class="choices" role="radiogroup" aria-labelledby="q${item.id}">
+        ${item.choices.map((c,i)=>choice(c,i)).join('')}
+      </div>
+      <div class="grid2">
+        <button data-action="check" data-id="${item.id}">Check Answer</button>
+        <button data-action="resetOne" data-id="${item.id}">Clear</button>
+      </div>
+      <div class="result" id="r${item.id}" aria-live="polite"></div>
+      <details>
+        <summary>Show notebook‑style steps</summary>
+        <ol>${item.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+      </details>
+    </section>
+  `;
+}
+
+function renderList() {
+  const jumpers = examItems.map(it=>`<a class="pill" href="#q${it.id}">Q${it.id}</a>`).join('');
+  container.innerHTML = `<div class="q-index">${jumpers}</div>` + examItems.map(oneQuestionCard).join('');
+  renderScore();
+}
+
+function renderExam() {
+  container.innerHTML = examItems.map(oneQuestionCard).join('') +
+    `<div class="card"><button id="gradeAll">Grade Exam</button> <span id="finalScore" style="margin-left:10px"></span></div>`;
+  renderScore();
+}
+
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+
+  if(btn.id==='startExamBtn'){ showMode='exam'; renderExam(); return; }
+  if(btn.id==='resetBtn'){ userAnswers={}; showMode==='exam' ? renderExam() : renderList(); return; }
+  if(btn.id==='gradeAll'){
+    let correct=0;
+    for(const item of examItems){
+      if(userAnswers[item.id]===item.correctIndex) correct++;
+      showResult(item.id);
+    }
+    document.getElementById('finalScore').textContent = `Score: ${correct}/${examItems.length}`;
+    renderScore();
+    return;
+  }
+
+  const id = +btn.dataset.id;
+  if(btn.dataset.action==='check'){ showResult(id); renderScore(); }
+  if(btn.dataset.action==='resetOne'){ delete userAnswers[id]; showMode==='exam' ? renderExam() : renderList(); }
+});
+
+document.addEventListener('change', (e)=>{
+  if(e.target.matches('input[type=radio][name^="q"]')){
+    const id = +e.target.name.slice(1);
+    userAnswers[id] = +e.target.value;
+    renderScore();
+  }
+});
+
+function showResult(id){
+  const item = examItems.find(x=>x.id===id);
+  const r = document.getElementById('r'+id);
+  const idx = userAnswers[id];
+  if(typeof idx!=='number'){ r.innerHTML = `<span class="bad">Choose an option first.</span>`; return; }
+  const ok = idx === item.correctIndex;
+  r.innerHTML = ok
+    ? `<span class="ok">Correct ✔</span>`
+    : `<span class="bad">Incorrect ✘ — Correct answer is <strong>${String.fromCharCode(65+item.correctIndex)}</strong>.</span>`;
+}
+
+renderList();
+
+/* PWA: register service worker if available */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>

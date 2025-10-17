@@ -1,459 +1,339 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MA 25B — Practice Exam 1 (Interactive)</title>
-  <meta name="description" content="Interactive Practice Exam 1 with step-by-step notebook-style solutions. Works on all devices and browsers." />
-  <link rel="manifest" href="manifest.webmanifest">
-  <style>
-    :root {
-      --bg:#0b0e11; --card:#12161c; --ink:#e9edf1; --muted:#b8c1cc; --accent:#4da3ff; --ok:#19c37d; --bad:#ff5c5c; --line:#1f2a36;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    header,main,footer{max-width:980px;margin:auto;padding:16px}
-    header h1{font-size:1.4rem;margin:0 0 6px}
-    header p{margin:0 0 12px;color:var(--muted)}
-    nav a{display:inline-block;margin-right:12px;color:var(--accent);text-decoration:none}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
-    .q-index{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
-    .pill{display:inline-flex;min-width:34px;justify-content:center;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);cursor:pointer;text-decoration:none}
-    .pill.active{background:var(--accent);border-color:transparent;color:#031a33}
-    .choices{display:grid;gap:8px;margin:10px 0}
-    label.choice{display:flex;gap:10px;align-items:flex-start;background:#0f141a;border:1px solid var(--line);border-radius:8px;padding:10px;cursor:pointer}
-    input[type="radio"]{transform:scale(1.2);margin-top:2px}
-    button{appearance:none;border:1px solid var(--line);background:#0e3a66;color:#eaf3ff;border-radius:8px;padding:10px 14px;cursor:pointer}
-    button:hover{filter:brightness(1.08)}
-    .result{margin-top:8px;font-weight:600}
-    .ok{color:var(--ok)}
-    .bad{color:var(--bad)}
-    details{background:#0f141a;border:1px dashed var(--line);border-radius:10px;padding:10px}
-    details summary{cursor:pointer;color:var(--accent);outline:none}
-    code,kbd{background:#0c1218;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
-    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .sticky{position:sticky;top:0;background:linear-gradient(180deg,#0b0e11 90%,#0b0e1100);padding-top:10px;z-index:99}
-    footer{color:var(--muted);font-size:.95rem}
-    .grid2{display:grid;grid-template-columns:1fr;gap:10px}
-    @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<title>MA025B — Practice Exam 1 (Original, with full solutions)</title>
+<style>
+:root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--danger:#ff6b6b;--ok:#2ecc71;--shadow:0 6px 20px rgba(0,0,0,.25)}
+@media (prefers-color-scheme: light){
+  :root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--shadow:0 10px 25px rgba(0,0,0,.08)}
+}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);
+  background:linear-gradient(180deg,var(--bg),#111b2e);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
+.brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
+nav a,.btn,button{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease;white-space:nowrap}
+nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn:active,button:active{transform:translateY(0)}
+.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
+.footer{color:var(--muted);text-align:center;margin:30px 0 40px}
+h2{margin:.2rem 0 1rem}
+.q{margin:0 0 12px;font-weight:600}
+.choices{display:grid;gap:8px;margin:8px 0 10px}
+.choice{display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,.05);padding:10px;border-radius:10px}
+.choice input{transform:translateY(2px)}
+.meta{color:var(--muted);font-size:.92rem;margin-top:4px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.msg{font-weight:700}
+.msg.ok{color:var(--ok)} .msg.bad{color:var(--danger)}
+details{background:rgba(255,255,255,.06);padding:10px 12px;border-radius:10px}
+summary{cursor:pointer;font-weight:700}
+kbd{font-family:ui-monospace,Menlo,Consolas,monospace;background:rgba(255,255,255,.09);padding:.1rem .35rem;border-radius:6px}
+small{color:var(--muted)}
+@media (pointer:coarse){ .choice{padding:14px} .choice input{transform:scale(1.35)} }
+@media print{
+  header, .sticky, .actions{display:none !important}
+  body{background:#fff;color:#000}
+  .card{border:1px solid #ccc;box-shadow:none}
+}
+</style>
 </head>
 <body>
-<header class="sticky">
-  <h1>MA 25B — Practice Exam 1 (Interactive)</h1>
-  <p>Multiple‑choice with notebook‑style solutions. Select a question below or take the full exam.</p>
-  <div class="toolbar">
-    <button id="startExamBtn" aria-label="Start full exam">Start Full Exam</button>
-    <button id="resetBtn" aria-label="Reset all answers">Reset</button>
-    <a href="random_practice.html" class="pill">Random Practice</a>
-    <a href="index.html" class="pill">Home</a>
-  </div>
-  <div id="scorebar" class="q-index" aria-live="polite"></div>
-</header>
+<div class="container">
+  <header class="header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>MA025B — Practice Exam 1</h1>
+    </div>
+    <nav aria-label="Primary">
+      <a href="index.html">🏠 Home</a>
+      <a href="references.html">🎥 References</a>
+    </nav>
+  </header>
 
-<main id="container"></main>
+  <section class="card">
+    <h2>How this page works</h2>
+    <p>This is the <strong>original Practice Exam 1</strong> re‑created for the web. Select an answer, press <em>Check</em>, and then open <em>Show steps</em> to see the full notebook‑style solution. Works on any phone or computer.</p>
+    <div class="meta">Source: departmental handout “MA 25B Practice Exam 1”. Methods follow the OTC open‑textbook (factoring strategies, FOIL, etc.).</div>
+  </section>
 
-<footer class="card" role="contentinfo">
-  <p><strong>Sources & Alignment</strong>: Item wording adapted from your uploaded <em>MA 25B Practice Exam 1</em>. Skills/steps follow <em>Beginning Algebra</em> OER (Units 5–9: polynomials, factoring, rationals, radicals, quadratics). Please include proper attribution in your README/license page. </p>
-  <p>OER references: factoring (Ch. 6), rational expressions (Ch. 7), radicals (Ch. 8), quadratics (Ch. 9). </p>
-</footer>
+  <section class="card" id="exam"></section>
+
+  <section class="card">
+    <h2>Notes & Sources</h2>
+    <ul>
+      <li>Question wording and choices are from <em>MA 25B Practice Exam 1</em> (handout). :contentReference[oaicite:5]{index=5} :contentReference[oaicite:6]{index=6}</li>
+      <li>Methods shown: FOIL for binomials; factoring by grouping; ac‑method; special products (difference of cubes). See the open text <em>Beginning &amp; Intermediate Algebra</em> examples. :contentReference[oaicite:7]{index=7} :contentReference[oaicite:8]{index=8}</li>
+    </ul>
+    <p><small>Tip: Use <kbd>Ctrl/⌘+P</kbd> to print to PDF if you want a paper copy with solutions.</small></p>
+  </section>
+
+  <footer class="footer">Built for maximum compatibility. MIT‑style code.</footer>
+</div>
 
 <script>
-/* ---------- Exam Data (adapted from your “MA 25B Practice Exam 1”) ---------- */
-const examItems = [
-  {
-    id: 1, topic: "Properties",
-    q: "Use a property of multiplication to complete: -2 · 5 = 5 · ____ . State the property.",
-    type: "mc",
-    choices: ["-2; associative property","2; associative property","2; commutative property","-2; commutative property"],
-    correctIndex: 3,
+// Each question: { q, choices[], ans (0‑based), steps[] }
+const data = [
+  { q: "1) Identify the polynomial as a monomial, binomial, trinomial, or none. Give its degree:  (1/5) r^3 + (2/5) r^2",
+    choices: ["Trinomial, degree 2","Binomial, degree 3","Binomial, degree 1","Binomial, degree 5"],
+    ans: 1,
     steps: [
-      "Commutative property of multiplication lets us reverse factor order: a·b = b·a.",
-      "So -2·5 = 5·(-2).",
-      "Answer: -2; commutative property."
+      "A binomial has two terms; here the terms are (1/5)r^3 and (2/5)r^2.",
+      "The degree is the highest exponent of r among the terms → max(3, 2) = 3.",
+      "Classification: Binomial of degree 3."
     ]
   },
-  {
-    id: 2, topic: "Formulas",
-    q: "Perimeter of a rectangle: P = 2L + 2W. Solve for L.",
-    type: "mc",
-    choices: ["L = d - 2W","L = P - W","L = (P - 2W)/2","L = (P - W)/2"],
-    correctIndex: 2,
+  { q: "2) Evaluate −5x^3 − 5x^2 + 18 when x = 2",
+    choices: ["−32","−42","−52","−54"],
+    ans: 1,
     steps: [
-      "P = 2L + 2W → subtract 2W: P - 2W = 2L.",
-      "Divide by 2: L = (P - 2W)/2 = P/2 − W."
+      "Plug in x=2: −5(2^3) − 5(2^2) + 18.",
+      "Compute exponents: 2^3=8, 2^2=4 → −5(8) − 5(4) + 18.",
+      "Multiply: −40 − 20 + 18 = −42."
     ]
   },
-  {
-    id: 3, topic: "Percent word problem",
-    q: "A store gives a 9% cash discount. If the discount was $52, what was the total before discount? (nearest dollar)",
-    type: "mc",
-    choices: ["$6","$578","$5","$500"],
-    correctIndex: 1,
+  { q: "3) Subtract (7n^5 − 14n^3 + 5) − (2n^3 + 2n^5 + 12)",
+    choices: ["5n^5 − 12n^3 + 17","5n^5 − 16n^3 − 7","−18n^8","5n^5 − 16n^3 + 17"],
+    ans: 1,
     steps: [
-      "Let T be the total. Discount = 0.09·T = 52.",
-      "T = 52 / 0.09 = 577.777… ≈ $578."
+      "Distribute the minus: (7n^5 − 14n^3 + 5) − 2n^3 − 2n^5 − 12.",
+      "Combine like terms: (7n^5 − 2n^5) + (−14n^3 − 2n^3) + (5 − 12).",
+      "Simplify: 5n^5 − 16n^3 − 7."
     ]
   },
-  {
-    id: 4, topic: "Integers / net change",
-    q: "Runs: +5, +5, −3, −3, −3, −8, +2, +2, +2, +2 (10 games). Net difference?",
-    type: "mc",
-    choices: ["1 run","2 runs","17 runs","−4 runs"],
-    correctIndex: 0,
+  { q: "4) Find the product using FOIL: (5x + 7)(x − 3)",
+    choices: ["5x^2 − 8x − 21","5x^2 − 21x − 8","5x^2 − 10x − 21","5x^2 − 8x − 8"],
+    ans: 0,
     steps: [
-      "Wins by 5 (twice): +10; losses by 3 (thrice): −9; one loss by 8: −8; four wins by 2: +8.",
-      "Total = 10 − 9 − 8 + 8 = +1 run."
+      "FOIL (First‑Outer‑Inner‑Last): First 5x·x=5x^2; Outer 5x·(−3)=−15x; Inner 7·x=7x; Last 7·(−3)=−21. :contentReference[oaicite:9]{index=9}",
+      "Combine like terms: −15x + 7x = −8x.",
+      "Result: 5x^2 − 8x − 21."
     ]
   },
-  {
-    id: 5, topic: "Graphing",
-    q: "Which line is y + 4 = 0?",
-    type: "mc",
-    choices: ["A","B","C","D"],
-    correctIndex: 0,
+  { q: "5) Divide and write with positive exponents: (−30x^5 + 15x^4 − 40x^3) / (−5x^4)",
+    choices: ["6x + 15x^4 + 8/x","6x − 3","14x − 3","6x − 3 + 8/x"],
+    ans: 3,
     steps: [
-      "y + 4 = 0 → y = −4 is a horizontal line crossing the y‑axis at −4.",
-      "Choose the horizontal line at y = −4."
+      "Divide term‑by‑term: (−30x^5)/(−5x^4)=6x; (15x^4)/(−5x^4)=−3; (−40x^3)/(−5x^4)=+8/x.",
+      "Combine: 6x − 3 + 8/x."
     ]
   },
-  {
-    id: 6, topic: "Slope",
-    q: "Find the slope through (−9, 3) and (6, 8).",
-    type: "mc",
-    choices: ["6","1/6","3","1/3"],
-    correctIndex: 3,
+  { q: "6) Perform the division: (p^2 + 2p − 33) ÷ (p + 7)",
+    choices: ["p − 5","(p + 5) + 2/(p + 7)","(p − 2) + 5/(p + 7)","(p − 5) + 2/(p + 7)"],
+    ans: 3,
     steps: [
-      "Slope m = (y2 − y1) / (x2 − x1) = (8 − 3) / (6 − (−9)) = 5/15 = 1/3."
+      "Use synthetic division with −7: coefficients 1, 2, −33.",
+      "Bring down 1; ×(−7)=−7; 2+(−7)=−5; ×(−7)=35; −33+35=2 remainder.",
+      "Quotient p − 5 with remainder 2 → p − 5 + 2/(p + 7)."
     ]
   },
-  {
-    id: 7, topic: "Inequalities",
-    q: "Solve: −7x ≤ 21. Write interval notation.",
-    type: "mc",
-    choices: ["[3, ∞)","[−3, ∞)","(−∞, −3]","(−∞, 3]"],
-    correctIndex: 1,
+  { q: "7) Find the GCF of 42 and 48",
+    choices: ["90","6","7","3"],
+    ans: 1,
     steps: [
-      "Divide both sides by −7 (flip inequality): x ≥ −3.",
-      "Interval: [−3, ∞)."
+      "Prime factors: 42=2·3·7; 48=2^4·3. Common lowest powers: 2·3=6."
     ]
   },
-  {
-    id: 8, topic: "Systems (elimination/substitution)",
-    q: "Solve the system: x + 9y = 9, 7x − 5y = −5.",
-    type: "mc",
-    choices: ["(1, 0)","(0, 1)","(1, 1)","(0, 0)"],
-    correctIndex: 1,
+  { q: "8) Find the GCF of 15m^5, 135m^7, 225m^6",
+    choices: ["15m^5","2025m^2","135m^5","15m^2"],
+    ans: 0,
     steps: [
-      "From x + 9y = 9 → x = 9 − 9y.",
-      "Substitute: 7(9 − 9y) − 5y = −5 → 63 − 63y − 5y = −5 → −68y = −68 → y = 1.",
-      "Then x = 9 − 9(1) = 0. Solution (0, 1)."
+      "GCD(15,135,225)=15. Variable part uses the smallest exponent m^5.",
+      "So GCF=15m^5. (GCF process) :contentReference[oaicite:10]{index=10}"
     ]
   },
-  {
-    id: 9, topic: "Rational equations",
-    q: "Solve: (x − 7)/4 = (x + 8)/7.",
-    type: "mc",
-    choices: ["81/28","7/4","{8}","27"],
-    correctIndex: 3,
+  { q: "9) Complete the factoring: 5x^2 − 45x = 5x( )",
+    choices: ["9 − x","9 − x^2","x − 9","x^2 − 9"],
+    ans: 2,
     steps: [
-      "Cross‑multiply: 7(x − 7) = 4(x + 8).",
-      "7x − 49 = 4x + 32 → 3x = 81 → x = 27."
+      "Factor out 5x: 5x(x − 9).",
+      "Inside parentheses is x − 9."
     ]
   },
-  {
-    id: 10, topic: "Multi‑step equations",
-    q: "Solve: 6w + 9 = 10 − 7w − 6w.",
-    type: "mc",
-    choices: ["−19","1/19","19","−1/13"],
-    correctIndex: 1,
+  { q: "10) Factor out the greatest common factor: 72x^9y^6 − 120x^2y^4 − 60x^7y^2",
+    choices: [
+      "12x^2(6x^7y^6 − 10y^4 − 5x^5y^2)",
+      "12x^2y^2(6x^7y^4 − 10y^2 − 5x^5)",
+      "No common factor (except 1)",
+      "12(6x^9y^6 − 10x^2y^4 − 5x^7y^2)"
+    ],
+    ans: 1,
     steps: [
-      "Right side: 10 − 13w.",
-      "6w + 9 = 10 − 13w → add 13w: 19w + 9 = 10.",
-      "19w = 1 → w = 1/19."
+      "GCF(72,120,60)=12; min x power is x^2; min y power is y^2.",
+      "Factor: 12x^2y^2(6x^7y^4 − 10y^2 − 5x^5)."
     ]
   },
-  {
-    id: 11, topic: "Identities",
-    q: "Solve: −4(x + 5) = −(4x + 20).",
-    type: "mc",
-    choices: ["all real numbers","∅","{5}","{0}"],
-    correctIndex: 0,
+  { q: "11) Factor by grouping: 6a^3 − 8a^2b + 15ab^2 − 20b^3",
+    choices: [
+      "(2a^2 − 5b^2)(3a + 4b)",
+      "(6a^2 + 5b^2)(a − 4b)",
+      "(2a^2 + 5b)(3a − 4b)",
+      "(2a^2 + 5b^2)(3a − 4b)"
+    ],
+    ans: 3,
     steps: [
-      "Expand both sides: −4x − 20 = −4x − 20.",
-      "Always true → infinitely many solutions (all real numbers)."
+      "Group: (6a^3 − 8a^2b) + (15ab^2 − 20b^3).",
+      "Factor each: 2a^2(3a − 4b) + 5b^2(3a − 4b).",
+      "Common binomial appears → (3a − 4b)(2a^2 + 5b^2). (Grouping idea) :contentReference[oaicite:11]{index=11}"
     ]
   },
-  {
-    id: 12, topic: "Fraction coefficients",
-    q: "Solve: (2/5)x − (1/3)x = 2.",
-    type: "mc",
-    choices: ["{−60}","{60}","{−30}","{30}"],
-    correctIndex: 3,
+  { q: "12) Factor completely: x^2 − 6x − 40",
+    choices: ["(x − 4)(x + 10)","(x − 4)(x + 1)","(x + 4)(x − 10)","Prime"],
+    ans: 2,
     steps: [
-      "(2/5 − 1/3)x = (6/15 − 5/15)x = (1/15)x.",
-      "(1/15)x = 2 → x = 30."
+      "Find two numbers with product −40 and sum −6 → −10 and 4.",
+      "So (x − 10)(x + 4). (ac‑method overview) :contentReference[oaicite:12]{index=12}"
     ]
   },
-  {
-    id: 13, topic: "Quadratics",
-    q: "Solve: x² − x = 56.",
-    type: "mc",
-    choices: ["{1, 56}","{−7, −8}","{−7, 8}","{7, 8}"],
-    correctIndex: 2,
+  { q: "13) Factor completely: 4x^4 + 28x^3 + 48x^2",
+    choices: ["x^2(x + 4)(4x + 12)","4x^2(x + 4)(x + 3)","4^2(x^2 + 7x + 12)","x^2(4x + 16)(x + 3)"],
+    ans: 1,
     steps: [
-      "x² − x − 56 = 0.",
-      "Factor: (x − 8)(x + 7) = 0 → x = 8 or x = −7."
+      "Factor GCF 4x^2 → 4x^2(x^2 + 7x + 12).",
+      "Factor trinomial: 12→ 3·4; sum 7 → (x + 3)(x + 4).",
+      "Final: 4x^2(x + 3)(x + 4)."
     ]
   },
-  {
-    id: 14, topic: "Lines from two points",
-    q: "Find the slope‑intercept form through (−7, 1) and (10, −5).",
-    type: "mc",
-    choices: ["y = (8/15)x + 1/3","y = −(8/15)x + 1/3","y = −(6/17)x − 25/17","y = (6/17)x − 25/17"],
-    correctIndex: 2,
+  { q: "14) Factor by grouping: 18x^2 − 12xy − 15xy + 10y^2",
+    choices: ["(6x − 5)(3x − 2)","(18x − 5y)(x − 2y)","(6x + 5y)(3x − 2y)","(6x − 5y)(3x − 2y)"],
+    ans: 3,
     steps: [
-      "m = (−5 − 1)/(10 − (−7)) = −6/17.",
-      "Use y = mx + b with (−7,1): 1 = (−6/17)(−7) + b = 42/17 + b → b = −25/17.",
-      "Equation: y = −(6/17)x − 25/17."
+      "Group: (18x^2 − 12xy) + (−15xy + 10y^2).",
+      "Factor groups: 6x(3x − 2y) − 5y(3x − 2y).",
+      "Binomial repeats → (3x − 2y)(6x − 5y)."
     ]
   },
-  {
-    id: 15, topic: "Factoring trinomials",
-    q: "Factor completely: x² + 43x + 44.",
-    type: "mc",
-    choices: ["(x + 44)(x − 1)","(x − 11)(x + 4)","(x + 11)(x − 4)","Prime"],
-    correctIndex: 3,
+  { q: "15) Factor completely: x^2 + 12xy + 36y^2",
+    choices: ["(x − 6y)^2","(x + 6y)^2","(x + 6y)(x − 6y)","Prime"],
+    ans: 1,
     steps: [
-      "We need two integers with product 44 and sum 43.",
-      "Pairs: 1·44 (sum 45), 2·22 (24), 4·11 (15) → none sum to 43 → prime over ℤ."
+      "Perfect‑square trinomial: x^2 + 2(6y)x + (6y)^2.",
+      "So (x + 6y)^2."
     ]
   },
-  {
-    id: 16, topic: "Evaluate expressions",
-    q: "Evaluate (3x + 7)/(14 − 2y) for x = 9, y = 6.",
-    type: "mc",
-    choices: ["39","34","14","17"],
-    correctIndex: 3,
+  { q: "16) Factor: 128k^3 m − 54 m^4",
+    choices: [
+      "2m(4k + 3m^2)(16k^2 − 12km + 9km^2)",
+      "2m(64k − 3m)(k^2 + 12km + 9m^2)",
+      "(8km − 6m^2)(16k^2 + 9m^2)",
+      "2m(4k − 3m)(16k^2 + 12km + 9m^2)"
+    ],
+    ans: 3,
     steps: [
-      "Numerator: 3·9 + 7 = 34.",
-      "Denominator: 14 − 2·6 = 2.",
-      "Value: 34/2 = 17."
+      "Factor GCF 2m → 2m(64k^3 − 27m^3).",
+      "Use difference of cubes: a^3 − b^3=(a−b)(a^2+ab+b^2) with a=4k, b=3m. :contentReference[oaicite:13]{index=13}",
+      "So 64k^3−27m^3=(4k−3m)(16k^2+12km+9m^2)."
     ]
   },
-  {
-    id: 17, topic: "Evaluate with exponents",
-    q: "Evaluate 9x − 2y² for x = 3, y = −4.",
-    type: "mc",
-    choices: ["59","−5","11","19"],
-    correctIndex: 1,
+  { q: "17) Solve: (4y + 5)(5y + 12) = 0",
+    choices: ["{1, 7}","−4, −5/12","−5/4, −12/5","5/4, 12/5"],
+    ans: 2,
     steps: [
-      "9·3 − 2·(−4)² = 27 − 2·16 = 27 − 32 = −5."
+      "Zero‑product property: set each factor to 0.",
+      "4y+5=0 → y=−5/4; 5y+12=0 → y=−12/5."
     ]
   },
-  {
-    id: 18, topic: "Systems (substitution)",
-    q: "Solve: x − 5y = 15,  −4x − 4y = 12.",
-    type: "mc",
-    choices: ["(3, 0)","(1, −4)","(0, −3)","No solution"],
-    correctIndex: 2,
+  { q: "18) Solve: x^2 + 4x − 21 = 0",
+    choices: ["{7, −3}","{7, 3}","{−7, 1}","{−7, 3}"],
+    ans: 3,
     steps: [
-      "x = 15 + 5y.",
-      "Plug: −4(15 + 5y) − 4y = 12 → −60 − 20y − 4y = 12 → −24y = 72 → y = −3.",
-      "x = 15 + 5(−3) = 0 → (0, −3)."
+      "Factor: (x+7)(x−3)=0 since 7·(−3)=−21 and 7+(−3)=4.",
+      "Solutions: x=−7 or x=3."
     ]
   },
-  {
-    id: 19, topic: "Polynomial division",
-    q: "Compute (y² + 18y + 81) ÷ (y + 9).",
-    type: "mc",
-    choices: ["y − 9","y + 9","(y + 9)/(y + 9)","y² + 9"],
-    correctIndex: 1,
+  { q: "19) A rectangle has length x + 5 and width x − 5 with area 56. Find the length & width.",
+    choices: [
+      "width = 2; length = 28",
+      "width = 4; length = 14",
+      "width = 7; length = 8",
+      "width = 1; length = 56"
+    ],
+    ans: 1,
     steps: [
-      "y² + 18y + 81 = (y + 9)².",
-      "Divide by (y + 9): result y + 9 (for y ≠ −9)."
+      "Area = (x+5)(x−5)=x^2−25. Set x^2−25=56 → x^2=81 → x=9 (positive).",
+      "Width=9−5=4; Length=9+5=14."
     ]
   },
-  {
-    id: 20, topic: "Factoring completion",
-    q: "Complete: x² − 13x + 42 = (x − 7)(  ?  ).",
-    type: "mc",
-    choices: ["x − 6","7 − x","x + 6","x² + 7"],
-    correctIndex: 0,
+  { q: "20) Find three consecutive odd integers whose sum is 36 less than the product of the smaller two.",
+    choices: ["−6, −4, −2","7, 9, 11","5, 7, 9","7, 9, 11, or −6, −4, −2"],
+    ans: 1,
     steps: [
-      "42 = 7·6 and 7 + 6 = 13.",
-      "Factor: (x − 7)(x − 6)."
-    ]
-  },
-  {
-    id: 21, topic: "Translate phrase",
-    q: "Write and simplify: “the product of −9 and 1, subtracted from −5”.",
-    type: "mc",
-    choices: ; 4"],
-    correctIndex: 2,
-    steps: [
-      "‘Subtracted from −5’ means: −5 − [ (−9)·1 ].",
-      "Compute: −5 − (−9) = −5 + 9 = 4."
-    ]
-  },
-  {
-    id: 22, topic: "Reduce rational expressions",
-    q: "Reduce: (16x + 20) / (20x + 25).",
-    type: "mc",
-    choices: ["5/4","1","4/5","4"],
-    correctIndex: 2,
-    steps: [
-      "Factor: 4(4x + 5) / 5(4x + 5).",
-      "Cancel (4x + 5) (x ≠ −5/4): result 4/5."
-    ]
-  },
-  {
-    id: 23, topic: "Reduce rational expressions",
-    q: "Reduce: (a² − 6a) / [(a + 9)(a − 6)].",
-    type: "mc",
-    choices: ["1/(a + 9)","(a − 6)/(a + 9)","a/(a + 9)","a²/(a + 9)"],
-    correctIndex: 2,
-    steps: [
-      "Factor numerator: a(a − 6).",
-      "Cancel (a − 6) (a ≠ 6): result a/(a + 9)."
-    ]
-  },
-  {
-    id: 24, topic: "Binomial square",
-    q: "Expand: (7t + r)².",
-    type: "mc",
-    choices: ["49t² + 2·7tr + r²","7t + 2·7tr + r","7t + 7tr + r","49t² + 7tr + r²"],
-    correctIndex: 0,
-    steps: [
-      "(a + b)² = a² + 2ab + b².",
-      "Here a=7t, b=r → 49t² + 14tr + r² (choice shown as 2·7tr)."
-    ]
-  },
-  {
-    id: 25, topic: "Polynomial add/subtract",
-    q: "Simplify: (7x + 30xy − 28y) − (14x − 29xy − 25y).",
-    type: "mc",
-    choices: ["−7x + 59xy − 3y","−7x − 59xy − 53y","49xy","−23x + 7xy + 53"],
-    correctIndex: 0,
-    steps: [
-      "Subtract termwise: (7x−14x)=−7x; 30xy−(−29xy)=59xy; (−28y)−(−25y)=−3y."
-    ]
-  },
-  {
-    id: 26, topic: "Special products",
-    q: "Find the product: (5a + 6c)(5a − 6c).",
-    type: "mc",
-    choices: ["25a² + 36c²","25a² − 36c²","10a − 36c","(5a − 6c)²"],
-    correctIndex: 1,
-    steps: [
-      "(A+B)(A−B) = A² − B².",
-      "A=5a,B=6c → 25a² − 36c²."
+      "Let the integers be n, n+2, n+4.",
+      "Sum: 3n+6. Product of first two: n(n+2)=n^2+2n.",
+      "Equation: 3n+6 = n^2+2n − 36 → n^2 − n − 42 = 0.",
+      "Factor: (n−7)(n+6)=0 → n=7 or n=−6.",
+      "So sets: 7,9,11 or −6,−4,−2. (Key uses the positive set.)"
     ]
   }
 ];
 
-/* ---------- Rendering ---------- */
-const container = document.getElementById('container');
-const scorebar = document.getElementById('scorebar');
-let userAnswers = {}; // id -> index
-let showMode = 'list';
+function makeQuestion(idx, item){
+  const id = i => `q${idx}-c${i}`;
+  const wrap = document.createElement('article');
+  wrap.className = 'card';
+  const q = document.createElement('div');
+  q.className = 'q';
+  q.textContent = item.q;
+  wrap.appendChild(q);
 
-function renderScore() {
-  const answered = Object.keys(userAnswers).length;
-  const correct = Object.entries(userAnswers).filter(([id, idx]) => examItems.find(x=>x.id==id).correctIndex===idx).length;
-  scorebar.innerHTML = `
-    <span class="pill active">Answered ${answered}/${examItems.length}</span>
-    <span class="pill">Correct ${correct}</span>
-  `;
+  const choices = document.createElement('div');
+  choices.className = 'choices';
+  item.choices.forEach((t,i)=>{
+    const label = document.createElement('label');
+    label.className = 'choice';
+    const input = document.createElement('input');
+    input.type = 'radio'; input.name = `q${idx}`; input.id = id(i); input.value = i;
+    const span = document.createElement('span'); span.textContent = t;
+    label.appendChild(input); label.appendChild(span);
+    choices.appendChild(label);
+  });
+  wrap.appendChild(choices);
+
+  const actions = document.createElement('div');
+  actions.className = 'actions';
+  const btn = document.createElement('button');
+  btn.textContent = 'Check';
+  const reset = document.createElement('button');
+  reset.textContent = 'Reset'; reset.className = 'btn';
+  actions.appendChild(btn); actions.appendChild(reset);
+  wrap.appendChild(actions);
+
+  const msg = document.createElement('div');
+  msg.className = 'meta msg'; wrap.appendChild(msg);
+
+  const det = document.createElement('details');
+  const sum = document.createElement('summary'); sum.textContent = 'Show steps';
+  det.appendChild(sum);
+  const ol = document.createElement('ol');
+  item.steps.forEach(s=>{ const li=document.createElement('li'); li.textContent=s; ol.appendChild(li); });
+  det.appendChild(ol);
+  wrap.appendChild(det);
+
+  btn.addEventListener('click', ()=>{
+    const picked = wrap.querySelector('input[type=radio]:checked');
+    if(!picked){ msg.textContent = 'Pick an option and press Check.'; msg.className='meta msg'; return; }
+    const correct = Number(picked.value) === item.ans;
+    msg.textContent = correct ? 'Correct!' : 'Not quite — open “Show steps”.';
+    msg.className = 'meta msg ' + (correct ? 'ok':'bad');
+    det.open = true;
+  });
+  reset.addEventListener('click', ()=>{
+    wrap.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+    msg.textContent=''; msg.className='meta msg';
+    det.open=false;
+  });
+  return wrap;
 }
 
-function oneQuestionCard(item) {
-  const idx = userAnswers[item.id];
-  const checked = typeof idx === 'number' ? idx : -1;
-  const choice = (text, i) => `
-    <label class="choice">
-      <input type="radio" name="q${item.id}" value="${i}" ${checked===i?'checked':''} />
-      <span>${String.fromCharCode(65+i)}. ${text}</span>
-    </label>`;
-  return `
-    <section class="card" id="q${item.id}">
-      <h2 style="margin:0 0 6px;font-size:1.05rem">Q${item.id}. ${item.topic}</h2>
-      <p>${item.q}</p>
-      <div class="choices" role="radiogroup" aria-labelledby="q${item.id}">
-        ${item.choices.map((c,i)=>choice(c,i)).join('')}
-      </div>
-      <div class="grid2">
-        <button data-action="check" data-id="${item.id}">Check Answer</button>
-        <button data-action="resetOne" data-id="${item.id}">Clear</button>
-      </div>
-      <div class="result" id="r${item.id}" aria-live="polite"></div>
-      <details>
-        <summary>Show notebook‑style steps</summary>
-        <ol>${item.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
-      </details>
-    </section>
-  `;
-}
+const host = document.getElementById('exam');
+data.forEach((item,idx)=> host.appendChild(makeQuestion(idx+1,item)) );
 
-function renderList() {
-  const jumpers = examItems.map(it=>`<a class="pill" href="#q${it.id}">Q${it.id}</a>`).join('');
-  container.innerHTML = `<div class="q-index">${jumpers}</div>` + examItems.map(oneQuestionCard).join('');
-  renderScore();
-}
-
-function renderExam() {
-  container.innerHTML = examItems.map(oneQuestionCard).join('') +
-    `<div class="card"><button id="gradeAll">Grade Exam</button> <span id="finalScore" style="margin-left:10px"></span></div>`;
-  renderScore();
-}
-
-document.addEventListener('click', (e)=>{
-  const btn = e.target.closest('button');
-  if(!btn) return;
-
-  if(btn.id==='startExamBtn'){ showMode='exam'; renderExam(); return; }
-  if(btn.id==='resetBtn'){ userAnswers={}; showMode==='exam' ? renderExam() : renderList(); return; }
-  if(btn.id==='gradeAll'){
-    let correct=0;
-    for(const item of examItems){
-      if(userAnswers[item.id]===item.correctIndex) correct++;
-      showResult(item.id);
-    }
-    document.getElementById('finalScore').textContent = `Score: ${correct}/${examItems.length}`;
-    renderScore();
-    return;
-  }
-
-  const id = +btn.dataset.id;
-  if(btn.dataset.action==='check'){ showResult(id); renderScore(); }
-  if(btn.dataset.action==='resetOne'){ delete userAnswers[id]; showMode==='exam' ? renderExam() : renderList(); }
-});
-
-document.addEventListener('change', (e)=>{
-  if(e.target.matches('input[type=radio][name^="q"]')){
-    const id = +e.target.name.slice(1);
-    userAnswers[id] = +e.target.value;
-    renderScore();
-  }
-});
-
-function showResult(id){
-  const item = examItems.find(x=>x.id===id);
-  const r = document.getElementById('r'+id);
-  const idx = userAnswers[id];
-  if(typeof idx!=='number'){ r.innerHTML = `<span class="bad">Choose an option first.</span>`; return; }
-  const ok = idx === item.correctIndex;
-  r.innerHTML = ok
-    ? `<span class="ok">Correct ✔</span>`
-    : `<span class="bad">Incorrect ✘ — Correct answer is <strong>${String.fromCharCode(65+item.correctIndex)}</strong>.</span>`;
-}
-
-renderList();
-
-/* PWA: register service worker if available */
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js').catch(()=>{});
-}
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js'); }
 </script>
 </body>
 </html>

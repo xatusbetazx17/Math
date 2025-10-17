@@ -1,193 +1,542 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Practice Exam 1 — MA025B (with step‑by‑step)</title>
-<meta name="description" content="Interactive study version of Practice Exam 1 with detailed, notebook-style solutions.">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Practice Exam 1 — MA025B (MC + step‑by‑step)</title>
+<meta name="description" content="Multiple‑choice practice exam with detailed, notebook-style solutions. Works on any device and offline." />
 <style>
-  :root{--bg:#0b132b;--panel:#111826;--ink:#ecf0f3;--muted:#9fb0c0;--accent:#33b1ff;--ok:#28a745;--bad:#ff5c5c;--line:#1f2a36}
+  :root{--bg:#0b132b;--card:#1c2541;--ink:#edf2f4;--muted:#a8b2c1;--accent:#5bc0be;--accent2:#98c1d9;--line:#223;--ok:#2ecc71;--bad:#ff6b6b}
+  @media (prefers-color-scheme: light){
+    :root{--bg:#f5f7fb;--card:#fff;--ink:#102a43;--muted:#64748b;--accent:#0a9396;--accent2:#005f73;--line:#e6e8ee;--ok:#1b8a5a;--bad:#b00020}
+  }
   *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#0b132b,#0a0f1f);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  header,main,footer{max-width:1000px;margin:auto;padding:16px}
-  header h1{font-size:clamp(18px,4vw,26px);margin:0 0 6px}
-  header p{color:var(--muted);margin:4px 0 8px}
-  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),#111b2e);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  header,main,footer{max-width:980px;margin:auto;padding:16px}
   a{color:var(--accent);text-decoration:none}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0}
-  .q{border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#0f1725}
-  .q h3{margin:0 0 8px;font-size:1rem}
-  .result{font-weight:650;margin-top:8px}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .brand{font-weight:800}
+  .btn{appearance:none;border:1px solid var(--line);background:var(--accent);color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
+  .btn.secondary{background:transparent;color:var(--accent);border-color:var(--accent)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0}
+  .q{padding:12px;border:1px solid var(--line);border-radius:12px;margin:12px 0;background:rgba(255,255,255,.04)}
+  fieldset{border:0;padding:0}
+  legend{font-weight:700;margin-bottom:6px}
+  label{display:block;margin:6px 0}
+  details{background:#0f1a2a1a;border:1px dashed var(--line);border-radius:10px;padding:10px}
+  summary{cursor:pointer;color:var(--accent)}
+  .result{margin-top:8px;font-weight:700}
   .ok{color:var(--ok)} .bad{color:var(--bad)}
-  details{background:#0b1117;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:8px}
-  summary{cursor:pointer;color:#7cc0ff}
-  input[type=text]{width:100%;max-width:220px;padding:8px;border-radius:8px;border:1px solid var(--line);background:#0c1220;color:var(--ink)}
-  button{appearance:none;border:1px solid var(--line);background:#0e3a66;color:#eaf3ff;border-radius:8px;padding:9px 13px;cursor:pointer}
-  button:hover{filter:brightness(1.07)}
-  .meta{color:var(--muted);font-size:.92rem}
-  .sticky{position:sticky;top:0;background:#0b132b;z-index:2;padding:6px 0;border-bottom:1px solid var(--line)}
+  .small{color:var(--muted);font-size:.95rem}
+  code{background:rgba(0,0,0,.15);padding:0 .25rem;border-radius:6px}
 </style>
 </head>
 <body>
-<header>
-  <h1>Practice Exam 1 — MA025B</h1>
-  <p>Study version with full <em>notebook‑style</em> steps and instant feedback. Works offline on any device.</p>
-  <div class="row">
-    <a href="index.html">Home</a> •
-    <a href="random_practice.html">Random Practice</a> •
-    <a href="references.html">References / Videos</a>
-  </div>
+<header class="bar">
+  <div class="brand">MA025B — Practice Exam 1</div>
+  <nav>
+    <a href="index.html" class="btn secondary">Home</a>
+    <a href="references.html" class="btn secondary">References</a>
+  </nav>
 </header>
 
 <main>
   <section class="card">
-    <div class="row">
-      <button id="modeAll">Show All Questions</button>
-      <button id="modeOne">One‑by‑One Mode</button>
-      <button id="checkAll">Check All</button>
-      <button id="revealAll">Reveal All Answers</button>
-      <span class="meta" id="score"></span>
+    <p>This page reproduces Practice Exam 1 as multiple‑choice with detailed, notebook‑style solutions. Tap <em>Check</em> to verify your choice, or open <em>Show steps</em> to learn the method.</p>
+    <div class="small">Tip: Works offline after the first load. (Keep <code>sw.js</code> in the repo.)</div>
+    <div class="bar" style="margin-top:8px">
+      <button id="checkAll" class="btn">Check all</button>
+      <button id="resetAll" class="btn secondary">Reset all</button>
     </div>
-    <p class="meta">Tip: type your answer (like <code>x = 27</code> or <code>m = 1/3</code>); the checker accepts equivalent simplified forms when possible.</p>
   </section>
 
-  <section id="exam"></section>
+  <section id="exam" class="card">
+    <!-- Q1 -->
+    <article class="q" data-answer="D">
+      <fieldset>
+        <legend>1) Use a property to complete:  −2 · 5 = 5 · ____  (which property?)</legend>
+        <label><input type="radio" name="q1" value="A"> A) −2; associative property</label>
+        <label><input type="radio" name="q1" value="B"> B) 2; associative property</label>
+        <label><input type="radio" name="q1" value="C"> C) 2; commutative property</label>
+        <label><input type="radio" name="q1" value="D"> D) −2; commutative property</label>
+      </fieldset>
+      <button class="btn chk">Check</button>
+      <div class="result" aria-live="polite"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li>Commutative property of multiplication: <code>a·b = b·a</code>.</li>
+          <li>So <code>(−2)·5 = 5·(−2)</code>. Answer: −2; property: commutative.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q2 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>2) Perimeter of a rectangle: <code>P = 2L + 2W</code>. Solve for <code>L</code>.</legend>
+        <label><input type="radio" name="q2" value="A"> A) L = d − 2W</label>
+        <label><input type="radio" name="q2" value="B"> B) L = P − W</label>
+        <label><input type="radio" name="q2" value="C"> C) L = (P − 2W)/2</label>
+        <label><input type="radio" name="q2" value="D"> D) L = (P − W)/2</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li>Subtract <code>2W</code> both sides: <code>P − 2W = 2L</code>.</li>
+          <li>Divide both sides by 2: <code>L = (P − 2W)/2</code>.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q3 -->
+    <article class="q" data-answer="B">
+      <fieldset>
+        <legend>3) A store gives a 9% cash discount. If the discount amount is $52, what was the bill before the discount? (nearest dollar)</legend>
+        <label><input type="radio" name="q3" value="A"> A) $6</label>
+        <label><input type="radio" name="q3" value="B"> B) $578</label>
+        <label><input type="radio" name="q3" value="C"> C) $5</label>
+        <label><input type="radio" name="q3" value="D"> D) $500</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li>Let total be <code>T</code>. Discount = <code>0.09T</code>.</li>
+          <li><code>0.09T = 52 ⇒ T = 52 / 0.09 = 577.7… ≈ $578</code>.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q4 -->
+    <article class="q" data-answer="A">
+      <fieldset>
+        <legend>4) Run differential in 10 games: won 2 by 5; lost 3 by 3; lost 1 by 8; won 4 by 2. Net runs?</legend>
+        <label><input type="radio" name="q4" value="A"> A) 1 run</label>
+        <label><input type="radio" name="q4" value="B"> B) 2 runs</label>
+        <label><input type="radio" name="q4" value="C"> C) 17 runs</label>
+        <label><input type="radio" name="q4" value="D"> D) −4 runs</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>+10 (2×5) − 9 (3×3) − 8 (1×8) + 8 (4×2) = <b>+1</b>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q5 -->
+    <article class="q" data-answer="A">
+      <fieldset>
+        <legend>5) Graph the linear equation <code>y + 4 = 0</code>.</legend>
+        <label><input type="radio" name="q5" value="A"> A) Horizontal line at <code>y = −4</code></label>
+        <label><input type="radio" name="q5" value="B"> B) Vertical line at <code>x = −4</code></label>
+        <label><input type="radio" name="q5" value="C"> C) Line through origin with slope −4</label>
+        <label><input type="radio" name="q5" value="D"> D) Line through origin with slope 4</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li><code>y + 4 = 0 ⇒ y = −4</code> is a constant‑<em>y</em> equation → horizontal line crossing the y‑axis at −4.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q6 -->
+    <article class="q" data-answer="D">
+      <fieldset>
+        <legend>6) Slope through points (−9, 3) and (6, 8)</legend>
+        <label><input type="radio" name="q6" value="A"> A) 6</label>
+        <label><input type="radio" name="q6" value="B"> B) 1/6</label>
+        <label><input type="radio" name="q6" value="C"> C) 3</label>
+        <label><input type="radio" name="q6" value="D"> D) 1/3</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li><code>m = (8−3)/(6−(−9)) = 5/15 = 1/3</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q7 -->
+    <article class="q" data-answer="B">
+      <fieldset>
+        <legend>7) Solve and write interval:  <code>−7x ≤ 21</code></legend>
+        <label><input type="radio" name="q7" value="A"> A) [3, ∞)</label>
+        <label><input type="radio" name="q7" value="B"> B) [−3, ∞)</label>
+        <label><input type="radio" name="q7" value="C"> C) (−∞, −3]</label>
+        <label><input type="radio" name="q7" value="D"> D) (−∞, 3]</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li>Divide by −7 (flip inequality): <code>x ≥ −3</code>.</li>
+          <li>Interval: <code>[−3, ∞)</code>.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q8 -->
+    <article class="q" data-answer="B">
+      <fieldset>
+        <legend>8) Solve by elimination:  <code>x + 9y = 9</code>,  <code>7x − 5y = −5</code></legend>
+        <label><input type="radio" name="q8" value="A"> A) (1, 0)</label>
+        <label><input type="radio" name="q8" value="B"> B) (0, 1)</label>
+        <label><input type="radio" name="q8" value="C"> C) (1, 1)</label>
+        <label><input type="radio" name="q8" value="D"> D) (0, 0)</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li>From <code>x + 9y = 9</code> ⇒ <code>x = 9 − 9y</code>.</li>
+          <li>Substitute: <code>7(9−9y) − 5y = −5 ⇒ 63 − 68y = −5 ⇒ y = 1</code>.</li>
+          <li><code>x = 9 − 9(1) = 0</code>. So (0, 1).</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q9 -->
+    <article class="q" data-answer="D">
+      <fieldset>
+        <legend>9) Solve:  <code>(x − 7)/4 = (x + 8)/7</code></legend>
+        <label><input type="radio" name="q9" value="A"> A) 81/28</label>
+        <label><input type="radio" name="q9" value="B"> B) 7/4</label>
+        <label><input type="radio" name="q9" value="C"> C) 8</label>
+        <label><input type="radio" name="q9" value="D"> D) 27</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Cross‑multiply: <code>7(x−7)=4(x+8)</code> ⇒ <code>7x−49=4x+32</code>.</li>
+          <li><code>3x = 81 ⇒ x = 27</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q10 -->
+    <article class="q" data-answer="B">
+      <fieldset>
+        <legend>10) Solve:  <code>6w + 9 = 10 − 7w − 6w</code></legend>
+        <label><input type="radio" name="q10" value="A"> A) −19</label>
+        <label><input type="radio" name="q10" value="B"> B) 1/19</label>
+        <label><input type="radio" name="q10" value="C"> C) 19</label>
+        <label><input type="radio" name="q10" value="D"> D) −1/13</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Right side: <code>−13w + 10</code>. So <code>6w + 9 = −13w + 10</code>.</li>
+          <li><code>19w = 1 ⇒ w = 1/19</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q11 -->
+    <article class="q" data-answer="A">
+      <fieldset>
+        <legend>11) Solve:  <code>−4(x + 5) = −(4x + 20)</code></legend>
+        <label><input type="radio" name="q11" value="A"> A) all real numbers</label>
+        <label><input type="radio" name="q11" value="B"> B) no solution</label>
+        <label><input type="radio" name="q11" value="C"> C) {5}</label>
+        <label><input type="radio" name="q11" value="D"> D) {0}</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Both sides simplify to <code>−4x − 20</code>. Identity ⇒ true for all real <code>x</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q12 -->
+    <article class="q" data-answer="D">
+      <fieldset>
+        <legend>12) Solve:  <code>(2/5)x − (1/3)x = 2</code></legend>
+        <label><input type="radio" name="q12" value="A"> A) −60</label>
+        <label><input type="radio" name="q12" value="B"> B) 60</label>
+        <label><input type="radio" name="q12" value="C"> C) −30</label>
+        <label><input type="radio" name="q12" value="D"> D) 30</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li><code>(6/15 − 5/15)x = (1/15)x = 2 ⇒ x = 30</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q13 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>13) Solve:  <code>x² − x = 56</code></legend>
+        <label><input type="radio" name="q13" value="A"> A) {1, 56}</label>
+        <label><input type="radio" name="q13" value="B"> B) {−7, −8}</label>
+        <label><input type="radio" name="q13" value="C"> C) {−7, 8}</label>
+        <label><input type="radio" name="q13" value="D"> D) {7, 8}</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li><code>x² − x − 56 = 0</code> ⇒ factor: <code>(x−8)(x+7)=0</code>.</li>
+          <li>Solutions: <code>x = 8</code> or <code>x = −7</code>.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q14 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>14) Line through (−7, 1) and (10, −5) in slope‑intercept form</legend>
+        <label><input type="radio" name="q14" value="A"> A) y = (8/15)x + 1/3</label>
+        <label><input type="radio" name="q14" value="B"> B) y = −(8/15)x + 1/3</label>
+        <label><input type="radio" name="q14" value="C"> C) y = −(6/17)x − 25/17</label>
+        <label><input type="radio" name="q14" value="D"> D) y = (6/17)x − 25/17</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li><code>m = (−5−1)/(10−(−7)) = −6/17</code>.</li>
+          <li>Use point (−7,1): <code>y − 1 = (−6/17)(x + 7)</code> ⇒ <code>y = −(6/17)x − 25/17</code>.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q15 -->
+    <article class="q" data-answer="D">
+      <fieldset>
+        <legend>15) Factor completely:  <code>x² + 43x + 44</code></legend>
+        <label><input type="radio" name="q15" value="A"> A) (x + 44)(x − 1)</label>
+        <label><input type="radio" name="q15" value="B"> B) (x − 11)(x + 4)</label>
+        <label><input type="radio" name="q15" value="C"> C) (x + 11)(x − 4)</label>
+        <label><input type="radio" name="q15" value="D"> D) Prime</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Look for integers that multiply to 44 and add to 43 (1&44, 2&22, 4&11 → none add to 43).</li>
+          <li>Discriminant <code>b² − 4ac = 43² − 176 = 1673</code> (not a perfect square) ⇒ not factorable over integers.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q16 -->
+    <article class="q" data-answer="D">
+      <fieldset>
+        <legend>16) Evaluate <code>(3x + 7)/(14 − 2y)</code> for <code>x = 9, y = 6</code>.</legend>
+        <label><input type="radio" name="q16" value="A"> A) 39</label>
+        <label><input type="radio" name="q16" value="B"> B) 34</label>
+        <label><input type="radio" name="q16" value="C"> C) 14</label>
+        <label><input type="radio" name="q16" value="D"> D) 17</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Numerator: <code>3·9 + 7 = 34</code>; Denominator: <code>14 − 2·6 = 2</code>; value <code>= 34/2 = 17</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q17 -->
+    <article class="q" data-answer="B">
+      <fieldset>
+        <legend>17) Evaluate <code>9x − 2y²</code> for <code>x = 3, y = −4</code>.</legend>
+        <label><input type="radio" name="q17" value="A"> A) 59</label>
+        <label><input type="radio" name="q17" value="B"> B) −5</label>
+        <label><input type="radio" name="q17" value="C"> C) 11</label>
+        <label><input type="radio" name="q17" value="D"> D) 19</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li><code>9·3 − 2·(−4)² = 27 − 2·16 = 27 − 32 = −5</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q18 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>18) Solve by substitution:  <code>x − 5y = 15</code>,  <code>−4x − 4y = 12</code></legend>
+        <label><input type="radio" name="q18" value="A"> A) (3, 0)</label>
+        <label><input type="radio" name="q18" value="B"> B) (1, −4)</label>
+        <label><input type="radio" name="q18" value="C"> C) (0, −3)</label>
+        <label><input type="radio" name="q18" value="D"> D) no solution</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ol>
+          <li><code>x = 15 + 5y</code>. Substitute: <code>−4(15 + 5y) − 4y = 12</code>.</li>
+          <li><code>−60 − 20y − 4y = 12 ⇒ −24y = 72 ⇒ y = −3</code>.</li>
+          <li><code>x = 15 + 5(−3) = 0</code>.</li>
+        </ol>
+      </details>
+    </article>
+
+    <!-- Q19 -->
+    <article class="q" data-answer="B">
+      <fieldset>
+        <legend>19) Divide:  <code>(y² + 18y + 81)/(y + 9)</code></legend>
+        <label><input type="radio" name="q19" value="A"> A) y − 9</label>
+        <label><input type="radio" name="q19" value="B"> B) y + 9</label>
+        <label><input type="radio" name="q19" value="C"> C) y + 9/(y + 9)</label>
+        <label><input type="radio" name="q19" value="D"> D) y² + 9</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Factor numerator: <code>y² + 18y + 81 = (y + 9)²</code> ⇒ cancellation gives <code>y + 9</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q20 -->
+    <article class="q" data-answer="A">
+      <fieldset>
+        <legend>20) Complete the factoring:  <code>x² − 13x + 42 = (x − 7)( ____ )</code></legend>
+        <label><input type="radio" name="q20" value="A"> A) x − 6</label>
+        <label><input type="radio" name="q20" value="B"> B) 7 − x</label>
+        <label><input type="radio" name="q20" value="C"> C) x + 6</label>
+        <label><input type="radio" name="q20" value="D"> D) x² + 7</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Find numbers that multiply to 42 and add to −13 ⇒ −7 and −6.</li>
+          <li>So <code>(x − 7)(x − 6)</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q21 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>21) Write and simplify: “The product of −9 and 1, subtracted from −5.”</legend>
+        <label><input type="radio" name="q21" value="A"> A) −5 + (−9)(1) = −14</label>
+        <label><input type="radio" name="q21" value="B"> B) (−5)(−9)(1) = 45</label>
+        <label><input type="radio" name="q21" value="C"> C) −5 − (−9)(1) = 4</label>
+        <label><input type="radio" name="q21" value="D"> D)  = 4</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>“Subtracted from −5” ⇒ <code>−5 − [ (−9)·1 ] = −5 − (−9) = 4</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q22 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>22) Lowest terms:  <code>(16x + 20)/(20x + 25)</code></legend>
+        <label><input type="radio" name="q22" value="A"> A) 5/4</label>
+        <label><input type="radio" name="q22" value="B"> B) 1</label>
+        <label><input type="radio" name="q22" value="C"> C) 4/5</label>
+        <label><input type="radio" name="q22" value="D"> D) 4</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Factor: <code>4(4x + 5)/[5(4x + 5)] = 4/5</code>, provided <code>x ≠ −5/4</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q23 -->
+    <article class="q" data-answer="C">
+      <fieldset>
+        <legend>23) Lowest terms:  <code>(a² − 6a)/[(a + 9)(a − 6)]</code></legend>
+        <label><input type="radio" name="q23" value="A"> A) 1/(a + 9)</label>
+        <label><input type="radio" name="q23" value="B"> B) (a − 6)/(a + 9)</label>
+        <label><input type="radio" name="q23" value="C"> C) a/(a + 9)</label>
+        <label><input type="radio" name="q23" value="D"> D) a²/(a + 9)</label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Factor numerator: <code>a(a − 6)</code>; cancel <code>(a − 6)</code> ⇒ <code>a/(a + 9)</code> (domain: <code>a ≠ −9, 6</code>).</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q24 -->
+    <article class="q" data-answer="A">
+      <fieldset>
+        <legend>24) Simplify:  <code>(√(7t) + r)²</code> (assume nonnegative variables)</legend>
+        <label><input type="radio" name="q24" value="A"> A) <code>7t + 2r√(7t) + r²</code></label>
+        <label><input type="radio" name="q24" value="B"> B) <code>√(7t) + 2√(7tr) + r</code></label>
+        <label><input type="radio" name="q24" value="C"> C) <code>7t + 7tr + r</code></label>
+        <label><input type="radio" name="q24" value="D"> D) <code>49t² + 7tr + r²</code></label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Use <code>(A+B)² = A² + 2AB + B²</code> with <code>A=√(7t)</code>, <code>B=r</code>.</li>
+          <li>Gives <code>7t + 2r√(7t) + r²</code>.</li>
+        </ul>
+      </details>
+    </article>
+
+    <!-- Q25 -->
+    <article class="q" data-answer="A">
+      <fieldset>
+        <legend>25) Subtract:  <code>(7x + 30xy − 28y) − (14x − 29xy − 25y)</code></legend>
+        <label><input type="radio" name="q25" value="A"> A) <code>−7x + 59xy − 3y</code></label>
+        <label><input type="radio" name="q25" value="B"> B) <code>−7x − 59xy − 53y</code></label>
+        <label><input type="radio" name="q25" value="C"> C) <code>7x + 59xy − 3y</code></label>
+        <label><input type="radio" name="q25" value="D"> D) <code>7x − 59xy + 53y</code></label>
+      </fieldset>
+      <button class="btn chk">Check</button><div class="result"></div>
+      <details><summary>Show steps</summary>
+        <ul>
+          <li>Distribute minus: <code>7x+30xy−28y −14x+29xy+25y</code>.</li>
+          <li>Combine like terms ⇒ <code>(7−14)x = −7x</code>; <code>30xy+29xy=59xy</code>; <code>−28y+25y=−3y</code>.</li>
+        </ul>
+      </details>
+    </article>
+  </section>
+
+  <section class="card">
+    <button id="scoreBtn" class="btn">Score my exam</button>
+    <div id="score" style="margin-top:8px"></div>
+  </section>
 </main>
 
-<footer class="card">
-  <p class="meta">Question set mirrors the class exam bank and skills from OER Units 0–9. See <a href="references.html">References</a> for refreshers.</p>
+<footer class="card" style="max-width:980px;margin:auto">
+  Linked study notes & examples: see <a href="references.html">References</a>.
 </footer>
 
 <script>
-const byId = (s)=>document.getElementById(s);
-function eqAns(user, want) {
-  const norm = (s)=>s.replace(/\s+/g,'').replace(/^([a-z])=/i,'');
-  const u = norm(user).toLowerCase();
-  const w = norm(want).toLowerCase();
-  if(u===w) return true;
-  const f = (s)=>{
-    if(/^-?\d+\/-?\d+$/.test(s)){ const [a,b]=s.split('/').map(Number); return a/b; }
-    const n = Number(s); return Number.isFinite(n)? n : NaN;
-  };
-  const uf=f(u), wf=f(w);
-  if(Number.isFinite(uf) && Number.isFinite(wf)) return Math.abs(uf-wf) < 1e-9;
-  return false;
-}
+  // PWA
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
 
-const QUESTIONS = [
-  {id:1,prompt:"Use a property to complete: (−2)·5 = 5·(    ). What property is used?",expected:"-2",steps:["The order of factors can be reversed without changing the product.","This is the <b>commutative property of multiplication</b>.","So (−2)·5 = 5·(−2)."]},
-  {id:2,prompt:"Solve the perimeter formula P = 2L + 2W for L.",expected:"L = (P - 2W)/2",steps:["Start with P = 2L + 2W.","Subtract 2W from both sides: P − 2W = 2L.","Divide by 2: L = (P − 2W)/2."]},
-  {id:3,prompt:"Cash discount: 9% off gave a $52 discount. Find the original price (nearest dollar).",expected:"578",steps:["A 9% discount means discount = 0.09 × original.","Original = 52 / 0.09 = 577.777..., so ≈ $578."]},
-  {id:4,prompt:"Net runs: won 2 games by 5, lost 3 by 3, lost 1 by 8, won last 4 by 2. Net runs over 10 games?",expected:"1",steps:["Wins: 2×5 = +10, plus 4×2 = +8 → +18.","Losses: 3×(−3) = −9, plus 1×(−8) = −8 → −17.","Total = 18 + (−17) = +1."]},
-  {id:5,prompt:"Graph y + 4 = 0. Describe the line.",expected:"y = -4",steps:["y + 4 = 0 ⇒ y = −4.","Horizontal line crossing the y‑axis at −4 (all x)."]},
-  {id:6,prompt:"Find slope through (−9, 3) and (6, 8).",expected:"1/3",steps:["m = (y₂ − y₁)/(x₂ − x₁) = (8 − 3)/(6 − (−9)) = 5/15 = 1/3."]},
-  {id:7,prompt:"Solve the inequality and give interval: −7x ≤ 21.",expected:"x ≥ -3",steps:["Divide both sides by −7 and <b>flip</b> the inequality: x ≥ −3.","Interval notation: [−3, ∞)."]},
-  {id:8,prompt:"Solve by elimination: x + 9y = 9 and 7x − 5y = −5.",expected:"(0, 1)",steps:["Multiply first eqn by 5: 5x + 45y = 45.","Multiply second by 9: 63x − 45y = −45.","Add: 68x = 0 ⇒ x = 0. Substitute: 0 + 9y = 9 ⇒ y = 1."]},
-  {id:9,prompt:"Solve: (x − 7)/4 = (x + 8)/7.",expected:"x = 27",steps:["Cross‑multiply: 7(x − 7) = 4(x + 8).","7x − 49 = 4x + 32 ⇒ 3x = 81 ⇒ x = 27."]},
-  {id:10,prompt:"Solve: 6w + 9 = 10 − 7w − 6w.",expected:"w = 1/19",steps:["Right side: −7w − 6w = −13w, so 6w + 9 = 10 − 13w.","Add 13w: 19w + 9 = 10 ⇒ 19w = 1 ⇒ w = 1/19."]},
-  {id:11,prompt:"Solve: −4(x + 5) = −(4x + 20).",expected:"all real numbers",steps:["Left: −4x − 20. Right: −4x − 20.","Both sides are identical ⇒ identity ⇒ all real numbers."]},
-  {id:12,prompt:"Solve: (2/5)x − (1/3)x = 2.",expected:"x = 30",steps:["Common denominator 15: (6/15 − 5/15)x = (1/15)x = 2.","Multiply by 15: x = 30."]},
-  {id:13,prompt:"Solve: x² − x = 56.",expected:"x = 8 or x = -7",steps:["x² − x − 56 = 0.","Factor: (x − 8)(x + 7) = 0 ⇒ x = 8 or x = −7."]},
-  {id:14,prompt:"Line through (−7,1) and (10,−5): write in slope‑intercept form.",expected:"y = -(6/17)x - 25/17",steps:["Slope m = (−5 − 1)/(10 − (−7)) = −6/17.","Point‑slope: y − 1 = (−6/17)(x + 7).","y = (−6/17)x − 42/17 + 17/17 = −(6/17)x − 25/17."]},
-  {id:15,prompt:"Factor completely: x² + 43x + 44.",expected:"prime",steps:["Look for integers p,q with p+q=43 and pq=44.","Pairs of 44: (1,44),(2,22),(4,11). Sums: 45,24,15.","None sum to 43 ⇒ prime over integers."]},
-  {id:16,prompt:"Evaluate (3x + 7)/(14 − 2y) at x=9, y=6.",expected:"17",steps:["Numerator: 3·9 + 7 = 27 + 7 = 34.","Denominator: 14 − 2·6 = 14 − 12 = 2.","Value: 34/2 = 17."]},
-  {id:17,prompt:"Evaluate 9x − 2y² at x=3, y=−4.",expected:"-5",steps:["9·3 − 2·(−4)² = 27 − 2·16 = 27 − 32 = −5."]},
-  {id:18,prompt:"Solve by substitution: x − 5y = 15 and −4x − 4y = 12.",expected:"(0, -3)",steps:["x = 5y + 15.","Substitute: −4(5y+15) − 4y = 12 ⇒ −20y − 60 − 4y = 12.","−24y = 72 ⇒ y = −3; then x = 5(−3)+15 = 0."]},
-  {id:19,prompt:"Divide: (y² + 18y + 81) ÷ (y + 9).",expected:"y + 9",steps:["Factor numerator: (y + 9)².","Cancel one (y + 9): result y + 9."]},
-  {id:20,prompt:"Complete the factoring: x² − 13x + 42 = (x − 7)(  ).",expected:"x - 6",steps:["Find numbers with sum −13 and product 42: −7 and −6.","So x² − 13x + 42 = (x − 7)(x − 6)."]},
-  {id:21,prompt:"Translate and simplify: “The product of −9 and 1, subtracted from −5.”",expected:"4",steps:["‘a subtracted from b’ ⇒ b − a.","Compute: −5 − [ (−9)·1 ] = −5 − (−9) = −5 + 9 = 4."]},
-  {id:22,prompt:"Reduce to lowest terms: (16x + 20)/(20x + 25).",expected:"4/5",steps:["Factor numerator 4(4x + 5); denominator 5(4x + 5).","Cancel (4x + 5) ⇒ 4/5."]},
-  {id:23,prompt:"Write in lowest terms: (a² − 6a)/[(a + 9)(a − 6)].",expected:"a/(a + 9)",steps:["Factor numerator a(a − 6); cancel (a − 6).","Result a/(a + 9); domain excludes a=−9,6."]},
-  {id:24,prompt:"Expand: (7t + r)².",expected:"49t^2 + 14tr + r^2",steps:["(a + b)² = a² + 2ab + b².","Here a=7t, b=r ⇒ 49t² + 14tr + r²."]},
-  {id:25,prompt:"Simplify: (7x + 30xy − 28y) − (14x − 29xy − 25y).",expected:"-7x + 59xy - 3y",steps:["Distribute the minus: −14x + 29xy + 25y.","Combine like terms: (7x − 14x) = −7x; 30xy + 29xy = 59xy; (−28y + 25y) = −3y."]}
-];
-
-const exam = byId('exam');
-function renderAll(){
-  exam.innerHTML = QUESTIONS.map((q,i)=>`
-    <article class="q" data-i="${i}">
-      <h3>Q${i+1}. ${q.prompt}</h3>
-      <div class="row">
-        <label>Answer: <input type="text" id="ans${i}" placeholder="type answer (e.g., x = 27, m = 1/3, y = -4)"></label>
-        <button class="check" data-i="${i}">Check</button>
-      </div>
-      <div id="res${i}" class="result" aria-live="polite"></div>
-      <details><summary>Show step‑by‑step</summary><ol>${q.steps.map(s=>`<li>${s}</li>`).join('')}</ol><p class="meta">Exact answer: <code>${q.expected}</code></p></details>
-    </article>
-  `).join('');
-  bindButtons();
-}
-function renderOneByOne(){
-  let idx=0;
-  exam.innerHTML = `
-    <div class="sticky"><strong>One‑by‑One Mode</strong> — ${QUESTIONS.length} questions</div>
-    <div id="oneBox"></div>
-    <div class="row">
-      <button id="prev">◀ Prev</button>
-      <button id="next">Next ▶</button>
-      <button id="chk1">Check</button>
-      <span class="meta" id="pos"></span>
-    </div>
-  `;
-  const oneBox = byId('oneBox');
-  function draw(){
-    const q = QUESTIONS[idx];
-    oneBox.innerHTML = `
-      <article class="q" data-i="${idx}">
-        <h3>Q${idx+1}. ${q.prompt}</h3>
-        <div class="row">
-          <label>Answer: <input type="text" id="ans${idx}" placeholder="type answer"></label>
-        </div>
-        <div id="res${idx}" class="result" aria-live="polite"></div>
-        <details><summary>Show step‑by‑step</summary><ol>${q.steps.map(s=>`<li>${s}</li>`).join('')}</ol><p class="meta">Exact answer: <code>${q.expected}</code></p></details>
-      </article>
-    `;
-    byId('pos').textContent = `Question ${idx+1} / ${QUESTIONS.length}`;
+  function checkOne(block){
+    const ans = block.dataset.answer;
+    const sel = block.querySelector('input[type=radio]:checked');
+    const out = block.querySelector('.result');
+    if(!sel){ out.innerHTML = '<span class="bad">Pick an option.</span>'; return 0; }
+    if(sel.value === ans){ out.innerHTML = '<span class="ok">Correct ✔</span>'; return 1; }
+    out.innerHTML = '<span class="bad">Not quite. Try again or open “Show steps”.</span>';
+    return 0;
   }
-  draw();
-  byId('prev').onclick=()=>{ if(idx>0){idx--;draw();} };
-  byId('next').onclick=()=>{ if(idx<QUESTIONS.length-1){idx++;draw();} };
-  byId('chk1').onclick=()=>{
-    const q = QUESTIONS[idx];
-    const val = (byId('ans'+idx).value||'').trim();
-    const res = byId('res'+idx);
-    if(!val){ res.innerHTML='<span class="bad">Enter an answer.</span>'; return; }
-    res.innerHTML = eqAns(val,q.expected) ? '<span class="ok">Correct ✔</span>' :
-      '<span class="bad">Not quite. Compare with the steps and exact answer.</span>';
-  };
-}
-
-function bindButtons(){
-  document.querySelectorAll('.check').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const i=+btn.dataset.i, q=QUESTIONS[i];
-      const val=(byId('ans'+i).value||'').trim();
-      const res=byId('res'+i);
-      if(!val){ res.innerHTML='<span class="bad">Enter an answer.</span>'; return; }
-      res.innerHTML = eqAns(val,q.expected) ? '<span class="ok">Correct ✔</span>' :
-        '<span class="bad">Not quite. Compare with the steps and exact answer.</span>';
-      updateScore();
+  document.querySelectorAll('.chk').forEach(btn=>{
+    btn.addEventListener('click', ()=> checkOne(btn.closest('.q')));
+  });
+  document.getElementById('checkAll').addEventListener('click', ()=>{
+    document.querySelectorAll('.q').forEach(q=>checkOne(q));
+  });
+  document.getElementById('resetAll').addEventListener('click', ()=>{
+    document.querySelectorAll('.q input[type=radio]').forEach(r=>r.checked=false);
+    document.querySelectorAll('.result').forEach(d=>d.textContent='');
+  });
+  document.getElementById('scoreBtn').addEventListener('click', ()=>{
+    const qs = [...document.querySelectorAll('.q')];
+    let correct = 0, attempted = 0;
+    qs.forEach(q=>{
+      const sel = q.querySelector('input[type=radio]:checked');
+      if(sel){attempted++; if(sel.value===q.dataset.answer) correct++; }
     });
+    document.getElementById('score').textContent =
+      `You answered ${correct} correct out of ${attempted} attempted. Total questions on page: ${qs.length}.`;
   });
-}
-function updateScore(){
-  let got=0, tot=QUESTIONS.length;
-  QUESTIONS.forEach((q,i)=>{
-    const val=(byId('ans'+i)?.value||'').trim();
-    if(val && eqAns(val,q.expected)) got++;
-  });
-  const s=byId('score');
-  if(s) s.textContent = `Score so far: ${got}/${tot}`;
-}
-byId('checkAll').onclick=()=>{ document.querySelectorAll('.check').forEach(b=>b.click()); };
-byId('revealAll').onclick=()=>{ document.querySelectorAll('details').forEach(d=>d.open=true); };
-byId('modeAll').onclick=renderAll;
-byId('modeOne').onclick=renderOneByOne;
-
-renderAll();
-
-/* PWA */
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
 </script>
 </body>
 </html>

@@ -12,6 +12,18 @@ A **mobile‑friendly** study site for MA025/Beginning Algebra with step‑by‑
 - `algebra_quiz_notebook.html` — Units **0–5** (Foundations).
 - `algebra_units6_9_quiz.html` — Units **6–9** (Factoring → Quadratics).
 - `references.html` — OER textbook mapping and **video links** for quick review.
+  ## Study & Practice
+
+- **Practice Exam 1 (interactive):** [`practice_exam1.html`](https://xatusbetazx17.github.io/Math/practice_exam1.html)  
+  Multiple-choice, instant feedback, and notebook-style step-by-step solutions.
+
+- **Random Practice Generator:** [`random_practice.html`](https://xatusbetazx17.github.io/Math/random_practice.html)  
+  Build custom quizzes (linear equations, inequalities, slope, factoring with a=1 or a≠1 using the ac-method, and quadratics). Each item has detailed steps.
+
+### Attribution
+Skill explanations and topic structure align with *Beginning Algebra* OER (Units 5–9).  
+Please see the LICENSE/References page for CC BY-NC-SA 4.0 attribution.  
+
 
 Everything is **vanilla HTML/CSS/JS**, no frameworks, and should run in **all browsers**.
 

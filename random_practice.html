@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Random Practice Generator — Algebra Units 5–9</title>
-<meta name="description" content="Generate randomized practice for linear equations, inequalities, factoring, slope, and quadratics with notebook-style steps. Works on any device." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Random Practice — Exam 1 Topics (with steps)</title>
+<meta name="description" content="Generate randomized practice modeled on Practice Exam 1: equations, inequalities, slope, factoring, rational expressions, and more.">
 <style>
   :root{--bg:#0b0e11;--card:#12161c;--ink:#e9edf1;--muted:#b8c1cc;--accent:#4da3ff;--line:#1f2a36;--ok:#19c37d;--bad:#ff5c5c}
   *{box-sizing:border-box}
@@ -18,7 +18,7 @@
   fieldset{border:1px solid var(--line);border-radius:10px;padding:10px}
   legend{color:var(--muted)}
   label{display:flex;gap:8px;align-items:center;margin:6px 0}
-  input[type=number]{width:100%;max-width:160px;padding:8px;border-radius:8px;border:1px solid var(--line);background:#0f141a;color:var(--ink)}
+  input[type=number]{width:100%;max-width:120px;padding:8px;border-radius:8px;border:1px solid var(--line);background:#0f141a;color:var(--ink)}
   button{appearance:none;border:1px solid var(--line);background:#0e3a66;color:#eaf3ff;border-radius:8px;padding:10px 14px;cursor:pointer}
   button:hover{filter:brightness(1.08)}
   .qa{margin:10px 0;padding:12px;border:1px solid var(--line);border-radius:10px;background:#0f141a}
@@ -32,7 +32,7 @@
 </head>
 <body>
 <header>
-  <h1>Random Practice Generator — Units 5–9</h1>
+  <h1>Random Practice — Exam 1 Topics</h1>
   <p>Select topics, generate a custom quiz, and reveal detailed notebook‑style steps on each problem.</p>
   <div class="row">
     <a href="index.html">Home</a> •
@@ -45,18 +45,29 @@
   <section class="card">
     <div class="grid">
       <fieldset>
-        <legend>Topics</legend>
-        <label><input type="checkbox" class="topic" value="lin1" checked /> Linear equations (ax + b = c)</label>
-        <label><input type="checkbox" class="topic" value="ineq" checked /> Inequalities (flip sign when ÷ by −)</label>
-        <label><input type="checkbox" class="topic" value="slope" checked /> Slope from two points</label>
-        <label><input type="checkbox" class="topic" value="fac1" checked /> Factoring trinomials (a = 1)</label>
-        <label><input type="checkbox" class="topic" value="facA" checked /> Factoring trinomials (a ≠ 1, ac‑method)</label>
-        <label><input type="checkbox" class="topic" value="quad" checked /> Quadratics (solve by factoring)</label>
+        <legend>Topics (modeled on Exam 1)</legend>
+        <label><input type="checkbox" class="topic" value="prop" checked> Properties (commutative/associative)</label>
+        <label><input type="checkbox" class="topic" value="solveL" checked> Solve formula (e.g., P=2L+2W)</label>
+        <label><input type="checkbox" class="topic" value="percent" checked> Percent / cash discount</label>
+        <label><input type="checkbox" class="topic" value="netruns" checked> Integer word problems (net change)</label>
+        <label><input type="checkbox" class="topic" value="slope" checked> Slope from two points</label>
+        <label><input type="checkbox" class="topic" value="ineq" checked> Inequalities (flip when ÷ by −)</label>
+        <label><input type="checkbox" class="topic" value="elim" checked> Systems (elimination)</label>
+        <label><input type="checkbox" class="topic" value="fracEq" checked> Equations with fractions</label>
+        <label><input type="checkbox" class="topic" value="linBoth" checked> Linear eq (variables both sides)</label>
+        <label><input type="checkbox" class="topic" value="quad" checked> Quadratics (factor & solve)</label>
+        <label><input type="checkbox" class="topic" value="lineEq" checked> Equation of a line</label>
+        <label><input type="checkbox" class="topic" value="factor" checked> Factor trinomials / prime check</label>
+        <label><input type="checkbox" class="topic" value="eval" checked> Evaluate expressions</label>
+        <label><input type="checkbox" class="topic" value="divPoly" checked> Polynomial division</label>
+        <label><input type="checkbox" class="topic" value="ratSimp" checked> Rational simplify</label>
+        <label><input type="checkbox" class="topic" value="binSq" checked> Square a binomial</label>
+        <label><input type="checkbox" class="topic" value="addPoly" checked> Add/Subtract polynomials</label>
       </fieldset>
       <fieldset>
         <legend>Options</legend>
         <label>Number of Questions
-          <input type="number" id="count" min="3" max="25" value="10" />
+          <input type="number" id="count" min="3" max="25" value="10">
         </label>
         <div class="row">
           <button id="gen">Generate Quiz</button>
@@ -70,49 +81,81 @@
 </main>
 
 <footer class="card">
-  <p>Skill breakdown mirrors OER Units 5–9 (polynomials, factoring, rationals, radicals, quadratics). For study notes/videos, see <a href="references.html">References</a>. </p>
+  <p>Based on MA025B Exam 1 skill areas (OER Units 0–9). See <a href="references.html">References</a> for review videos and notes.</p>
 </footer>
 
 <script>
 function randInt(lo, hi){ return Math.floor(Math.random()*(hi-lo+1))+lo; }
 function coin(){ return Math.random()<0.5? -1 : 1; }
 function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ const t=b; b=a%b; a=t; } return a||1; }
-function simplifyFrac(n,d){ const g=gcd(n,d); return [n/g,d/g]; }
+function simplifyFrac(n,d){ const g=gcd(n,d); n/=g; d/=g; const s=(n<0)^(d<0)?'-':''; n=Math.abs(n); d=Math.abs(d); return d===1? s+n : s+n+'/'+d; }
 
-/* Generators return { prompt, answerText, steps } */
-function genLinearEq(){
-  // (ax + b = c) with integer solution
-  const a = coin()*randInt(2,8);
-  const x = coin()*randInt(1,12);
-  const b = coin()*randInt(0,15);
-  const c = a*x + b;
-  const steps = [
-    `Start: ${a}x + ${b} = ${c}`,
-    `Subtract ${b} from both sides → ${a}x = ${c-b}`,
-    `Divide both sides by ${a} → x = ${(c-b)}/${a} = ${x}`
-  ];
+function genProp(){
+  const a = coin()*randInt(2,9), b=coin()*randInt(2,9);
+  const kind = Math.random()<0.5? 'comm' : 'assoc';
+  if(kind==='comm'){
+    return {
+      prompt:`Complete and name the property: (${a})·(${b}) = (${b})·(  )`,
+      answerText:String(a),
+      steps:[
+        "Reversing the order of the factors leaves the product unchanged.",
+        "This is the <b>commutative property of multiplication</b>.",
+        `(${a})·(${b}) = (${b})·(${a}).`
+      ]
+    };
+  }else{
+    const c=coin()*randInt(1,9);
+    return {
+      prompt:`Complete and name the property: [${a} + (${b} + ${c})] = [(  ) + ${c}]`,
+      answerText:String(a+' + '+b),
+      steps:[
+        "Regrouping terms leaves the sum unchanged.",
+        "This is the <b>associative property of addition</b>.",
+        `[${a} + (${b} + ${c})] = [(${a} + ${b}) + ${c}].`
+      ]
+    };
+  }
+}
+
+function genSolveL(){
+  const W=randInt(1,20), P=2*randInt(10,40);
   return {
-    prompt:`Solve: ${a}x + ${b} = ${c}`,
-    answerText:`x = ${x}`,
-    steps
+    prompt:`Solve P = 2L + 2W for L. Then plug W=${W}, P=${P} to compute L.`,
+    answerText:`L = ${(P-2*W)/2}`,
+    steps:[
+      "P = 2L + 2W ⇒ P − 2W = 2L ⇒ L = (P − 2W)/2.",
+      `Substitute W=${W}, P=${P}: L = (${P} − 2·${W})/2 = ${(P-2*W)}/2 = ${(P-2*W)/2}.`
+    ]
   };
 }
 
-function genInequality(){
-  // kx ≤ c with negative k to force flip
-  const k = -1 * randInt(2,9);
-  const x = coin()*randInt(0,6);
-  const c = k*x;
-  const steps = [
-    `Start: ${k}x ≤ ${c}`,
-    `Divide both sides by ${k} (negative) → flip ≤ to ≥`,
-    `x ≥ ${c}/${k} = ${x}`,
-    `Interval notation: [${x}, ∞)`
-  ];
+function genPercent(){
+  const rate = [5,8,9,10,12,15][randInt(0,5)];
+  const price = randInt(200,1200);
+  const disc = Math.round(price*rate/100);
   return {
-    prompt:`Solve and give interval: ${k}x ≤ ${c}`,
-    answerText:`x ≥ ${x}  (interval [${x}, ∞))`,
-    steps
+    prompt:`A store offers ${rate}% off for cash. If the discount is $${disc}, what was the original price?`,
+    answerText:String(Math.round(disc/(rate/100))),
+    steps:[
+      `discount = rate × original ⇒ ${disc} = ${rate}% × original.`,
+      `original = ${disc} / (${rate}/100) = ${disc} ÷ ${rate/100} = ${disc/(rate/100)}.`,
+      "Round to the nearest dollar if needed."
+    ]
+  };
+}
+
+function genNetRuns(){
+  const w1 = randInt(1,3), m1 = randInt(2,6);
+  const l1 = randInt(1,4), n1 = randInt(2,6);
+  const w2 = randInt(1,5), m2 = randInt(1,4);
+  const total = w1*m1 - l1*n1 + w2*m2;
+  return {
+    prompt:`Team won ${w1} games by ${m1} runs, lost ${l1} by ${n1} runs, then won ${w2} by ${m2} runs. Net runs?`,
+    answerText:String(total),
+    steps:[
+      `Wins: +${w1}·${m1} = +${w1*m1}. Losses: −${l1}·${n1} = −${l1*n1}.`,
+      `Final wins: +${w2}·${m2} = +${w2*m2}. Total = ${total}.`
+    ]
   };
 }
 
@@ -122,80 +165,186 @@ function genSlope(){
   const y2=randInt(-10,10);
   let num = y2 - y1, den = x2 - x1;
   const sign = (num<0)^(den<0)? '-' : '';
-  [num,den]=simplifyFrac(Math.abs(num),Math.abs(den));
+  num = Math.abs(num); den = Math.abs(den);
+  const g=gcd(num,den); num/=g; den/=g;
   const m = den===1? `${sign}${num}` : `${sign}${num}/${den}`;
-  const steps = [
-    `m = (y₂ − y₁) / (x₂ − x₁) = (${y2} − ${y1}) / (${x2} − ${x1})`,
-    `m = ${(y2-y1)} / ${(x2-x1)} = ${m}`
-  ];
   return {
-    prompt:`Find the slope through (${x1}, ${y1}) and (${x2}, ${y2}).`,
+    prompt:`Find slope through (${x1}, ${y1}) and (${x2}, ${y2}).`,
     answerText:`m = ${m}`,
-    steps
+    steps:[
+      `m = (y₂ − y₁)/(x₂ − x₁) = (${y2} − ${y1})/(${x2} − ${x1}).`,
+      `Simplify to ${m}.`
+    ]
   };
 }
 
-function genFactorAeq1(){
-  // (x^2 + bx + c) with integers p,q → b=p+q, c=pq
-  const p = coin()*randInt(1,10);
-  let q = coin()*randInt(1,10);
-  const b = p+q, c = p*q;
-  const steps = [
-    `x² + ${b}x + ${c} → find integers whose product is ${c} and sum is ${b}.`,
-    `Numbers: ${p} and ${q}.`,
-    `Factor: (x + ${p})(x + ${q}).`
-  ];
+function genIneq(){
+  const k = -1*randInt(2,9);
+  const x = coin()*randInt(0,6);
+  const c = k*x;
   return {
-    prompt:`Factor: x² + ${b}x + ${c}`,
-    answerText:`(x + ${p})(x + ${q})`,
-    steps
+    prompt:`Solve and give interval: ${k}x ≤ ${c}.`,
+    answerText:`x ≥ ${c}/${k} = ${x}`,
+    steps:[
+      `Divide by ${k} (negative) ⇒ flip ≤ to ≥.`,
+      `x ≥ ${c}/${k} = ${x}. Interval [${x}, ∞).`
+    ]
   };
 }
 
-function genFactorAneq1(){
-  // (a x^2 + b x + c) with a in 2..5, choose (a*r)(x + s)(px + q) style via ac method
-  const a = randInt(2,5);
-  const r = coin()*randInt(1,9);
-  const s = coin()*randInt(1,9);
-  // build (ax + ?)(x + ?): choose factorization (a x + s)(x + r) = a x^2 + (ar + s) x + s r
-  const b = a*r + s;
-  const c = s*r;
-  const steps = [
-    `${a}x² + ${b}x + ${c}.`,
-    `ac = ${a}·${c} = ${a*c}. Find two integers with product ${a*c} and sum ${b}.`,
-    `Here they are ${a*r} and ${s}. Split: ${a}x² + ${a*r}x + ${s}x + ${c}.`,
-    `Group: ${a}x(x + ${r}) + ${s}(x + ${r}) = (x + ${r})(${a}x + ${s}).`
-  ];
+function genElim(){
+  const a=randInt(1,9), b=randInt(1,9), d=randInt(1,9), e=randInt(1,9);
+  const x0=randInt(-5,5), y0=randInt(-5,5);
+  const c1 = a*x0 + b*y0;
+  const f1 = d*x0 + e*y0;
   return {
-    prompt:`Factor: ${a}x² + ${b}x + ${c}`,
-    answerText:`(x + ${r})(${a}x + ${s})`,
-    steps
+    prompt:`Solve by elimination: ${a}x + ${b}y = ${c1} and ${d}x + ${e}y = ${f1}.`,
+    answerText:`(${x0}, ${y0})`,
+    steps:[
+      `Multiply equations to eliminate one variable, add/subtract, solve for the other.`,
+      `Back‑substitute to find the remaining variable. Here the solution is (${x0}, ${y0}).`
+    ]
   };
 }
 
-function genQuadratic(){
-  // (x - p)(x + q) = 0 form → integer roots
-  const p = randInt(1,10), q = randInt(1,10);
+function genFracEq(){
+  const p = coin()*randInt(0,10);
+  const sol = coin()*randInt(1,12);
+  const m2 = randInt(2,9), n2 = randInt(2,9);
+  const q2 = Math.round((n2/m2)*(sol - p) - sol);
+  return {
+    prompt:`Solve: (x − ${p})/${m2} = (x + ${q2})/${n2}.`,
+    answerText:`x = ${sol}`,
+    steps:[
+      `Cross‑multiply: ${n2}(x − ${p}) = ${m2}(x + ${q2}).`,
+      `Expand and collect: (${n2}−${m2})x = ${n2*p} + ${m2*q2}.`,
+      `Solve for x to obtain ${sol}.`
+    ]
+  };
+}
+
+function genLinBoth(){
+  const x = coin()*randInt(1,12);
+  const a=randInt(2,9), b=randInt(2,9), c=randInt(2,9), d=randInt(2,9);
+  const k = randInt(-10,10);
+  return {
+    prompt:`Solve: ${a}x + ${b} + ${k} = ${c}x + ${d} + ${k}.`,
+    answerText:`x = ${x}`,
+    steps:[
+      `Cancel ${k} on both sides ⇒ ${a}x + ${b} = ${c}x + ${d}.`,
+      `Move x‑terms and constants: (${a}−${c})x = ${d}−${b}.`,
+      `Solve to get x = ${x}.`
+    ]
+  };
+}
+
+function genQuad(){
+  const p = randInt(1,10), q=randInt(1,10);
   const b = q - p, c = -p*q;
-  const steps = [
-    `x² + ${b}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
-    `Factor: (x − ${p})(x + ${q}) = 0`,
-    `Solutions: x = ${p} or x = −${q}`
-  ];
   return {
-    prompt:`Solve: x² + ${b}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
+    prompt:`Solve: x² + ${b}x ${c<0?'-':'+'} ${Math.abs(c)} = 0 by factoring.`,
     answerText:`x = ${p} or x = −${q}`,
-    steps
+    steps:[
+      `Factor: (x − ${p})(x + ${q}) = 0.`,
+      `Set each factor = 0 ⇒ x = ${p} or x = −${q}.`
+    ]
+  };
+}
+
+function genLineEq(){
+  const x1=randInt(-10,10), y1=randInt(-10,10);
+  let x2=randInt(-10,10); while(x2===x1) x2=randInt(-10,10);
+  const y2=randInt(-10,10);
+  const mNum = y2-y1, mDen = x2-x1;
+  const m = simplifyFrac(mNum, mDen);
+  return {
+    prompt:`Find the slope‑intercept form of the line through (${x1}, ${y1}) and (${x2}, ${y2}).`,
+    answerText:`y = ${m.includes('/')? '('+m+')':' '+m}x + ${simplifyFrac(y1* mDen - mNum*x1, mDen)}`,
+    steps:[
+      `m = (y₂ − y₁)/(x₂ − x₁) = ${m}.`,
+      `Use point‑slope: y − ${y1} = ${m}(x − ${x1}), then rearrange to y = mx + b.`
+    ]
+  };
+}
+
+function genFactor(){
+  const p = coin()*randInt(1,12), q = coin()*randInt(1,12);
+  const b = p+q, c = p*q;
+  return {
+    prompt:`Factor: x² + ${b}x + ${c}. If not factorable over integers, say prime.`,
+    answerText:`(x + ${p})(x + ${q})`,
+    steps:[
+      `Find integers p,q with p+q=${b} and pq=${c}.`,
+      `Here p=${p}, q=${q}. So (x + ${p})(x + ${q}).`
+    ]
+  };
+}
+
+function genEval(){
+  const x=coin()*randInt(1,8), y=coin()*randInt(1,8);
+  const A = 3*x+7, B = 14-2*y;
+  return {
+    prompt:`Evaluate (3x + 7)/(14 − 2y) at x=${x}, y=${y}.`,
+    answerText:String(A/B),
+    steps:[
+      `Numerator: 3·${x} + 7 = ${A}. Denominator: 14 − 2·${y} = ${B}.`,
+      `Value: ${A}/${B}.`
+    ]
+  };
+}
+
+function genDivPoly(){
+  return {
+    prompt:`Divide: (y² + 18y + 81) ÷ (y + 9).`,
+    answerText:`y + 9`,
+    steps:[
+      "Recognize a perfect square: y² + 18y + 81 = (y + 9)².",
+      "Divide to get y + 9."
+    ]
+  };
+}
+
+function genRatSimp(){
+  return {
+    prompt:`Reduce: (16x + 20)/(20x + 25).`,
+    answerText:`4/5`,
+    steps:[
+      "Factor: 4(4x+5) over 5(4x+5).",
+      "Cancel common binomial, result 4/5."
+    ]
+  };
+}
+
+function genBinSq(){
+  const a=randInt(2,9), b=randInt(1,9);
+  return {
+    prompt:`Expand: (${a}t + ${b})².`,
+    answerText:`${a*a}t^2 + ${2*a*b}t + ${b*b}`,
+    steps:[
+      "(u+v)² = u² + 2uv + v².",
+      `Here u=${a}t, v=${b} ⇒ ${a*a}t² + ${2*a*b}t + ${b*b}.`
+    ]
+  };
+}
+
+function genAddPoly(){
+  const A=randInt(1,12), B=randInt(1,12), C=randInt(1,12);
+  const D=randInt(1,12), E=randInt(1,12), F=randInt(1,12);
+  return {
+    prompt:`Simplify: (${A}x + ${B}xy − ${C}y) − (${D}x − ${E}xy − ${F}y).`,
+    answerText:`${A-D}x + ${B+E}xy + ${-C+F}y`,
+    steps:[
+      "Distribute the minus into the second parentheses.",
+      "Combine like terms in x, xy, and y."
+    ]
   };
 }
 
 const genByKey = {
-  lin1: genLinearEq,
-  ineq: genInequality,
-  slope: genSlope,
-  fac1: genFactorAeq1,
-  facA: genFactorAneq1,
-  quad: genQuadratic
+  prop: genProp, solveL: genSolveL, percent: genPercent, netruns: genNetRuns,
+  slope: genSlope, ineq: genIneq, elim: genElim, fracEq: genFracEq, linBoth: genLinBoth,
+  quad: genQuad, lineEq: genLineEq, factor: genFactor, eval: genEval,
+  divPoly: genDivPoly, ratSimp: genRatSimp, binSq: genBinSq, addPoly: genAddPoly
 };
 
 const quiz = document.getElementById('quiz');
@@ -205,7 +354,7 @@ document.getElementById('gen').addEventListener('click', ()=>{
   if(!wanted.length){ alert('Pick at least one topic.'); return; }
   const items=[];
   for(let i=0;i<n;i++){
-    const key = wanted[i % wanted.length]; // cycle topics for variety
+    const key = wanted[i % wanted.length];
     items.push(genByKey[key]());
   }
   render(items);
@@ -219,7 +368,7 @@ function render(items){
       <p>${it.prompt}</p>
       <div class="row">
         <label>Answer:
-          <input type="text" id="ans${idx}" placeholder="type your answer"/>
+          <input type="text" id="ans${idx}" placeholder="type your answer">
         </label>
         <button data-i="${idx}" class="chk">Check</button>
       </div>

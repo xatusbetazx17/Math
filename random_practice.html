@@ -3,16 +3,146 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Redirecting to Random Practice…</title>
-<meta http-equiv="refresh" content="0; url=algebra_quiz_notebook.html">
+<title>Random Practice — MA025B Units 5–9</title>
+<meta name="description" content="Generate randomized practice for GCF, factoring, FOIL, linear/quadratic equations, and word problems. Shows notebook-style steps.">
 <style>
-  body{margin:0;height:100vh;display:grid;place-items:center;font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  a{color:#0366d6}
+  :root{--bg:#0b0e11;--card:#12161c;--ink:#e9edf1;--muted:#b8c1cc;--accent:#4da3ff;--line:#1f2a36;--ok:#19c37d;--bad:#ff5c5c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  header,main,footer{max-width:980px;margin:auto;padding:16px}
+  h1{font-size:1.3rem;margin:0 0 8px} p{color:var(--muted);margin:8px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px} @media(min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
+  fieldset{border:1px solid var(--line);border-radius:10px;padding:10px} legend{color:var(--muted)}
+  label{display:flex;gap:8px;align-items:center;margin:6px 0}
+  input[type=number]{width:100%;max-width:160px;padding:8px;border-radius:8px;border:1px solid var(--line);background:#0f141a;color:var(--ink)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  button{appearance:none;border:1px solid var(--line);background:#0e3a66;color:#eaf3ff;border-radius:8px;padding:10px 14px;cursor:pointer}
+  button:hover{filter:brightness(1.08)}
+  .qa{margin:10px 0;padding:12px;border:1px solid var(--line);border-radius:10px;background:#0f141a}
+  .result{font-weight:600;margin-top:8px}.ok{color:var(--ok)} .bad{color:var(--bad)}
+  details{background:#0b1117;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:6px}
+  summary{cursor:pointer;color:var(--accent)} a{color:var(--accent);text-decoration:none}
 </style>
 </head>
 <body>
-  <div>
-    <p>Opening <strong>Random Practice (with steps)</strong>… If you are not redirected, <a href="algebra_quiz_notebook.html">click here</a>.</p>
-  </div>
+<header>
+  <h1>Random Practice — Units 5–9</h1>
+  <p>Create custom drills and reveal detailed notebook‑style steps. <a href="index.html">Home</a> • <a href="practice_exam1.html">Practice Exam 1</a> • <a href="references.html">References</a></p>
+</header>
+
+<main>
+  <section class="card">
+    <div class="grid">
+      <fieldset>
+        <legend>Topics</legend>
+        <label><input type="checkbox" class="topic" value="foil" checked> FOIL products</label>
+        <label><input type="checkbox" class="topic" value="gcf" checked> GCF of terms</label>
+        <label><input type="checkbox" class="topic" value="gcfnum" checked> GCF of numbers</label>
+        <label><input type="checkbox" class="topic" value="fact_gcf" checked> Factor out GCF</label>
+        <label><input type="checkbox" class="topic" value="group" checked> Factor by grouping</label>
+        <label><input type="checkbox" class="topic" value="tri" checked> Factor trinomials (a=1)</label>
+        <label><input type="checkbox" class="topic" value="tria" checked> Factor trinomials (a≠1, ac‑method)</label>
+        <label><input type="checkbox" class="topic" value="zpp" checked> Zero‑product equations</label>
+        <label><input type="checkbox" class="topic" value="quad" checked> Quadratics by factoring</label>
+        <label><input type="checkbox" class="topic" value="rect" checked> Rectangle area word problems</label>
+        <label><input type="checkbox" class="topic" value="odd" checked> Consecutive odd integers</label>
+      </fieldset>
+      <fieldset>
+        <legend>Options</legend>
+        <label>Number of Questions <input type="number" id="count" min="3" max="30" value="10"></label>
+        <div class="row">
+          <button id="gen">Generate</button>
+          <button id="clear">Reset</button>
+        </div>
+      </fieldset>
+    </div>
+  </section>
+
+  <section id="quiz"></section>
+</main>
+
+<footer class="card">
+  <p>Methods follow the MA025B OER (grouping, ac‑method, zero‑product). See the <a href="references.html">References</a> page for videos/notes.</p>
+</footer>
+
+<script>
+function r(lo,hi){return Math.floor(Math.random()*(hi-lo+1))+lo;}
+function sign(){return Math.random()<.5?-1:1;}
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;}
+function simplify(n,d){const g=gcd(n,d);return [n/g,d/g];}
+const topics={
+  foil(){ const a=r(1,9)*sign(), b=r(1,9)*sign(), c=r(1,9)*sign(), d=r(1,9)*sign();
+    const steps=[`FOIL: (${a}x+${b})(${c}x+${d}) = ${a*c}x² + ${a*d+b*c}x + ${b*d}`];
+    return {prompt:`Multiply: (${a}x + ${b})(${c}x + ${d})`, answer:`${a*c}x² ${(a*d+b*c<0)?'-':'+'} ${Math.abs(a*d+b*c)}x ${(b*d<0)?'-':'+'} ${Math.abs(b*d)}`, steps};
+  },
+  gcf(){ const coefs=[r(6,60),r(6,60),r(6,60)].map(v=>v-v%3);
+    const p=r(1,5),q=r(2,7),t=r(1,6); const ans=`${Math.min(...coefs)}m^${Math.min(p,q,t)}`;
+    return {prompt:`GCF of ${coefs[0]}m^${p}, ${coefs[1]}m^${q}, ${coefs[2]}m^${t}`, answer:ans,
+      steps:[`Take gcd of coefficients = ${Math.min(...coefs)}, smallest exponent = ${Math.min(p,q,t)}`]};
+  },
+  gcfnum(){ const a=r(20,120), b=r(20,120); const g=gcd(a,b);
+    return {prompt:`GCF(${a}, ${b})`, answer:String(g), steps:[`Prime factors → gcd=${g}.`]};
+  },
+  fact_gcf(){ const a=r(2,9), b=r(2,9), c=r(2,9); const p=r(3,8), q=r(2,6), s=r(4,9);
+    const A= a*12, B= b*10, C= c*15; const e=Math.min(p,q,s);
+    return {prompt:`Factor GCF: ${A}x^${p}y^${e} + ${B}x^${q}y^${e} + ${C}x^${s}y^${e}`,
+      answer:`${gcd(A,gcd(B,C))}x^${Math.min(p,q,s)}y^${e}(...)`,
+      steps:[`GCF coeff = gcd(${A},${B},${C}) = ${gcd(A,gcd(B,C))}`,`Take smallest x-power ${Math.min(p,q,s)} and y-power ${e}.`]
+    };
+  },
+  group(){ const u=r(2,9),v=r(2,9),w=r(2,9),z=r(2,9);
+    const steps=[`Split: ${u}x(x+${v}) + ${w}(x+${v}) → (x+${v})(${u}x+${w})`];
+    return {prompt:`Factor by grouping: ${u}x^2+${u*v}x+${w}x+${w*v}`, answer:`(x+${v})(${u}x+${w})`, steps};
+  },
+  tri(){ const p=sign()*r(1,10), q=sign()*r(1,10); const b=p+q, c=p*q;
+    return {prompt:`Factor: x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)}`,
+      answer:`(x ${p<0?'-':'+'} ${Math.abs(p)})(x ${q<0?'-':'+'} ${Math.abs(q)})`,
+      steps:[`Find two integers with product ${c} and sum ${b}: ${p}, ${q}.`]};
+  },
+  tria(){ const a=r(2,5), p=sign()*r(1,9), q=sign()*r(1,9);
+    const b=a*q+p, c=p*q;
+    const steps=[`ac=${a*c}. Split ${b}x → ${a*q}x+${p}x. Group → (x+${q})(${a}x+${p}).`];
+    return {prompt:`Factor: ${a}x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)}`,
+      answer:`(x ${q<0?'-':'+'} ${Math.abs(q)})(${a}x ${p<0?'-':'+'} ${Math.abs(p)})`, steps};
+  },
+  zpp(){ const a=r(2,6), b=r(1,10), c=r(2,6), d=r(1,10);
+    return {prompt:`Solve: (${a}x ${b<0?'-':'+'} ${Math.abs(b)})(${c}x ${d<0?'-':'+'} ${Math.abs(d)})=0`,
+      answer:`x=${(-b)/a}, ${(-d)/c}`, steps:["Use zero-product property, set each factor to 0 and solve."]};
+  },
+  quad(){ const p=r(1,10), q=r(1,10), b=q-p, c=-p*q;
+    return {prompt:`Solve: x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
+      answer:`x=${p} or x=−${q}`, steps:[`Factor to (x−${p})(x+${q})=0 → x=${p} or x=−${q}.`]};
+  },
+  rect(){ const x=r(2,10); const A=(x+5)*(x-5);
+    return {prompt:`(Area = ${A}) A rectangle has length x+5 and width x−5. Find dimensions.`,
+      answer:`width= ${x-5}, length= ${x+5}`, steps:["(x+5)(x−5)=A → x²−25=A → solve x; pick positive dimensions."]};
+  },
+  odd(){ const n=r(3,10); const A=(n*n+2*n)- (3*n+6); // product - sum (just for story)
+    return {prompt:`Find three consecutive odd integers where the sum is ${A} less than the product of the smaller two.`,
+      answer:`${n}, ${n+2}, ${n+4}`, steps:["Let n,n+2,n+4. 3n+6 = n(n+2) − "+A+" → solve for n."]};
+  }
+};
+const quiz=document.getElementById('quiz');
+document.getElementById('gen').addEventListener('click',()=>{
+  const wanted=[...document.querySelectorAll('.topic:checked')].map(e=>e.value);
+  const n=Math.max(3,Math.min(30, +document.getElementById('count').value||10));
+  if(!wanted.length){alert('Pick at least one topic.'); return;}
+  const items=[]; for(let i=0;i<n;i++){ const k=wanted[i%wanted.length]; items.push(topics[k]()); }
+  render(items);
+});
+document.getElementById('clear').addEventListener('click',()=>quiz.innerHTML='');
+function render(items){
+  quiz.innerHTML=items.map((it,idx)=>`
+    <article class="qa">
+      <h3>Q${idx+1}</h3>
+      <p>${it.prompt}</p>
+      <details><summary>Show steps</summary><ol>${(it.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol></details>
+      <details><summary>Reveal answer</summary><p><strong>${it.answer}</strong></p></details>
+    </article>
+  `).join('');
+}
+/* PWA */
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=10'); }
+</script>
 </body>
 </html>

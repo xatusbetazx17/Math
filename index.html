@@ -12,15 +12,26 @@
   :root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--warn:#a97300;--shadow:0 10px 25px rgba(0,0,0,.08)}
 }
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";color:var(--ink);
-  background:linear-gradient(180deg,var(--bg),#111b2e);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  margin:0;
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--bg),#111b2e);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
 .container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
 .header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
 .brand{display:flex;align-items:center;gap:12px}
 .brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
 .brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
-nav a,.btn,button{appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease}
-nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn:active,button:active{transform:translateY(0)}
+nav a,.btn,button{
+  appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;
+  padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;
+  box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease
+}
+nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}
+nav a:active,.btn:active,button:active{transform:translateY(0)}
 .card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .footer{color:var(--muted);text-align:center;margin:30px 0 40px}
@@ -37,6 +48,7 @@ nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn
     <nav aria-label="Primary">
       <a href="references.html">🎥 References</a>
       <a href="practice_exam1.html">Practice Exam 1</a>
+      <a href="practice_exam1-v2.html">Practice Exam 1 (v2)</a>
       <a href="random_practice.html">Random Practice</a>
     </nav>
   </header>
@@ -63,12 +75,17 @@ nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn
     </div>
   </section>
 
+  <!-- Practice Tests -->
   <section class="card">
     <h2>Practice Tests</h2>
     <div class="grid">
       <a class="card" href="practice_exam1.html">
         <h3>Practice Exam 1</h3>
         <p>Multiple choice + step‑by‑step explanations</p>
+      </a>
+      <a class="card" href="practice_exam1-v2.html">
+        <h3>Practice Exam 1 (v2)</h3>
+        <p>Same exam, cleaner layout, full worked steps</p>
       </a>
       <a class="card" href="random_practice.html">
         <h3>Random Practice</h3>
@@ -80,9 +97,7 @@ nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn
   <section class="card">
     <h2>Audio/Class Review</h2>
     <p>Put your <code>.m4a</code> files in an <code>audio/</code> folder. Open <a href="unit5_quick_review.html">Unit 5 Quick Review</a> to auto‑load players.</p>
-    <ul>
-      <li><a href="audio.html">Audio Lectures</a></li>
-    </ul>
+    <ul><li><a href="audio.html">Audio Lectures</a></li></ul>
   </section>
 
   <section class="card">
@@ -96,6 +111,11 @@ nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}nav a:active,.btn
 
   <footer class="footer">Built for maximum compatibility.</footer>
 </div>
-<script>if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}</script>
+<script>
+  // Refresh the service worker (cache buster)
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js?ver=11');
+  }
+</script>
 </body>
 </html>

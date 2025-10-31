@@ -32,7 +32,7 @@
 <body>
 <header class="card">
   <h1 style="margin:.2rem 0">Practice Exam 2 — MA025B</h1>
-  <p class="muted" style="margin:.2rem 0 .6rem">Paste the exact questions/choices/answers into the <code>EXAM</code> array below. Click “Show steps” for a full notebook-style solution.</p>
+  <p class="muted" style="margin:.2rem 0 .6rem">Tap “Check” per question or “Grade all”. Open <em>Show steps</em> for a full notebook‑style walkthrough.</p>
   <div class="row">
     <a class="btn" href="index.html">⟵ Home</a>
     <a class="btn" href="practice_exam1-v2.html">Exam 1 (v2)</a>
@@ -50,55 +50,180 @@
 <main id="exam" class="card"></main>
 
 <footer class="card muted">
-  <p><strong>How to paste your exam:</strong> Scroll down in this file to the <code>EXAM</code> array. For each question, set:
-  <code>q</code> = question text (you may use HTML like <code>x^2</code> → <code>x²</code>), <code>choices</code> = four strings A–D,
-  <code>correct</code> = 0..3, and <code>steps</code> = an array of step strings explaining the solution.</p>
+  <p>If you want the <strong>exact Exam 2 wording/choices</strong>, send the text or re‑upload the PDF and I’ll swap the items in the <code>EXAM</code> array.</p>
 </footer>
 
 <script>
-/* =========  PASTE YOUR EXAM HERE  =========
-   Replace the placeholder items with the EXACT Exam 2 wording, choices, and correct index.
-   For each question: q: "text", choices: ["A","B","C","D"], correct: <0..3>, steps: ["...", "..."] */
-
+/* ===================== EXAM DATA (18 questions) ===================== */
+/* For each item: q (html), choices [A..D], correct (0..3), steps [..], why (short hint). */
 const EXAM = [
-/* Q1 (EXAMPLE — replace with your exact Exam 2 Q1) */
-{ q: "EXAM 2 — Q1: [Paste exact text here]",
-  choices: ["Choice A","Choice B","Choice C","Choice D"],
-  correct: 1,
-  steps: [
-    "Explain the key idea used (e.g., GCF, property, rule).",
-    "Show each algebraic manipulation line-by-line.",
-    "State the final answer and why other options are wrong."
-  ]
-},
+/* 1 */ { q:`Evaluate at x = −2: <code>2x³ − 3x² + 4x − 5</code>.`,
+  choices:[`−35`,`−41`,`41`,`−21`], correct:1,
+  why:`Substitute x = −2 carefully; mind the odd/even powers.`,
+  steps:[
+    `Substitute: 2(−2)³ − 3(−2)² + 4(−2) − 5`,
+    `Compute powers: 2(−8) − 3(4) − 8 − 5`,
+    `= −16 − 12 − 8 − 5 = −41`
+  ]},
 
-/* Q2 */
-{ q: "EXAM 2 — Q2: [Paste exact text here]",
-  choices: ["A","B","C","D"],
-  correct: 0,
-  steps: [
-    "Step 1...",
-    "Step 2...",
-    "Step 3..."
-  ]
-},
+/* 2 */ { q:`Simplify: <code>(3x²y)(−2xy³)</code>.`,
+  choices:[`−6x³y⁴`,`6x³y²`,`−6x²y⁵`,`−5x³y⁴`], correct:0,
+  why:`Multiply coefficients; add exponents of like bases.`,
+  steps:[
+    `Coefficients: 3·(−2)=−6`,
+    `x: x²·x¹ = x³; y: y¹·y³ = y⁴`,
+    `Result: −6x³y⁴`
+  ]},
 
-/* Q3 */
-{ q: "EXAM 2 — Q3: [Paste exact text here]",
-  choices: ["A","B","C","D"],
-  correct: 2,
-  steps: [
-    "Explain the setup...",
-    "Compute carefully...",
-    "Conclude and select the correct option."
-  ]
-},
+/* 3 */ { q:`Divide: <code>(x² − 9x + 14) ÷ (x − 7)</code>.`,
+  choices:[`x + 2`,`x − 2`,`x − 7`,`1/(x − 7)`], correct:1,
+  why:`Dividend factors as (x−7)(x−2).`,
+  steps:[
+    `Factor numerator: x² − 9x + 14 = (x − 7)(x − 2)`,
+    `Cancel (x − 7) with divisor`,
+    `Quotient: x − 2`
+  ]},
 
-/* … Add Q4 through Q20+ here, one object per question … */
+/* 4 */ { q:`Multiply (FOIL): <code>(2x − 5)(x + 4)</code>.`,
+  choices:[`2x² + 13x − 20`,`2x² + 3x − 20`,`2x² − 3x − 20`,`2x² + 3x + 20`], correct:1,
+  why:`FOIL: 2x·x, 2x·4, −5·x, −5·4.`,
+  steps:[
+    `2x·x = 2x²; 2x·4 = 8x; −5·x = −5x; −5·4 = −20`,
+    `Combine like terms: 8x − 5x = 3x`,
+    `Answer: 2x² + 3x − 20`
+  ]},
 
+/* 5 */ { q:`Factor out the GCF: <code>24x³y² − 18x²y + 6xy³</code>.`,
+  choices:[
+    `6xy(4x²y − 3x + y²)`,
+    `6x(4x²y² − 3xy + y³)`,
+    `12xy(2x²y − 3x + y²)`,
+    `6xy(4x²y − 3 + y²)`
+  ], correct:0,
+  why:`Common to all: 6xy.`,
+  steps:[
+    `GCF of coefficients = 6; lowest x-power = x; lowest y-power = y`,
+    `Divide each term by 6xy: 24x³y²→4x²y, 18x²y→3x, 6xy³→y²`,
+    `Answer: 6xy(4x²y − 3x + y²)`
+  ]},
+
+/* 6 */ { q:`Factor completely: <code>6x² + 7x − 3</code>.`,
+  choices:[
+    `(2x − 3)(3x + 1)`,
+    `(2x + 3)(3x + 1)`,
+    `(2x + 3)(3x − 1)`,
+    `(x + 3)(6x − 1)`
+  ], correct:2,
+  why:`ac = 6·(−3)=−18; find 9 and −2 (sum 7).`,
+  steps:[
+    `6x² + 7x − 3 → split 7x as 9x − 2x`,
+    `Group: (6x² + 9x) + (−2x − 3)`,
+    `Factor: 3x(2x + 3) − 1(2x + 3)`,
+    `Common binomial: (2x + 3)(3x − 1)`
+  ]},
+
+/* 7 */ { q:`Solve: <code>x² − 5x − 14 = 0</code>.`,
+  choices:[`{7, −2}`,`{2, −7}`,`{7, 2}`,`{−7, 2}`], correct:0,
+  why:`Factor to (x−7)(x+2)=0.`,
+  steps:[
+    `Find numbers with product −14 and sum −5 → −7 and +2`,
+    `x² − 5x − 14 = (x − 7)(x + 2)`,
+    `Zero product → x = 7 or x = −2`
+  ]},
+
+/* 8 */ { q:`Solve: <code>x/3 − 2/5 = 1/2</code>.`,
+  choices:[`27/10`,`7/10`,`21/10`,`−27/10`], correct:0,
+  why:`Clear fractions with LCM 30.`,
+  steps:[
+    `Multiply both sides by 30: 10x − 12 = 15`,
+    `10x = 27 → x = 27/10 = 2.7`
+  ]},
+
+/* 9 */ { q:`Solve the inequality: <code>−4x + 7 &gt; 19</code>.`,
+  choices:[`x &lt; −3`,`x &gt; −3`,`x ≥ −3`,`x ≤ −3`], correct:0,
+  why:`Dividing by a negative flips the sign.`,
+  steps:[
+    `−4x + 7 > 19 → −4x > 12`,
+    `Divide by −4 (flip >): x < −3`
+  ]},
+
+/* 10 */ { q:`Slope of the line through (−3, 4) and (5, −2).`,
+  choices:[`−3/4`,`3/4`,`−4/3`,`4/3`], correct:0,
+  why:`m = (y₂−y₁)/(x₂−x₁).`,
+  steps:[
+    `m = (−2 − 4)/(5 − (−3)) = (−6)/8 = −3/4`
+  ]},
+
+/* 11 */ { q:`Simplify: <code>√(50x²y³)</code>.`,
+  choices:[`5xy√(2y)`,`5x√(2y)`,`5y√(2xy)`,`5xy√(y/2)`], correct:0,
+  why:`Pull perfect squares out of the radical.`,
+  steps:[
+    `50x²y³ = (25)(2)(x²)(y²)(y)`,
+    `√(...) = 5·x·y·√(2y) = 5xy√(2y)`
+  ]},
+
+/* 12 */ { q:`Rationalize: <code>3/(2 − √5)</code>.`,
+  choices:[`−6 − 3√5`,`6 − 3√5`,`6 + 3√5`,`−6 + 3√5`], correct:0,
+  why:`Multiply top/bottom by the conjugate (2+√5).`,
+  steps:[
+    `3/(2−√5) · (2+√5)/(2+√5) = 3(2+√5)/(4−5)`,
+    `= 3(2+√5)/(−1) = −6 − 3√5`
+  ]},
+
+/* 13 */ { q:`Solve: <code>2x² − 3x − 2 = 0</code>.`,
+  choices:[`x=2, −1/2`,`x=1/2, −2`,`x=2, 1/2`,`x=−2, 1/2`], correct:0,
+  why:`Quadratic formula or factoring.`,
+  steps:[
+    `Δ = (−3)² − 4·2·(−2) = 9 + 16 = 25`,
+    `x = [3 ± √25]/(4) = (3 ± 5)/4`,
+    `x = 2 or x = −1/2`
+  ]},
+
+/* 14 */ { q:`Solve by completing the square: <code>x² + 6x + 5 = 0</code>.`,
+  choices:[`{−1, −5}`,`{1, 5}`,`{−2, −3}`,`{1, −5}`], correct:0,
+  why:`Make (x+3)² by adding 9 to both sides.`,
+  steps:[
+    `x² + 6x = −5`,
+    `Add (6/2)² = 9: (x + 3)² = 4`,
+    `x + 3 = ±2 → x = −1 or x = −5`
+  ]},
+
+/* 15 */ { q:`Simplify: <code>(x⁻³y²)/(x⁻¹y⁻⁴)</code> (no negative exponents).`,
+  choices:[`y⁶/x²`,`x²/y⁶`,`xy⁴`,`x⁻²y⁶`], correct:0,
+  why:`Subtract exponents: x^(−3 − (−1)) = x⁻²; y^(2 − (−4)) = y⁶.`,
+  steps:[
+    `(x⁻³y²)/(x⁻¹y⁻⁴) = x^(−3+1)·y^(2+4) = x⁻²y⁶`,
+    `= y⁶ / x²`
+  ]},
+
+/* 16 */ { q:`Factor: <code>25a² − 36b²</code>.`,
+  choices:[`(5a − 6b)(5a + 6b)`,`(5a − 6b)²`,`(25a − 36b)(a + b)`,`Prime`], correct:0,
+  why:`Difference of squares: A² − B² = (A−B)(A+B).`,
+  steps:[
+    `Let A=5a, B=6b → A² − B²`,
+    `Factor: (5a − 6b)(5a + 6b)`
+  ]},
+
+/* 17 */ { q:`A rectangle has length <code>3x + 2</code> and width <code>x − 1</code>. Perimeter is 34. Find L and W.`,
+  choices:[`L=14, W=3`,`L=12, W=5`,`L=11, W=6`,`L=10, W=7`], correct:0,
+  why:`Perimeter 2(L+W) ⇒ L+W = 17.`,
+  steps:[
+    `L+W = (3x+2)+(x−1) = 4x + 1 = 17`,
+    `4x = 16 → x = 4`,
+    `Length 3(4)+2 = 14; Width 4−1 = 3`
+  ]},
+
+/* 18 */ { q:`Solve the system: <code>2x + 3y = 7</code>, <code>x − y = 1</code>.`,
+  choices:[`(2, 1)`,`(1, 2)`,`(−2, 1)`,`(2, −1)`], correct:0,
+  why:`Substitute x = 1 + y into 2x+3y=7.`,
+  steps:[
+    `x = 1 + y`,
+    `2(1+y) + 3y = 7 → 2 + 2y + 3y = 7`,
+    `5y = 5 → y = 1 → x = 2`
+  ]},
 ];
 
-/* =========  RENDER / LOGIC  ========= */
+/* ===================== RENDER / LOGIC ===================== */
 const examEl = document.getElementById('exam');
 const scoreEl = document.getElementById('score');
 const barEl = document.getElementById('bar');
@@ -131,8 +256,9 @@ function gradeOne(i){
   const res = document.getElementById('r'+i);
   if(!sel){ res.innerHTML = '<span class="bad">Choose an option first.</span>'; return; }
   const ok = (+sel.value === EXAM[i].correct);
+  const why = EXAM[i].why ? `<span class="muted"> (${EXAM[i].why})</span>` : '';
   res.innerHTML = ok ? '<span class="ok">Correct ✔</span>'
-                     : `<span class="bad">Not quite.</span> Open “Show steps” for a walkthrough.`;
+                     : `<span class="bad">Not quite.</span> ${why}`;
   updateScore();
 }
 function clearOne(i){
@@ -142,10 +268,10 @@ function clearOne(i){
 }
 function updateScore(){
   const total = EXAM.length||0;
-  let correct=0, answered=0;
+  let correct=0;
   EXAM.forEach((_,i)=>{
     const sel = document.querySelector(`input[name="q${i}"]:checked`);
-    if(sel){ answered++; if(+sel.value===EXAM[i].correct) correct++; }
+    if(sel && +sel.value===EXAM[i].correct) correct++;
   });
   scoreEl.textContent = total? `Score: ${correct}/${total}  (${Math.round(100*correct/total)}%)`
                              : `Score: —`;
@@ -171,7 +297,7 @@ document.getElementById('resetAll').addEventListener('click', ()=>{
 
 render();
 
-/* PWA: optional cache bust on updates */
+/* PWA: optional cache bust */
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=12').catch(()=>{}); }
 </script>
 </body>

@@ -33,6 +33,10 @@
 </style>
 </head>
 <body>
+
+<!-- NEW: No‑JS message so the page isn't blank if JavaScript is disabled -->
+<noscript><div class="card">This page needs JavaScript enabled to show the questions.</div></noscript>
+
 <header class="card">
   <h1 style="margin:.2rem 0">Practice Exam 2 — MA025B</h1>
   <p class="muted" style="margin:.2rem 0 .6rem">Exact 18 questions. Tap <em>Check</em> for feedback, <em>Show steps</em> for a notebook‑style solution, and <em>Grade all</em> to see your score out of 100.</p>
@@ -262,7 +266,7 @@ const EXAM = [
   steps:[
     `7(x − 7) = 4(x + 7) ⇒ 7x − 49 = 4x + 28`,
     `3x = 77 ⇒ x = 77/3`,
-    `Check: denominators are constants (4,7) ⇒ no restriction on x (other than not affecting denominators).`
+    `Check: denominators are constants (4,7) ⇒ no restriction on x.`
   ],
   fb:{
     0:`7/4 comes from treating numerators as equal to denominators; use cross‑multiplication.`,
@@ -272,7 +276,7 @@ const EXAM = [
 
 /* 18 */ { q:`Solve the equation:
             <br><strong>(x + 9)/(x − 4) = 8/(4 − x)</strong>.`,
-  choices:[ set(−1), set(1), set(−17), set(17) ], correct:2,
+  choices:[ set(-1), set(1), set(-17), set(17) ], correct:2,
   why:`Note 4−x = −(x−4); clear denominators carefully.`,
   steps:[
     `Right side 8/(4−x) = −8/(x−4). Multiplying both sides by (x−4) (x ≠ 4):`,
@@ -344,6 +348,13 @@ function updateScore(){
   barEl.style.width = pct + '%';
   scoreEl.textContent = total? `Score: ${correct}/${total}  (${pct}%)` : 'Score: —';
 }
+
+// Render the exam. If anything throws, show a helpful message instead of a blank page.
+try { render(); }
+catch (err) {
+  examEl.innerHTML = `<div class="card">⚠️ JavaScript error: ${err.message}</div>`;
+}
+
 document.getElementById('gradeAll').addEventListener('click', ()=>{ for(let i=0;i<EXAM.length;i++) gradeOne(i); });
 document.getElementById('revealAll').addEventListener('click', ()=>{
   document.querySelectorAll('details').forEach(d=>d.open=true);
@@ -359,10 +370,8 @@ document.getElementById('resetAll').addEventListener('click', ()=>{
   updateScore();
 });
 
-render();
-
 /* PWA cache-buster so GitHub Pages shows the latest */
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=15').catch(()=>{}); }
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=16').catch(()=>{}); }
 </script>
 </body>
 </html>

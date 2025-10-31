@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice Exam 2 — MA025B (MC + step‑by‑step)</title>
+<meta name="description" content="Practice Exam 2 with multiple choice and notebook-style, step-by-step solutions. Mobile-friendly, works on any device.">
+<style>
+  :root{--bg:#0b132b;--panel:#111a2f;--ink:#eaf0ff;--muted:#9fb0c6;--accent:#5bc0be;--line:#22304a;--ok:#2ecc71;--bad:#ff6b6b}
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),#0a1124);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  header,main,footer{max-width:980px;margin:auto;padding:16px}
+  a{color:var(--accent);text-decoration:none}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .btn{appearance:none;border:1px solid var(--line);background:#10365a;color:#e9f3ff;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
+  .btn:hover{filter:brightness(1.08)}
+  .score{font-weight:800}
+  .bar{height:8px;background:#0d1a2f;border-radius:6px;overflow:hidden;border:1px solid #0f213a;flex:1}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,#1fd1a5,#5bc0be);width:0%}
+  .q{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0f1a2f;margin:10px 0}
+  .choices label{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:8px}
+  .choices input{transform:scale(1.1);margin-top:2px}
+  .result{margin-top:6px;font-weight:700}
+  .ok{color:var(--ok)} .bad{color:var(--bad)} .muted{color:var(--muted)}
+  details{background:#0b162b;border:1px dashed #22324f;border-radius:10px;padding:10px;margin-top:8px}
+  summary{cursor:pointer;color:var(--accent);font-weight:600}
+  @media (pointer:coarse){.choices input{transform:scale(1.25)}}
+  @media print{header .row,.btn,footer{display:none} body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header class="card">
+  <h1 style="margin:.2rem 0">Practice Exam 2 — MA025B</h1>
+  <p class="muted" style="margin:.2rem 0 .6rem">Paste the exact questions/choices/answers into the <code>EXAM</code> array below. Click “Show steps” for a full notebook-style solution.</p>
+  <div class="row">
+    <a class="btn" href="index.html">⟵ Home</a>
+    <a class="btn" href="practice_exam1-v2.html">Exam 1 (v2)</a>
+    <a class="btn" href="random_practice_hard.html">Hard Random Practice</a>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <button id="gradeAll" class="btn">Grade all</button>
+    <button id="revealAll" class="btn">Reveal all</button>
+    <button id="resetAll"  class="btn">Reset</button>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="score" id="score">Score: —</div>
+  </div>
+</header>
+
+<main id="exam" class="card"></main>
+
+<footer class="card muted">
+  <p><strong>How to paste your exam:</strong> Scroll down in this file to the <code>EXAM</code> array. For each question, set:
+  <code>q</code> = question text (you may use HTML like <code>x^2</code> → <code>x²</code>), <code>choices</code> = four strings A–D,
+  <code>correct</code> = 0..3, and <code>steps</code> = an array of step strings explaining the solution.</p>
+</footer>
+
+<script>
+/* =========  PASTE YOUR EXAM HERE  =========
+   Replace the placeholder items with the EXACT Exam 2 wording, choices, and correct index.
+   For each question: q: "text", choices: ["A","B","C","D"], correct: <0..3>, steps: ["...", "..."] */
+
+const EXAM = [
+/* Q1 (EXAMPLE — replace with your exact Exam 2 Q1) */
+{ q: "EXAM 2 — Q1: [Paste exact text here]",
+  choices: ["Choice A","Choice B","Choice C","Choice D"],
+  correct: 1,
+  steps: [
+    "Explain the key idea used (e.g., GCF, property, rule).",
+    "Show each algebraic manipulation line-by-line.",
+    "State the final answer and why other options are wrong."
+  ]
+},
+
+/* Q2 */
+{ q: "EXAM 2 — Q2: [Paste exact text here]",
+  choices: ["A","B","C","D"],
+  correct: 0,
+  steps: [
+    "Step 1...",
+    "Step 2...",
+    "Step 3..."
+  ]
+},
+
+/* Q3 */
+{ q: "EXAM 2 — Q3: [Paste exact text here]",
+  choices: ["A","B","C","D"],
+  correct: 2,
+  steps: [
+    "Explain the setup...",
+    "Compute carefully...",
+    "Conclude and select the correct option."
+  ]
+},
+
+/* … Add Q4 through Q20+ here, one object per question … */
+
+];
+
+/* =========  RENDER / LOGIC  ========= */
+const examEl = document.getElementById('exam');
+const scoreEl = document.getElementById('score');
+const barEl = document.getElementById('bar');
+
+function render(){
+  examEl.innerHTML = EXAM.map((it,i)=>`
+    <article class="q" id="q${i}">
+      <h3>Q${i+1}</h3>
+      <p>${it.q}</p>
+      <div class="choices">
+        ${it.choices.map((c,j)=>`
+          <label><input type="radio" name="q${i}" value="${j}"> ${'ABCD'[j]}) ${c}</label>
+        `).join('')}
+      </div>
+      <div class="row">
+        <button class="btn" onclick="gradeOne(${i})">Check</button>
+        <button class="btn" onclick="clearOne(${i})">Clear</button>
+        <span class="result" id="r${i}"></span>
+      </div>
+      <details><summary>Show steps</summary>
+        <ol>${it.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <p class="muted">Correct choice: <strong>${'ABCD'[it.correct]}</strong></p>
+      </details>
+    </article>
+  `).join('');
+  updateScore();
+}
+function gradeOne(i){
+  const sel = document.querySelector(`input[name="q${i}"]:checked`);
+  const res = document.getElementById('r'+i);
+  if(!sel){ res.innerHTML = '<span class="bad">Choose an option first.</span>'; return; }
+  const ok = (+sel.value === EXAM[i].correct);
+  res.innerHTML = ok ? '<span class="ok">Correct ✔</span>'
+                     : `<span class="bad">Not quite.</span> Open “Show steps” for a walkthrough.`;
+  updateScore();
+}
+function clearOne(i){
+  document.querySelectorAll(`input[name="q${i}"]`).forEach(r=>r.checked=false);
+  document.getElementById('r'+i).textContent='';
+  updateScore();
+}
+function updateScore(){
+  const total = EXAM.length||0;
+  let correct=0, answered=0;
+  EXAM.forEach((_,i)=>{
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    if(sel){ answered++; if(+sel.value===EXAM[i].correct) correct++; }
+  });
+  scoreEl.textContent = total? `Score: ${correct}/${total}  (${Math.round(100*correct/total)}%)`
+                             : `Score: —`;
+  barEl.style.width = total? (100*correct/total)+'%' : '0%';
+}
+document.getElementById('gradeAll').addEventListener('click', ()=>{
+  for(let i=0;i<EXAM.length;i++){ gradeOne(i); }
+});
+document.getElementById('revealAll').addEventListener('click', ()=>{
+  document.querySelectorAll('details').forEach(d=>d.open=true);
+  for(let i=0;i<EXAM.length;i++){
+    const res = document.getElementById('r'+i);
+    res.innerHTML = `<span class="ok">Answer: <strong>${'ABCD'[EXAM[i].correct]}</strong></span>`;
+  }
+  updateScore();
+});
+document.getElementById('resetAll').addEventListener('click', ()=>{
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  document.querySelectorAll('.result').forEach(el=>el.textContent='');
+  document.querySelectorAll('details').forEach(d=>d.open=false);
+  updateScore();
+});
+
+render();
+
+/* PWA: optional cache bust on updates */
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=12').catch(()=>{}); }
+</script>
+</body>
+</html>

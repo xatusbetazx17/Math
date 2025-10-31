@@ -4,27 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Practice Exam 2 — MA025B (MC + step‑by‑step)</title>
-<meta name="description" content="Practice Exam 2 with multiple choice and notebook-style, step-by-step solutions. Mobile-friendly, works on any device.">
+<meta name="description" content="Exact Practice Exam 2 with multiple choice, notebook-style steps, wrong-answer feedback, and grading out of 100.">
 <style>
-  :root{--bg:#0b132b;--panel:#111a2f;--ink:#eaf0ff;--muted:#9fb0c6;--accent:#5bc0be;--line:#22304a;--ok:#2ecc71;--bad:#ff6b6b}
+  :root{--bg:#0b132b;--panel:#111a2f;--ink:#eaf0ff;--muted:#9fb0c6;--accent:#5bc0be;--line:#22304a;--ok:#2ecc71;--bad:#ff6b6b;--warn:#ffd166}
   *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,var(--bg),#0a1124);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  body{margin:0;background:linear-gradient(180deg,var(--bg),#0a1124);color:var(--ink);
+       font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   header,main,footer{max-width:980px;margin:auto;padding:16px}
   a{color:var(--accent);text-decoration:none}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .btn{appearance:none;border:1px solid var(--line);background:#10365a;color:#e9f3ff;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
+  .btn{appearance:none;border:1px solid var(--line);background:#10365a;color:#e9f3ff;border-radius:10px;
+       padding:10px 14px;cursor:pointer;font-weight:600}
   .btn:hover{filter:brightness(1.08)}
-  .score{font-weight:800}
+  .score{font-weight:800;min-width:180px}
   .bar{height:8px;background:#0d1a2f;border-radius:6px;overflow:hidden;border:1px solid #0f213a;flex:1}
   .bar i{display:block;height:100%;background:linear-gradient(90deg,#1fd1a5,#5bc0be);width:0%}
   .q{padding:12px;border:1px solid var(--line);border-radius:12px;background:#0f1a2f;margin:10px 0}
   .choices label{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:8px}
   .choices input{transform:scale(1.1);margin-top:2px}
   .result{margin-top:6px;font-weight:700}
-  .ok{color:var(--ok)} .bad{color:var(--bad)} .muted{color:var(--muted)}
+  .ok{color:var(--ok)} .bad{color:var(--bad)} .muted{color:var(--muted)} .warn{color:var(--warn)}
   details{background:#0b162b;border:1px dashed #22324f;border-radius:10px;padding:10px;margin-top:8px}
   summary{cursor:pointer;color:var(--accent);font-weight:600}
+  code{background:#0b1016;border:1px solid #1f2a36;padding:0 .35rem;border-radius:6px}
   @media (pointer:coarse){.choices input{transform:scale(1.25)}}
   @media print{header .row,.btn,footer{display:none} body{background:#fff;color:#000}}
 </style>
@@ -32,11 +35,12 @@
 <body>
 <header class="card">
   <h1 style="margin:.2rem 0">Practice Exam 2 — MA025B</h1>
-  <p class="muted" style="margin:.2rem 0 .6rem">Tap “Check” per question or “Grade all”. Open <em>Show steps</em> for a full notebook‑style walkthrough.</p>
+  <p class="muted" style="margin:.2rem 0 .6rem">Exact 18 questions. Tap <em>Check</em> for feedback, <em>Show steps</em> for a notebook‑style solution, and <em>Grade all</em> to see your score out of 100.</p>
   <div class="row">
     <a class="btn" href="index.html">⟵ Home</a>
     <a class="btn" href="practice_exam1-v2.html">Exam 1 (v2)</a>
     <a class="btn" href="random_practice_hard.html">Hard Random Practice</a>
+    <button class="btn" onclick="window.print()">Print</button>
   </div>
   <div class="row" style="margin-top:8px">
     <button id="gradeAll" class="btn">Grade all</button>
@@ -47,183 +51,242 @@
   </div>
 </header>
 
-<main id="exam" class="card"></main>
+<main id="exam" class="card" aria-live="polite"></main>
 
 <footer class="card muted">
-  <p>If you want the <strong>exact Exam 2 wording/choices</strong>, send the text or re‑upload the PDF and I’ll swap the items in the <code>EXAM</code> array.</p>
+  <p>Each item is worth <code>(100/18) ≈ 5.56</code> points. If you get one wrong, read the hint and the full steps.</p>
 </footer>
 
 <script>
-/* ===================== EXAM DATA (18 questions) ===================== */
-/* For each item: q (html), choices [A..D], correct (0..3), steps [..], why (short hint). */
+/* ======================================================================
+   EXACT EXAM 2 CONTENT — 18 QUESTIONS (choices A–D), CORRECT INDEX, STEPS
+   ====================================================================== */
+const set = v => '{' + v + '}';
+
 const EXAM = [
-/* 1 */ { q:`Evaluate at x = −2: <code>2x³ − 3x² + 4x − 5</code>.`,
-  choices:[`−35`,`−41`,`41`,`−21`], correct:1,
-  why:`Substitute x = −2 carefully; mind the odd/even powers.`,
+/* 1 */ { q:`Find the numerical value of the rational expression for the given value of x:
+           <br><strong>(4 − 3x)/(8x)</strong>,  with  <strong>x = 2</strong>.`,
+  choices:[`5/8`,`1/8`,`−29/16`,`−1/8`], correct:3,
+  why:`Substitute x = 2: (4−6)/16 = −2/16 = −1/8.`,
   steps:[
-    `Substitute: 2(−2)³ − 3(−2)² + 4(−2) − 5`,
-    `Compute powers: 2(−8) − 3(4) − 8 − 5`,
-    `= −16 − 12 − 8 − 5 = −41`
+    `Start with the expression: (4 − 3x)/(8x).`,
+    `Plug in x = 2 → numerator = 4 − 3·2 = 4 − 6 = −2, denominator = 8·2 = 16.`,
+    `Compute: (−2)/16 = −1/8.`
+  ],
+  fb:{
+    0:`You ignored the substitution 3x = 6. The numerator becomes negative.`,
+    1:`Sign error — the numerator is −2, not +2.`,
+    2:`Arithmetic slip combining the numbers; redo the substitution carefully.`
+  }},
+
+/* 2 */ { q:`Find all values that make the expression undefined:
+           <br><strong>(b − 6)/(6b − 24)</strong>.`,
+  choices:[`−6`,`0`,`4`,`24`], correct:2,
+  why:`Denominator 6b−24 = 0 ⇒ b = 4.`,
+  steps:[
+    `An expression is undefined when the denominator is 0.`,
+    `Solve 6b − 24 = 0 ⇒ 6b = 24 ⇒ b = 4.`
+  ],
+  fb:{
+    0:`6(−6) − 24 = −60 ≠ 0.`,
+    1:`6·0 − 24 = −24 ≠ 0.`,
+    3:`6·24 − 24 = 120 − 24 ≠ 0.`
+  }},
+
+/* 3 */ { q:`Write the rational expression in lowest terms:
+           <br><strong>(2x + 2)/(10x² + 16x + 6)</strong>.`,
+  choices:[`1/(5x + 3)`,`2x/(5x + 3)`,`(2x + 2)/(10x² + 16x + 6)`,`(2x + 5)/(5x + 16)`], correct:0,
+  why:`Factor and cancel common factors.`,
+  steps:[
+    `Factor numerator: 2x + 2 = 2(x + 1).`,
+    `Factor denominator: 10x² + 16x + 6 = 2(5x² + 8x + 3) = 2(5x + 3)(x + 1).`,
+    `Cancel 2 and (x + 1): result = 1/(5x + 3).`
+  ],
+  fb:{
+    1:`After canceling (x+1), nothing remains in the top except 1 (not 2x).`,
+    2:`Not reduced — you must factor first.`,
+    3:`Mismatched factors; denominator is (5x+3)(x+1).`
+  }},
+
+/* 4 */ { q:`Write the rational expression in lowest terms:
+           <br><strong>(pq − 2p + 7q − 14)/(qr + 4q − 2r − 8)</strong>.`,
+  choices:[`(pq − 2p + 7q − 28)/(qr + 4q − 2r − 8)`,`(p + 7)/(q − 4)`,`(p + 7)/(r + 4)`,`(p − 7)/(r + 4)`], correct:2,
+  why:`Group numerator & denominator; the common (q−2) cancels.`,
+  steps:[
+    `Numerator: pq − 2p + 7q − 14 = p(q−2) + 7(q−2) = (p+7)(q−2).`,
+    `Denominator: qr + 4q − 2r − 8 = q(r+4) − 2(r+4) = (q−2)(r+4).`,
+    `Cancel (q−2): result = (p+7)/(r+4).`
+  ],
+  fb:{
+    1:`You’d need a (q−4) factor to cancel, but the factor is (q−2).`,
+    3:`Sign error when grouping the numerator.`
+  }},
+
+/* 5 */ { q:`Multiply. Write the answer in lowest terms:
+           <br><strong>(4r − 12)/(16r² + 32r) · (8r + 16)/(24 − 8r)</strong>.`,
+  choices:[`(r − 3)/[4r(3 − r)]`,`−4/[4(3 − r)]`,`1/4`,`−1/(4r)`], correct:3,
+  why:`Factor all parts and use (r−3)/(3−r) = −1.`,
+  steps:[
+    `Factor: 4r−12=4(r−3); 16r²+32r=16r(r+2); 8r+16=8(r+2); 24−8r=8(3−r).`,
+    `Plug in: [4(r−3)]/[16r(r+2)] · [8(r+2)]/[8(3−r)].`,
+    `Cancel (r+2), cancel 8, reduce 4/16→1/4, and (r−3)/(3−r)=−1.`,
+    `Answer: −1/(4r).`
+  ],
+  fb:{
+    0:`You stopped before handling (r−3)/(3−r)=−1.`,
+    1:`An r remains in the denominator after cancellations.`,
+    2:`There is still r in the denominator; simplify completely.`
+  }},
+
+/* 6 */ { q:`Divide. Write the answer in lowest terms:
+           <br><strong>(6r − 18s)/(8r − 16s) ÷ (21s − 7r)/(2r − 4s)</strong>.`,
+  choices:[`−1/28`,`14/3`,`−14/3`,`−3/14`], correct:3,
+  why:`Reciprocal, factor, cancel, and track the sign from 3s−r = −(r−3s).`,
+  steps:[
+    `Rewrite as multiplication by the reciprocal.`,
+    `Factor: 6r−18s=6(r−3s); 8r−16s=8(r−2s); 21s−7r=7(3s−r); 2r−4s=2(r−2s).`,
+    `Compute: [6(r−3s)]/[8(r−2s)] · [2(r−2s)]/[7(3s−r)].`,
+    `Cancel (r−2s) and note (3s−r)=−(r−3s) ⇒ introduces a minus sign.`,
+    `Numbers: (6·2)/(8·7) with a minus → −12/56 = −3/14.`
+  ],
+  fb:{
+    0:`You inverted or reduced factors incorrectly.`,
+    1:`Don’t forget to take the reciprocal before multiplying.`,
+    2:`Missed the sign flip from (3s−r)=−(r−3s).`
+  }},
+
+/* 7 */ { q:`Multiply or divide as indicated. Write the answer in lowest terms:
+           <br><strong>(4r − 12)/(14r² + 28r) · (7r + 14)/(24 − 8r)</strong>.`,
+  choices:[`(r − 3)/[4r(3 − r)]`,`−4/[4(3 − r)]`,`1/4`,`−1/(4r)`], correct:3,
+  why:`Same pattern as Q5: factor, cancel, then use (r−3)/(3−r) = −1.`,
+  steps:[
+    `Factor: 4r−12=4(r−3); 14r²+28r=14r(r+2); 7r+14=7(r+2); 24−8r=8(3−r).`,
+    `Compute: [4(r−3)]/[14r(r+2)] · [7(r+2)]/[8(3−r)].`,
+    `Cancel (r+2); 4·7/(14·8)=28/112=1/4; and (r−3)/(3−r)=−1.`,
+    `Answer: −1/(4r).`
   ]},
 
-/* 2 */ { q:`Simplify: <code>(3x²y)(−2xy³)</code>.`,
-  choices:[`−6x³y⁴`,`6x³y²`,`−6x²y⁵`,`−5x³y⁴`], correct:0,
-  why:`Multiply coefficients; add exponents of like bases.`,
+/* 8 */ { q:`Find the LCD for the fractions:
+           <br><strong>1/(45x²)</strong> , <strong>7/(5x³)</strong>.`,
+  choices:[`45x²`,`45x³`,`45x⁵`,`5x³`], correct:1,
+  why:`LCM(45,5)=45, LCM(x²,x³)=x³ → 45x³.`,
   steps:[
-    `Coefficients: 3·(−2)=−6`,
-    `x: x²·x¹ = x³; y: y¹·y³ = y⁴`,
-    `Result: −6x³y⁴`
+    `Prime factors: 45=3²·5, 5=5.`,
+    `Highest powers: 3²·5 and x³ ⇒ LCD = 45x³.`
   ]},
 
-/* 3 */ { q:`Divide: <code>(x² − 9x + 14) ÷ (x − 7)</code>.`,
-  choices:[`x + 2`,`x − 2`,`x − 7`,`1/(x − 7)`], correct:1,
-  why:`Dividend factors as (x−7)(x−2).`,
+/* 9 */ { q:`Find the LCD for the list:
+           <br><strong>9/10</strong> , <strong>−5/18</strong> , <strong>4/45</strong>.`,
+  choices:[`30`,`18`,`90`,`45`], correct:2,
+  why:`LCM(10,18,45)=90.`,
   steps:[
-    `Factor numerator: x² − 9x + 14 = (x − 7)(x − 2)`,
-    `Cancel (x − 7) with divisor`,
-    `Quotient: x − 2`
+    `10=2·5; 18=2·3²; 45=3²·5 ⇒ LCM = 2·3²·5 = 90.`
   ]},
 
-/* 4 */ { q:`Multiply (FOIL): <code>(2x − 5)(x + 4)</code>.`,
-  choices:[`2x² + 13x − 20`,`2x² + 3x − 20`,`2x² − 3x − 20`,`2x² + 3x + 20`], correct:1,
-  why:`FOIL: 2x·x, 2x·4, −5·x, −5·4.`,
+/* 10 */ { q:`Find the LCD for the list:
+            <br><strong>5/n</strong> , <strong>−4/(2+n)</strong> , <strong>6/(2−n)</strong>.`,
+  choices:[`4n²`,`n + 2`,`n(2 + n)(2 − n)`,`n² + 4`], correct:2,
+  why:`(2−n)=−(n−2). Distinct linear factors are n, (2+n), (2−n).`,
   steps:[
-    `2x·x = 2x²; 2x·4 = 8x; −5·x = −5x; −5·4 = −20`,
-    `Combine like terms: 8x − 5x = 3x`,
-    `Answer: 2x² + 3x − 20`
+    `LCD must include n, (2+n), and (2−n).`,
+    `LCD = n(2+n)(2−n).`
   ]},
 
-/* 5 */ { q:`Factor out the GCF: <code>24x³y² − 18x²y + 6xy³</code>.`,
+/* 11 */ { q:`Rewrite with the indicated denominator:
+            <br><strong>−1/(6m) = ?/(30m)</strong>.`,
+  choices:[`−1/(30m)`,`−5/(30m)`,`5/(30m)`,`6/(30m)`], correct:1,
+  why:`Multiply top/bottom by 5: −1·5/(6m·5) = −5/(30m).`,
+  steps:[
+    `Target denominator 30m ⇒ multiply by 5/5.`,
+    `Result: −5/(30m).`
+  ]},
+
+/* 12 */ { q:`Add or subtract. Lowest terms:
+            <br><strong>17/(17x) − 6/(17x)</strong>.`,
+  choices:[`11/(34x)`,`11/(17x)`,`11`,`17x/11`], correct:1,
+  why:`Same denominator 17x ⇒ subtract numerators: 17−6=11.`,
+  steps:[
+    `Common denominator 17x.`,
+    `Combine: (17−6)/(17x) = 11/(17x).`
+  ]},
+
+/* 13 */ { q:`Add or subtract. Lowest terms:
+            <br><strong>−6/35 − 4/(7x)</strong>.`,
+  choices:[`−10/(35 − 7x)`,`(−6x − 20)/(35x)`,`(6x − 20)/(35x)`,`(−6x + 20)/(35x)`], correct:1,
+  why:`LCD 35x; rewrite each and add numerators.`,
+  steps:[
+    `LCD = 35x.  −6/35 = (−6x)/(35x);  −4/(7x) = (−20)/(35x).`,
+    `Sum: (−6x − 20)/(35x).`
+  ]},
+
+/* 14 */ { q:`Add or subtract. Lowest terms:
+            <br><strong>6/r + 9/(r + 4)</strong>.`,
+  choices:[`(−24r − 15)/[r(−4 − r)]`,`(15r + 24)/[r(r + 4)]`,`(−24r − 15)/[r(r + 4)]`,`(15r + 24)/[r(−4 − r)]`], correct:1,
+  why:`LCD r(r+4). Numerator: 6(r+4)+9r = 15r+24.`,
+  steps:[
+    `LCD = r(r+4).`,
+    `Compute numerator: 6(r+4)+9r = 6r+24+9r = 15r+24.`,
+    `Answer: (15r+24)/[r(r+4)].`
+  ]},
+
+/* 15 */ { q:`Add or subtract. Lowest terms:
+            <br><strong>x/(x² − 16) − 8/(x² + 5x + 4)</strong>.`,
   choices:[
-    `6xy(4x²y − 3x + y²)`,
-    `6x(4x²y² − 3xy + y³)`,
-    `12xy(2x²y − 3x + y²)`,
-    `6xy(4x²y − 3 + y²)`
-  ], correct:0,
-  why:`Common to all: 6xy.`,
+    `(x² + 7x + 32)/[(x − 4)(x + 4)(x + 1)]`,
+    `(x² − 7x + 32)/[(x − 4)(x + 4)]`,
+    `x² − 7 / [(x − 4)(x + 4)(x + 1)]`,
+    `(x² − 7x + 32)/[(x − 4)(x + 4)(x + 1)]`
+  ], correct:3,
+  why:`LCD (x−4)(x+4)(x+1); convert both and subtract.`,
   steps:[
-    `GCF of coefficients = 6; lowest x-power = x; lowest y-power = y`,
-    `Divide each term by 6xy: 24x³y²→4x²y, 18x²y→3x, 6xy³→y²`,
-    `Answer: 6xy(4x²y − 3x + y²)`
+    `Factor: x²−16=(x−4)(x+4);  x²+5x+4=(x+1)(x+4).`,
+    `x/(x²−16) = x/[(x−4)(x+4)] = x(x+1)/LCD.`,
+    `8/[(x+1)(x+4)] = 8(x−4)/LCD.`,
+    `Subtract: x(x+1) − 8(x−4) = x² + x − 8x + 32 = x² − 7x + 32.`,
+    `Answer: (x² − 7x + 32)/[(x − 4)(x + 4)(x + 1)].`
   ]},
 
-/* 6 */ { q:`Factor completely: <code>6x² + 7x − 3</code>.`,
-  choices:[
-    `(2x − 3)(3x + 1)`,
-    `(2x + 3)(3x + 1)`,
-    `(2x + 3)(3x − 1)`,
-    `(x + 3)(6x − 1)`
-  ], correct:2,
-  why:`ac = 6·(−3)=−18; find 9 and −2 (sum 7).`,
+/* 16 */ { q:`Identify as an equation or an expression:
+            <br><strong>(4/9)x + 7 − (3/7)x − 2</strong>.`,
+  choices:[`Equation`,`Expression`], correct:1,
+  why:`There is no “=” sign → it’s an expression.`,
   steps:[
-    `6x² + 7x − 3 → split 7x as 9x − 2x`,
-    `Group: (6x² + 9x) + (−2x − 3)`,
-    `Factor: 3x(2x + 3) − 1(2x + 3)`,
-    `Common binomial: (2x + 3)(3x − 1)`
+    `An equation must have an equals sign; this does not.`,
+    `Therefore: Expression.`
   ]},
 
-/* 7 */ { q:`Solve: <code>x² − 5x − 14 = 0</code>.`,
-  choices:[`{7, −2}`,`{2, −7}`,`{7, 2}`,`{−7, 2}`], correct:0,
-  why:`Factor to (x−7)(x+2)=0.`,
+/* 17 */ { q:`Solve the equation:
+            <br><strong>(x − 7)/4 = (x + 7)/7</strong>.`,
+  choices:[`7/4`, set(6), `77/3`, `11/4`], correct:2,
+  why:`Cross‑multiply and solve.`,
   steps:[
-    `Find numbers with product −14 and sum −5 → −7 and +2`,
-    `x² − 5x − 14 = (x − 7)(x + 2)`,
-    `Zero product → x = 7 or x = −2`
-  ]},
+    `7(x − 7) = 4(x + 7) ⇒ 7x − 49 = 4x + 28`,
+    `3x = 77 ⇒ x = 77/3`,
+    `Check: denominators are constants (4,7) ⇒ no restriction on x (other than not affecting denominators).`
+  ],
+  fb:{
+    0:`7/4 comes from treating numerators as equal to denominators; use cross‑multiplication.`,
+    1:`{6} appears if you subtract 7 on both sides incorrectly before clearing denominators.`,
+    3:`11/4 would result from adding numerators/denominators — not valid when solving.`
+  }},
 
-/* 8 */ { q:`Solve: <code>x/3 − 2/5 = 1/2</code>.`,
-  choices:[`27/10`,`7/10`,`21/10`,`−27/10`], correct:0,
-  why:`Clear fractions with LCM 30.`,
+/* 18 */ { q:`Solve the equation:
+            <br><strong>(x + 9)/(x − 4) = 8/(4 − x)</strong>.`,
+  choices:[ set(−1), set(1), set(−17), set(17) ], correct:2,
+  why:`Note 4−x = −(x−4); clear denominators carefully.`,
   steps:[
-    `Multiply both sides by 30: 10x − 12 = 15`,
-    `10x = 27 → x = 27/10 = 2.7`
-  ]},
-
-/* 9 */ { q:`Solve the inequality: <code>−4x + 7 &gt; 19</code>.`,
-  choices:[`x &lt; −3`,`x &gt; −3`,`x ≥ −3`,`x ≤ −3`], correct:0,
-  why:`Dividing by a negative flips the sign.`,
-  steps:[
-    `−4x + 7 > 19 → −4x > 12`,
-    `Divide by −4 (flip >): x < −3`
-  ]},
-
-/* 10 */ { q:`Slope of the line through (−3, 4) and (5, −2).`,
-  choices:[`−3/4`,`3/4`,`−4/3`,`4/3`], correct:0,
-  why:`m = (y₂−y₁)/(x₂−x₁).`,
-  steps:[
-    `m = (−2 − 4)/(5 − (−3)) = (−6)/8 = −3/4`
-  ]},
-
-/* 11 */ { q:`Simplify: <code>√(50x²y³)</code>.`,
-  choices:[`5xy√(2y)`,`5x√(2y)`,`5y√(2xy)`,`5xy√(y/2)`], correct:0,
-  why:`Pull perfect squares out of the radical.`,
-  steps:[
-    `50x²y³ = (25)(2)(x²)(y²)(y)`,
-    `√(...) = 5·x·y·√(2y) = 5xy√(2y)`
-  ]},
-
-/* 12 */ { q:`Rationalize: <code>3/(2 − √5)</code>.`,
-  choices:[`−6 − 3√5`,`6 − 3√5`,`6 + 3√5`,`−6 + 3√5`], correct:0,
-  why:`Multiply top/bottom by the conjugate (2+√5).`,
-  steps:[
-    `3/(2−√5) · (2+√5)/(2+√5) = 3(2+√5)/(4−5)`,
-    `= 3(2+√5)/(−1) = −6 − 3√5`
-  ]},
-
-/* 13 */ { q:`Solve: <code>2x² − 3x − 2 = 0</code>.`,
-  choices:[`x=2, −1/2`,`x=1/2, −2`,`x=2, 1/2`,`x=−2, 1/2`], correct:0,
-  why:`Quadratic formula or factoring.`,
-  steps:[
-    `Δ = (−3)² − 4·2·(−2) = 9 + 16 = 25`,
-    `x = [3 ± √25]/(4) = (3 ± 5)/4`,
-    `x = 2 or x = −1/2`
-  ]},
-
-/* 14 */ { q:`Solve by completing the square: <code>x² + 6x + 5 = 0</code>.`,
-  choices:[`{−1, −5}`,`{1, 5}`,`{−2, −3}`,`{1, −5}`], correct:0,
-  why:`Make (x+3)² by adding 9 to both sides.`,
-  steps:[
-    `x² + 6x = −5`,
-    `Add (6/2)² = 9: (x + 3)² = 4`,
-    `x + 3 = ±2 → x = −1 or x = −5`
-  ]},
-
-/* 15 */ { q:`Simplify: <code>(x⁻³y²)/(x⁻¹y⁻⁴)</code> (no negative exponents).`,
-  choices:[`y⁶/x²`,`x²/y⁶`,`xy⁴`,`x⁻²y⁶`], correct:0,
-  why:`Subtract exponents: x^(−3 − (−1)) = x⁻²; y^(2 − (−4)) = y⁶.`,
-  steps:[
-    `(x⁻³y²)/(x⁻¹y⁻⁴) = x^(−3+1)·y^(2+4) = x⁻²y⁶`,
-    `= y⁶ / x²`
-  ]},
-
-/* 16 */ { q:`Factor: <code>25a² − 36b²</code>.`,
-  choices:[`(5a − 6b)(5a + 6b)`,`(5a − 6b)²`,`(25a − 36b)(a + b)`,`Prime`], correct:0,
-  why:`Difference of squares: A² − B² = (A−B)(A+B).`,
-  steps:[
-    `Let A=5a, B=6b → A² − B²`,
-    `Factor: (5a − 6b)(5a + 6b)`
-  ]},
-
-/* 17 */ { q:`A rectangle has length <code>3x + 2</code> and width <code>x − 1</code>. Perimeter is 34. Find L and W.`,
-  choices:[`L=14, W=3`,`L=12, W=5`,`L=11, W=6`,`L=10, W=7`], correct:0,
-  why:`Perimeter 2(L+W) ⇒ L+W = 17.`,
-  steps:[
-    `L+W = (3x+2)+(x−1) = 4x + 1 = 17`,
-    `4x = 16 → x = 4`,
-    `Length 3(4)+2 = 14; Width 4−1 = 3`
-  ]},
-
-/* 18 */ { q:`Solve the system: <code>2x + 3y = 7</code>, <code>x − y = 1</code>.`,
-  choices:[`(2, 1)`,`(1, 2)`,`(−2, 1)`,`(2, −1)`], correct:0,
-  why:`Substitute x = 1 + y into 2x+3y=7.`,
-  steps:[
-    `x = 1 + y`,
-    `2(1+y) + 3y = 7 → 2 + 2y + 3y = 7`,
-    `5y = 5 → y = 1 → x = 2`
-  ]},
+    `Right side 8/(4−x) = −8/(x−4). Multiplying both sides by (x−4) (x ≠ 4):`,
+    `x + 9 = −8 ⇒ x = −17.`,
+    `Check restriction: x ≠ 4. −17 is allowed.`
+  ],
+  fb:{
+    0:`{−1} can appear if you drop the negative when rewriting 4−x.`,
+    1:`{1} comes from sign mistakes when clearing denominators.`,
+    3:`{17} also results from a sign error.`
+  }},
 ];
 
-/* ===================== RENDER / LOGIC ===================== */
+/* ================= UI logic: check, feedback, and /100 grading ================ */
 const examEl = document.getElementById('exam');
 const scoreEl = document.getElementById('score');
 const barEl = document.getElementById('bar');
@@ -235,7 +298,10 @@ function render(){
       <p>${it.q}</p>
       <div class="choices">
         ${it.choices.map((c,j)=>`
-          <label><input type="radio" name="q${i}" value="${j}"> ${'ABCD'[j]}) ${c}</label>
+          <label>
+            <input type="radio" name="q${i}" value="${j}">
+            ${'ABCD'[j] || ['A','B','C','D'][j]}) ${c}
+          </label>
         `).join('')}
       </div>
       <div class="row">
@@ -244,7 +310,7 @@ function render(){
         <span class="result" id="r${i}"></span>
       </div>
       <details><summary>Show steps</summary>
-        <ol>${it.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+        <ol>${(it.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
         <p class="muted">Correct choice: <strong>${'ABCD'[it.correct]}</strong></p>
       </details>
     </article>
@@ -252,13 +318,14 @@ function render(){
   updateScore();
 }
 function gradeOne(i){
+  const it = EXAM[i];
   const sel = document.querySelector(`input[name="q${i}"]:checked`);
   const res = document.getElementById('r'+i);
-  if(!sel){ res.innerHTML = '<span class="bad">Choose an option first.</span>'; return; }
-  const ok = (+sel.value === EXAM[i].correct);
-  const why = EXAM[i].why ? `<span class="muted"> (${EXAM[i].why})</span>` : '';
-  res.innerHTML = ok ? '<span class="ok">Correct ✔</span>'
-                     : `<span class="bad">Not quite.</span> ${why}`;
+  if(!sel){ res.innerHTML = '<span class="warn">Choose an option first.</span>'; return; }
+  const ok = (+sel.value === it.correct);
+  const fb = it.fb && it.fb[+sel.value] ? ' ' + it.fb[+sel.value] : '';
+  const hint = it.why ? `<br><span class="muted">Hint: ${it.why}</span>` : '';
+  res.innerHTML = ok ? '<span class="ok">Correct ✔</span>' : `<span class="bad">Not quite.</span>${fb}${hint}`;
   updateScore();
 }
 function clearOne(i){
@@ -267,24 +334,21 @@ function clearOne(i){
   updateScore();
 }
 function updateScore(){
-  const total = EXAM.length||0;
-  let correct=0;
+  const total = EXAM.length;
+  let correct = 0;
   EXAM.forEach((_,i)=>{
     const sel = document.querySelector(`input[name="q${i}"]:checked`);
     if(sel && +sel.value===EXAM[i].correct) correct++;
   });
-  scoreEl.textContent = total? `Score: ${correct}/${total}  (${Math.round(100*correct/total)}%)`
-                             : `Score: —`;
-  barEl.style.width = total? (100*correct/total)+'%' : '0%';
+  const pct = total ? Math.round(100*correct/total) : 0;
+  barEl.style.width = pct + '%';
+  scoreEl.textContent = total? `Score: ${correct}/${total}  (${pct}%)` : 'Score: —';
 }
-document.getElementById('gradeAll').addEventListener('click', ()=>{
-  for(let i=0;i<EXAM.length;i++){ gradeOne(i); }
-});
+document.getElementById('gradeAll').addEventListener('click', ()=>{ for(let i=0;i<EXAM.length;i++) gradeOne(i); });
 document.getElementById('revealAll').addEventListener('click', ()=>{
   document.querySelectorAll('details').forEach(d=>d.open=true);
   for(let i=0;i<EXAM.length;i++){
-    const res = document.getElementById('r'+i);
-    res.innerHTML = `<span class="ok">Answer: <strong>${'ABCD'[EXAM[i].correct]}</strong></span>`;
+    document.getElementById('r'+i).innerHTML = `<span class="ok">Answer: <strong>${'ABCD'[EXAM[i].correct]}</strong></span>`;
   }
   updateScore();
 });
@@ -297,8 +361,8 @@ document.getElementById('resetAll').addEventListener('click', ()=>{
 
 render();
 
-/* PWA: optional cache bust */
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=12').catch(()=>{}); }
+/* PWA cache-buster so GitHub Pages shows the latest */
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=15').catch(()=>{}); }
 </script>
 </body>
 </html>

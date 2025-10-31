@@ -3,50 +3,78 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hard Random Practice — MA025B</title>
-<meta name="description" content="Harder randomized algebra practice with notebook-style steps and detailed wrong-answer feedback.">
+<title>Hard Random Practice — MA025B (Exam 2 topics)</title>
+<meta name="description" content="Harder randomized practice aligned with Exam 2 topics. Full notebook-style steps and wrong-answer feedback.">
 <style>
   :root{--bg:#0b0e11;--card:#12161c;--ink:#e9edf1;--muted:#b8c1cc;--accent:#4da3ff;--line:#1f2a36;--ok:#19c37d;--bad:#ff5c5c;--warn:#ffd166}
-  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
   header,main,footer{max-width:980px;margin:auto;padding:16px}
   h1{font-size:1.25rem;margin:0 0 8px}
+  a{color:var(--accent);text-decoration:none}
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0}
-  .grid{display:grid;grid-template-columns:1fr;gap:12px} @media(min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
-  fieldset{border:1px solid var(--line);border-radius:10px;padding:10px} legend{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media (min-width:760px){.grid{grid-template-columns:repeat(2,1fr)}}
+  fieldset{border:1px solid var(--line);border-radius:10px;padding:10px}
+  legend{color:var(--muted)}
   label{display:flex;gap:8px;align-items:center;margin:6px 0}
-  input[type=number],input[type=text]{width:100%;max-width:200px;padding:8px;border-radius:8px;border:1px solid var(--line);background:#0f141a;color:var(--ink)}
+  input[type=number],input[type=text]{width:100%;max-width:280px;padding:8px;border-radius:8px;border:1px solid var(--line);background:#0f141a;color:var(--ink)}
   button{appearance:none;border:1px solid var(--line);background:#0e3a66;color:#eaf3ff;border-radius:8px;padding:10px 14px;cursor:pointer}
   button:hover{filter:brightness(1.08)}
   .qa{padding:12px;border:1px solid var(--line);border-radius:10px;background:#0f141a;margin:10px 0}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .result{font-weight:700;margin-top:6px}.ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+  .result{font-weight:700;margin-top:6px}
+  .ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)} .muted{color:var(--muted)}
   details{background:#0b1117;border:1px dashed var(--line);border-radius:10px;padding:10px;margin-top:6px}
-  summary{cursor:pointer;color:var(--accent)} a{color:var(--accent)}
+  summary{cursor:pointer;color:var(--accent)}
   code{background:#0b1016;border:1px solid #1f2a36;padding:0 .35rem;border-radius:6px}
+  .bar{height:8px;background:#0d1a2f;border-radius:6px;overflow:hidden;border:1px solid #0f213a;flex:1}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,#1fd1a5,#5bc0be);width:0%}
 </style>
 </head>
 <body>
+<noscript><div class="card">This page needs JavaScript enabled to generate and check problems.</div></noscript>
+
 <header>
-  <h1>Hard Random Practice — Units 6–9++</h1>
-  <p>Generate tough problems with full notebook‑style steps. <a href="index.html">Home</a> • <a href="practice_exam2.html">Exam 2</a></p>
+  <h1>Hard Random Practice — Exam 2 Topics</h1>
+  <p>Generate tough practice aligned with Exam 2 (rational expressions, LCDs, add/subtract rationals, rational equations).  
+     <a href="index.html">Home</a> • <a href="practice_exam2.html">Exam 2 (exact)</a></p>
+  <div class="row" style="margin-top:8px">
+    <div class="bar" title="score bar"><i id="bar"></i></div>
+    <div id="score" style="font-weight:800;min-width:160px">Score: —</div>
+  </div>
 </header>
 
 <main>
   <section class="card">
     <div class="grid">
       <fieldset>
-        <legend>Topics</legend>
-        <label><input type="checkbox" class="topic" value="acfact" checked> Factoring trinomials (a≠1, ac‑method)</label>
-        <label><input type="checkbox" class="topic" value="cts" checked> Completing the square</label>
-        <label><input type="checkbox" class="topic" value="qf" checked> Quadratic formula</label>
-        <label><input type="checkbox" class="topic" value="ratreq" checked> Rational equations (LCD + extraneous)</label>
-        <label><input type="checkbox" class="topic" value="rad" checked> Radicals: simplify & rationalize</label>
-        <label><input type="checkbox" class="topic" value="pld" checked> Polynomial long division</label>
-        <label><input type="checkbox" class="topic" value="sys" checked> Systems (elimination, fractions)</label>
+        <legend>Topics (Exam 2‑style)</legend>
+        <!-- Rational expressions -->
+        <label><input type="checkbox" class="topic" value="eval" checked> Evaluate rational expression at x</label>
+        <label><input type="checkbox" class="topic" value="undef" checked> Values that make expression undefined</label>
+        <label><input type="checkbox" class="topic" value="simpl1" checked> Simplify to lowest terms (factor & cancel)</label>
+        <label><input type="checkbox" class="topic" value="groupSimp" checked> Simplify by grouping (cancel common binomial)</label>
+        <label><input type="checkbox" class="topic" value="mulRat" checked> Multiply rational expressions (sign flips)</label>
+        <label><input type="checkbox" class="topic" value="divRat" checked> Divide rational expressions (reciprocal + sign)</label>
+        <!-- LCD / rewriting -->
+        <label><input type="checkbox" class="topic" value="lcdNum" checked> LCD of numeric denominators</label>
+        <label><input type="checkbox" class="topic" value="lcdVar" checked> LCD with n, (k+n), (k−n)</label>
+        <label><input type="checkbox" class="topic" value="rewrite" checked> Rewrite with indicated denominator</label>
+        <!-- Add/Subtract rationals -->
+        <label><input type="checkbox" class="topic" value="sameDen" checked> Add/Subtract with same denominator</label>
+        <label><input type="checkbox" class="topic" value="mixDen" checked> Add/Subtract with different denominators (x)</label>
+        <label><input type="checkbox" class="topic" value="linDen" checked> Add 6/r + 9/(r+h) type</label>
+        <label><input type="checkbox" class="topic" value="factAdd" checked> Add/Subtract with factored denominators</label>
+        <!-- Identify / Solve -->
+        <label><input type="checkbox" class="topic" value="id" checked> Identify: equation or expression</label>
+        <label><input type="checkbox" class="topic" value="eqConst" checked> Solve (x−k)/m = (x+k)/n</label>
+        <label><input type="checkbox" class="topic" value="eqFlip" checked> Solve (x+a)/(x−k) = b/(k−x)</label>
       </fieldset>
+
       <fieldset>
         <legend>Options</legend>
-        <label>Questions <input id="count" type="number" min="3" max="25" value="10"></label>
+        <label>Questions <input id="count" type="number" min="3" max="25" value="12"></label>
         <div class="row">
           <button id="gen">Generate</button>
           <button id="clear">Reset</button>
@@ -59,173 +87,410 @@
 </main>
 
 <footer class="card">
-  <p>Tips: show your work; compare to the step‑by‑step. If your form is correct but simplified differently, that still earns ✅.</p>
+  <p>Tip: exact formatting matters. For fractions, write like <code>-27/10</code> or <code>11/(17x)</code>. For equations, you can type <code>x = 7/3</code> or just <code>7/3</code>.</p>
 </footer>
 
 <script>
+/* --------- helpers --------- */
 function r(lo,hi){ return Math.floor(Math.random()*(hi-lo+1))+lo; }
 function sgn(){ return Math.random()<.5? -1:1; }
-function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ [a,b]=[b,a%b]; } return a||1; }
-function simp(n,d){ const g=gcd(n,d); return [n/g, d/g]; }
-function fracToText(n,d){ const sign=(n*d<0)?'-':''; [n,d]=[Math.abs(n),Math.abs(d)]; if(d===1) return sign+n; return sign + n + '/' + d; }
-function sameNumberForm(u,v){ return u.replace(/\s+/g,'').replace(/^0\+?/,'')===v.replace(/\s+/g,''); }
+function gcd(a,b){ a=Math.trunc(Math.abs(a)); b=Math.trunc(Math.abs(b)); while(b){ [a,b]=[b,a%b]; } return a||1; }
+function lcm(a,b){ return Math.abs(a*b)/gcd(a,b); }
+function simp(n,d){ const g=gcd(n,d); n/=g; d/=g; if(d<0){ n=-n; d=-d; } return [n,d]; }
+function fracToText(n,d){ const [N,D]=simp(n,d); return D===1? String(N) : `${N}/${D}`; }
 
-function acFact(){
-  const a=r(2,6), p=sgn()*r(1,9), q=sgn()*r(1,9);
-  const b=a*q+p, c=p*q;
-  const qf=`${a}x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)}`;
-  const steps=[
-    `ac = ${a}·${c} = ${a*c}. Find two integers whose product is ${a*c} and sum is ${b}.`,
-    `Split the middle term: ${a}x² + ${a*q}x + ${p}x ${c<0?'-':'+'} ${Math.abs(c)}.`,
-    `Group: ${a}x(x ${q<0?'-':'+'} ${Math.abs(q)}) + ${p}(x ${q<0?'-':'+'} ${Math.abs(q)})`,
-    `Factor common binomial → (x ${q<0?'-':'+'} ${Math.abs(q)})(${a}x ${p<0?'-':'+'} ${Math.abs(p)})`
+/* Parse answers: accept "x = 3/4", "3/4", "-2.7". Return {ok, n, d, valText} if numeric. */
+function parseNumberish(text){
+  let s = (text||'').trim().toLowerCase();
+  s = s.replace(/^x\s*=\s*/,'');           // allow "x = ..."
+  s = s.replace(/^\(+|\)+$/g,'');          // strip outer parens
+  if(!s) return {ok:false};
+  if(/^-?\d+\/-?\d+$/.test(s)){
+    const [a,b]=s.split('/').map(Number);
+    if(b===0) return {ok:false};
+    const [N,D]=simp(a,b);
+    return {ok:true, n:N, d:D, valText:fracToText(N,D)};
+  }
+  // decimal or integer
+  const v = Number(s);
+  if(!Number.isNaN(v) && Number.isFinite(v)){
+    // convert decimal to fraction with denominator up to 10000
+    const str = String(s);
+    if(str.includes('.')){
+      const parts=str.split('.');
+      const den = 10**parts[1].length;
+      const num = Math.round(v*den);
+      const [N,D]=simp(num,den);
+      return {ok:true, n:N, d:D, valText:fracToText(N,D)};
+    }else{
+      return {ok:true, n:v, d:1, valText:String(v)};
+    }
+  }
+  return {ok:false};
+}
+function sameFrac(user, targetN, targetD){
+  const p = parseNumberish(user);
+  if(!p.ok) return false;
+  const [U1,U2]=simp(p.n,p.d);
+  const [T1,T2]=simp(targetN,targetD);
+  return U1===T1 && U2===T2;
+}
+function norm(s){ return (s||'').replace(/\s+/g,'').toLowerCase(); }
+
+/* --------- generators (Exam 2 style) --------- */
+function genEvaluate(){
+  // (A - Bx)/(C x) at x = k (k ≠ 0)
+  const A = r(3,12)*sgn(), B = r(2,9), C = r(4,12);
+  let k = r(-6,6); if(k===0) k=2; // avoid zero denom
+  const num = A - B*k, den = C*k;
+  const [N,D]=simp(num,den);
+  const steps = [
+    `Expression: (${A} - ${B}x)/(${C}x) with x = ${k}`,
+    `Substitute: (${A} - ${B}·${k}) / (${C}·${k}) = ${A - B*k} / ${C*k}`,
+    `Reduce the fraction → ${fracToText(N,D)}`
   ];
   return {
-    prompt:`Factor: ${qf}`,
-    answer:`(x ${q<0?'-':'+'} ${Math.abs(q)})(${a}x ${p<0?'-':'+'} ${Math.abs(p)})`,
-    check:(val)=>val.replace(/\s+/g,'').includes(`(x${q<0?'-':'+'}${Math.abs(q)})(`),
-    whyWrong:`Use the ac‑method: product ${a*c} and sum ${b}; then group as shown.`,
+    prompt:`Evaluate at x = ${k}: <code>(${A} - ${B}x)/(${C}x)</code>`,
+    answer: fracToText(N,D),
+    check:(val)=>sameFrac(val,N,D),
+    whyWrong:`Be careful with signs; substitute x=${k} and reduce the fraction.`,
     steps
   };
 }
 
-function completingSquare(){
-  const h=sgn()*r(1,6), k=sgn()*r(0,10);
-  // (x - h)^2 = k form
-  const b=-2*h, c=h*h - k;
-  const steps=[
-    `Start: x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
-    `Move constant: x² ${b<0?'-':'+'} ${Math.abs(b)}x = ${-c}`,
-    `Complete the square: add (b/2)² = (${b}/2)² = ${h*h} to both sides`,
-    `(x ${h<0?'+':'-'} ${Math.abs(h)})² = ${-c + h*h}`,
-    `Solve: x = ${h} ± √(${ -c + h*h })`
+function genUndefined(){
+  // (b - k)/(m b - m k) → denominator zero when b = k
+  const m=r(3,12), k=r(-6,6); // b = k is the undefined value
+  const steps = [
+    `Denominator: ${m}b - ${m}·${k} = ${m}(b - ${k}).`,
+    `Undefined when denominator = 0 ⇒ b - ${k} = 0 ⇒ b = ${k}.`
   ];
   return {
-    prompt:`Solve by completing the square: x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
-    answer:`x = ${h} ± √(${ -c + h*h })`,
-    check:(val)=>val.replace(/\s+/g,'').includes(`x=${h}±√(${ -c + h*h })`),
-    whyWrong:`Complete the square using (b/2)²; write as (x${h<0?'+':'-'}${Math.abs(h)})² = ...`,
+    prompt:`Find all values that make the expression undefined: <code>(b - ${k})/(${m}b - ${m*k})</code>`,
+    answer: String(k),
+    check:(val)=>norm(val)===norm(String(k)) || norm(val)===norm(`b=${k}`),
+    whyWrong:`Set the denominator to 0 and solve for b.`,
     steps
   };
 }
 
-function quadraticFormula(){
-  // ax^2 + bx + c = 0 with integer roots sometimes
-  const a=r(1,6), root1=sgn()*r(1,9), root2=sgn()*r(1,9);
-  const b= -a*(root1+root2), c=a*root1*root2;
-  const disc=b*b-4*a*c;
-  const steps=[
-    `Equation: ${a}x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
-    `Use quadratic formula: x = (-b ± √(b² − 4ac))/(2a)`,
-    `b² − 4ac = ${b*b} − 4·${a}·${c} = ${disc}`,
-    `x = (${ -b } ± √${disc}) / ${2*a}`
+function genSimplify1(){
+  // Generalize exam #3 pattern:
+  // Numerator: Cx + C; Denominator: C(αx + β)(x + 1) → expanded
+  const C=r(2,5), alpha=r(3,8), beta=r(2,7);
+  const numA = C, numB = C;       // Cx + C
+  const A = C*alpha;              // denominator coefficients expanded
+  const B = C*(alpha+beta);
+  const K = C*beta;
+  const steps = [
+    `Numerator: ${C}x + ${C} = ${C}(x+1).`,
+    `Denominator (factor first): ${A}x² + ${B}x + ${K} = ${C}(αx+β)(x+1) with α=${alpha}, β=${beta}.`,
+    `Cancel common factors ${C} and (x+1) ⇒ <code>1/(${alpha}x + ${beta})</code>.`
   ];
-  const ans=`x = (${ -b } ± √${disc}) / ${2*a}`;
   return {
-    prompt:`Solve using quadratic formula: ${a}x² ${b<0?'-':'+'} ${Math.abs(b)}x ${c<0?'-':'+'} ${Math.abs(c)} = 0`,
-    answer:ans,
-    check:(val)=>val.replace(/\s+/g,'')===ans.replace(/\s+/g,''),
-    whyWrong:`Plug a=${a}, b=${b}, c=${c} into the formula; be careful with signs.`,
+    prompt:`Write in lowest terms: <code>(${numA}x + ${numB}) / (${A}x² + ${B}x + ${K})</code>`,
+    answer:`1/(${alpha}x + ${beta})`,
+    check:(val)=>norm(val)===norm(`1/(${alpha}x+${beta})`),
+    whyWrong:`Factor numerator and denominator completely and cancel (x+1) and ${C}.`,
     steps
   };
 }
 
-function rationalEquation(){
-  // (ax+b)/m = (cx+d)/n
-  const a=sgn()*r(1,6), b=sgn()*r(0,10), c=sgn()*r(1,6), d=sgn()*r(0,10), m=r(2,9), n=r(2,9);
-  // choose integer solution
-  const x=r(-6,6);
-  const left = a*x + b, right = c*x + d;
-  // Set equality so that (ax+b)/m = (cx+d)/n is true for chosen x
-  // Adjust constants so equality holds:
-  // we keep (ax+b)/m = (cx+d)/n -> choose d so equality holds for that x
-  const d2 = Math.round(( (a*x + b)/m * n ) - c*x);
-  const steps=[
-    `(${a}x ${b<0?'-':'+'} ${Math.abs(b)})/${m} = (${c}x ${d2<0?'-':'+'} ${Math.abs(d2)})/${n}`,
-    `Multiply both sides by lcm(${m},${n}) = ${m*n} to clear denominators.`,
-    `${n}(${a}x ${b<0?'-':'+'} ${Math.abs(b)}) = ${m}(${c}x ${d2<0?'-':'+'} ${Math.abs(d2)})`,
-    `${n*a}x ${ (n*b<0)?'-':'+' } ${Math.abs(n*b)} = ${m*c}x ${ (m*d2<0)?'-':'+' } ${Math.abs(m*d2)}`,
-    `Collect x terms and constants to solve for x.`,
-    `Check for extraneous: ensure denominators ≠ 0 (x ≠ values that make ${m} or ${n} zero — here constants, so OK).`
+function genGroupingSimplify(){
+  // (p(q-k) + t(q-k)) / ((q-k)(r+t)) → (p+t)/(r+t)
+  const p=r(-6,9), t=r(2,8), k=r(2,6), rvar='r', q='q';
+  const steps = [
+    `Group numerator: p(q−k) + t(q−k) = (p + t)(q − k).`,
+    `Group denominator: (q − k)(r + t).`,
+    `Cancel (q − k): result <code>(p + t)/(r + t)</code>.`,
+    `Now plug values p=${p}, t=${t}, k=${k}.`
   ];
   return {
-    prompt:`Solve the rational equation: (${a}x ${b<0?'-':'+'} ${Math.abs(b)})/${m} = (${c}x ${d2<0?'-':'+'} ${Math.abs(d2)})/${n}`,
-    answer:`x = ${x}`,
-    check:(val)=>val.replace(/\s+/g,'').toLowerCase()===('x='+x).replace(/\s+/g,'').toLowerCase() || val.trim()===''+x,
-    whyWrong:`Clear denominators with LCM, collect like terms, and isolate x. Recheck your distribution signs.`,
+    prompt:`Write in lowest terms: <code>(${p}${q} - ${p*k} + ${t}${q} - ${t*k}) / (${q}${rvar} + ${t}${q} - ${k}${rvar} - ${k*t})</code>`,
+    answer:`(${p+t})/(r + ${t})`,
+    check:(val)=>norm(val)===norm(`(${p+t})/(r+${t})`) || norm(val)===norm(`${p+t}/(r+${t})`),
+    whyWrong:`Factor by grouping to expose (q−${k}) and (r+${t}).`,
     steps
   };
 }
 
-function radicals(){
-  const k=r(2,12), t=r(2,6);
-  // Simplify √(k^2 * t) -> k√t
-  const rad=k*k*t;
-  const steps=[
-    `Simplify √${rad} = √(${k}²·${t}) = ${k}√${t}.`,
-    `If t has square factors, continue factoring; otherwise it's simplified.`
+function genMultiplyRat(){
+  // [a(x - k)]/[A x (x + k)] · [B (x + k)]/[C (k - x)] → −(aB)/(A C x)
+  const k=r(2,6), a=r(2,6), A=r(2,8), B=r(2,8), C=r(2,8);
+  const numConst = a*B, denConst = A*C;
+  const [N,D]=simp(-numConst, denConst); // negative from (x - k)/(k - x)
+  const steps = [
+    `Factor everything:`,
+    `• (x - ${k}) cancels with (k - x) but introduces a minus sign: (x - ${k})/(k - x) = -1.`,
+    `• (x + ${k}) cancels.`,
+    `• Reduce constants: (${a}·${B})/(${A}·${C}) ⇒ ${fracToText(N,-D)} with the minus sign.`,
+    `Final: <code>${N===0? '0' : (D===1? `${N}/x` : `${N}/(${D}x)`)}</code>`
   ];
+  const answer = D===1? `${N}/x` : `${N}/(${D}x)`;
   return {
-    prompt:`Simplify: √${rad}`,
-    answer:`${k}√${t}`,
-    check:(val)=>val.replace(/\s+/g,'')===(`${k}√${t}`).replace(/\s+/g,''),
-    whyWrong:`Look for perfect-square factors inside the radical: ${rad} = ${k}²·${t}.`,
+    prompt:`Multiply and simplify: <code>(${a}x - ${a*k})/(${A}x(x + ${k})) · (${B}(x + ${k}))/(${C}(${k} - x))</code>`,
+    answer: answer,
+    check:(val)=>norm(val)===norm(answer),
+    whyWrong:`Cancel common binomials and remember (x − ${k})/( ${k} − x ) = −1.`,
     steps
   };
 }
 
-function polyLongDivision(){
-  // (ax^3+bx^2+cx+d) ÷ (x - r) with integer remainder
-  const r0=sgn()*r(1,6);
-  const a=r(1,5), b=sgn()*r(0,9), c=sgn()*r(0,9), d=sgn()*r(0,9);
-  const steps=[
-    `Divide leading terms: (${a}x³)/(x) = ${a}x².`,
-    `Multiply back by divisor (x - ${r0}) and subtract; repeat to get quotient and remainder.`,
-    `Synthetic division can speed this up with root r=${r0}.`
+function genDivideRat(){
+  // [6: exam style pattern with sign flip]  -> produce constant negative
+  // (a(r - s))/(b(r - t)) ÷ (c(s - r))/(d(r - t)) → -(a d)/(b c)
+  const rvar='r', svar='s', a=r(2,8), b=r(2,8), c=r(2,8), d=r(2,8);
+  const s=r(2,6), t=r(2,6);
+  const [N,D]=simp(-a*d, b*c);
+  const steps = [
+    `Rewrite division as multiplication by the reciprocal.`,
+    `Factor common binomials: (s − r) = −(r − s).`,
+    `Cancel (r − ${t}) and (r − ${s}) appropriately; track the minus from (s−r).`,
+    `Constants reduce to ${fracToText(N,D)}.`
   ];
   return {
-    prompt:`Divide: (${a}x³ ${b<0?'-':'+'} ${Math.abs(b)}x² ${c<0?'-':'+'} ${Math.abs(c)}x ${d<0?'-':'+'} ${Math.abs(d)}) ÷ (x ${r0<0?'+':'-'} ${Math.abs(r0)})`,
-    answer:`Quotient: ${a}x² + … (work shown in steps); Remainder: depends on coefficients`,
-    check:()=>true, // manual check via steps
-    whyWrong:`Follow polynomial long division or synthetic division carefully; align like powers.`,
+    prompt:`Divide and simplify: <code>(${a}(${rvar} - ${s}))/(${b}(${rvar} - ${t})) ÷ (${c}(${s} - ${rvar}))/(${d}(${rvar} - ${t}))</code>`,
+    answer: fracToText(N,D),
+    check:(val)=>sameFrac(val,N,D),
+    whyWrong:`Take the reciprocal, then cancel and note (s−r)=−(r−s).`,
     steps
   };
 }
 
-function systemFrac(){
-  // ax + by = e,   cx + dy = f  with fractional coefficients
-  const a=r(1,6), b=r(1,6), c=r(1,6), d=r(1,6);
-  const x=r(-5,5), y=r(-5,5);
-  const e=a*x + b*y, f=c*x + d*y;
-  const steps=[
-    `System: ${a}x + ${b}y = ${e},   ${c}x + ${d}y = ${f}`,
-    `Eliminate (e.g., multiply top by ${c} and bottom by ${a}):`,
-    `${c*a}x + ${c*b}y = ${c*e}`,
-    `${a*c}x + ${a*d}y = ${a*f}`,
-    `Subtract to eliminate x, solve for y, then back‑substitute to get x.`
+function genLCDnum(){
+  const a=[r(6,20), r(6,20), r(6,20)];
+  const den = a.map(x=>x);
+  const lcd = den.reduce((acc,v)=>lcm(acc,v));
+  const steps = [
+    `Prime‑factor each denominator and take highest powers.`,
+    `LCM(${den.join(', ')}) = ${lcd}.`
   ];
   return {
-    prompt:`Solve the system: ${a}x + ${b}y = ${e}  and  ${c}x + ${d}y = ${f}`,
-    answer:`(x, y) = (${x}, ${y})`,
-    check:(val)=>val.replace(/\s+/g,'').toLowerCase()===`(x,y)=(${x},${y})`.replace(/\s+/g,'').toLowerCase()
-                 || val.replace(/\s+/g,'')===`${x},${y}`,
-    whyWrong:`Use elimination with integer multipliers to avoid fractions; verify by substitution.`,
+    prompt:`Find the LCD for the list: <code>${den.map((d,i)=> (i? ' , ':'') + String(d)).join('')}</code>`,
+    answer: String(lcd),
+    check:(val)=>norm(val)===String(lcd),
+    whyWrong:`Use prime factors or successive multiples to find the least common multiple.`,
     steps
   };
 }
 
-const genByKey = { acfact:acFact, cts:completingSquare, qf:quadraticFormula, ratreq:rationalEquation, rad:radicals, pld:polyLongDivision, sys:systemFrac };
+function genLCDvar(){
+  const k=r(2,6);
+  const steps = [
+    `Distinct linear factors: n, (n+${k}), and ( ${k} − n ) = −(n − ${k}).`,
+    `LCD must include all: <code>n(n+${k})( ${k}−n )</code> (order doesn’t matter).`
+  ];
+  const ans = `n(n+${k})(${k}-n)`;
+  return {
+    prompt:`Find the LCD for: <code>5/n</code> , <code>−4/(n+${k})</code> , <code>6/(${k}-n)</code>`,
+    answer: ans,
+    check:(val)=> {
+      const s=norm(val);
+      return s.includes('n(') && s.includes(`n+${k}`) && (s.includes(`(${k}-n)`) || s.includes(`(${k} - n)`));
+    },
+    whyWrong:`Include n, (n+${k}), and ( ${k}−n ).`,
+    steps
+  };
+}
 
+function genRewrite(){
+  // -1/(a m) = ?/(b m), with b multiple of a
+  const m=r(2,9), a=r(2,6), t=r(2,6);  // let b = a*t
+  const b=a*t;
+  const steps = [
+    `To go from denominator ${a*m} to ${b*m}, multiply top & bottom by ${t}.`,
+    `So numerator becomes −1·${t} = −${t}.`
+  ];
+  return {
+    prompt:`Rewrite with the indicated denominator: <code>−1/(${a*m}) = ?/(${b*m})</code>`,
+    answer:`-${t}/(${b*m})`,
+    check:(val)=>norm(val)===norm(`-${t}/(${b*m})`) || norm(val)===norm(`-${t}/${b*m}`),
+    whyWrong:`Scale numerator and denominator by the same factor.`,
+    steps
+  };
+}
+
+function genSameDen(){
+  const A=r(8,25), B=r(2,12);
+  const k=r(5,20), x='x';
+  const num=A-B, den=`${k}${x}`;
+  const [N,D]=simp(num,k); // keep as A-B over k times x (we’ll show with x)
+  // For display keep exact form like (A-B)/(k x)
+  const steps = [
+    `Common denominator: ${k}${x}.`,
+    `Subtract numerators: ${A} − ${B} = ${A-B}.`,
+    `Answer: <code>(${A-B})/(${k}${x})</code> (you may reduce numeric factor if common).`
+  ];
+  return {
+    prompt:`Add or subtract (lowest terms): <code>${A}/(${k}${x}) − ${B}/(${k}${x})</code>`,
+    answer:`${A-B}/(${k}${x})`,
+    check:(val)=>norm(val)===norm(`${A-B}/(${k}${x})`) || norm(val)===norm(`${A-B}/${k}${x}`),
+    whyWrong:`Just subtract numerators; denominator stays the same.`,
+    steps
+  };
+}
+
+function genMixDen(){
+  // −p/const − q/(s x)
+  const p=r(2,12), q=r(2,12), c=r(6,20), s=r(2,9);
+  const x='x';
+  const lcd = c*s + x; // for display only, but we’ll compute algebraically
+  const steps = [
+    `LCD: ${c}s${x} = ${c*s}${x}.`,
+    `Rewrite: −${p}/${c} = −${p}s${x}/(${c*s}${x}),  −${q}/(${s}${x}) = −${q}·${c}/(${c*s}${x}).`,
+    `Combine: numerator = −${p}s${x} − ${q}·${c} = −(${p*s})${x} − ${q*c}.`
+  ];
+  const answer = `(-${p*s}${x} - ${q*c})/(${c*s}${x})`;
+  return {
+    prompt:`Add or subtract (lowest terms): <code>−${p}/${c} − ${q}/(${s}${x})</code>`,
+    answer: answer,
+    check:(val)=>norm(val)===norm(answer.replace(/\s+/g,'')),
+    whyWrong:`Use the LCD ${c*s}${x}, then combine the numerators carefully (watch signs).`,
+    steps
+  };
+}
+
+function genLinDen(){
+  // 6/r + 9/(r + h)
+  const h=r(3,8), m=9, rvar='r';
+  const num1 = `6(${rvar}+${h}) = 6${rvar} + ${6*h}`;
+  const num2 = `${m}${rvar}`;
+  const num = `${(m+6)}${rvar} + ${6*h}`;
+  const steps = [
+    `LCD = ${rvar}(${rvar}+${h}).`,
+    `Numerator: 6(${rvar}+${h}) + ${m}${rvar} = ${num1} + ${num2} = ${num}.`,
+    `Answer: <code>(${num})/[${rvar}(${rvar}+${h})]</code>.`
+  ];
+  return {
+    prompt:`Add or subtract (lowest terms): <code>6/${rvar} + ${m}/(${rvar}+${h})</code>`,
+    answer:`(${num})/[${rvar}(${rvar}+${h})]`,
+    check:(val)=>norm(val)===norm(`(${num})/[${rvar}(${rvar}+${h})]`),
+    whyWrong:`Build the common denominator ${rvar}(${rvar}+${h}) and add the numerators.`,
+    steps
+  };
+}
+
+function genFactAdd(){
+  // x/(x^2 - a^2) - t/((x+1)(x+a)), with t = 2a
+  const a=r(3,7), t=2*a, x='x';
+  const steps = [
+    `Factor denominators: x² − ${a*a} = (x−${a})(x+${a}); and (x+1)(x+${a}).`,
+    `LCD = (x−${a})(x+${a})(x+1).`,
+    `Rewrite: x/(x²−${a*a}) → x(x+1)/LCD;  ${t}/[(x+1)(x+${a})] → ${t}(x−${a})/LCD.`,
+    `Subtract numerators: x(x+1) − ${t}(x−${a}) = x² + x − ${t}x + ${t*a} = x² + ${(1-t)}x + ${t*a}.`
+  ];
+  const num = `x^2 + ${(1-2*a)}x + ${2*a*a}`;
+  const ans = `(${num})/[(x-${a})(x+${a})(x+1)]`;
+  return {
+    prompt:`Add or subtract (lowest terms): <code>x/(x^2 - ${a*a}) - ${t}/((x+1)(x+${a}))</code>`,
+    answer: ans.replace(/\^2/g,'²'),
+    check:(val)=>norm(val.replace(/²/g,'^2'))===norm(ans),
+    whyWrong:`Use the LCD (x−${a})(x+${a})(x+1), then combine numerators carefully.`,
+    steps
+  };
+}
+
+function genId(){
+  const makeEq = Math.random()<0.4; // sometimes equation
+  if(makeEq){
+    const a=r(2,9), b=r(2,9);
+    return {
+      prompt:`Identify: equation or expression — <code>${a}x + ${b} = ${a+b}</code>`,
+      answer:`Equation`,
+      check:(val)=>/^equation$/i.test(val.trim()),
+      whyWrong:`It has “=”, so it’s an equation.`,
+      steps:[`Presence of “=” makes it an equation.`]
+    };
+  }else{
+    const A=r(2,9), B=r(2,9), C=r(2,9);
+    return {
+      prompt:`Identify: equation or expression — <code>(${A}/${B})x + ${C} - (${B}/${A})x</code>`,
+      answer:`Expression`,
+      check:(val)=>/^expression$/i.test(val.trim()),
+      whyWrong:`There is no equals sign.`,
+      steps:[`No “=” → expression.`]
+    };
+  }
+}
+
+function genEqConst(){
+  // (x - k)/m = (x + k)/n  →  n(x-k)=m(x+k) ⇒ (n-m)x = (n+m)k ⇒ x = ((n+m)k)/(n-m)
+  let m=r(2,9), n=r(2,9); if(n===m) n++;
+  const k=r(2,9);
+  const num = (n+m)*k, den = (n-m);
+  const [N,D]=simp(num,den);
+  const steps = [
+    `Cross‑multiply: ${n}(x − ${k}) = ${m}(x + ${k}).`,
+    `${n}x − ${n*k} = ${m}x + ${m*k} ⇒ (${n}−${m})x = (${n}+${m})·${k}.`,
+    `x = ${num}/${den} = ${fracToText(N,D)}.`
+  ];
+  return {
+    prompt:`Solve: <code>(x - ${k})/${m} = (x + ${k})/${n}</code>`,
+    answer: D===1? `${N}` : `${N}/${D}`,
+    check:(val)=>sameFrac(val,N,D) || norm(val)===norm(`x=${D===1? N : N+'/'+D}`),
+    whyWrong:`Clear denominators by cross‑multiplication; keep track of signs.`,
+    steps
+  };
+}
+
+function genEqFlip(){
+  // (x + a)/(x - k) = b/(k - x)  → RHS = -b/(x-k); multiply by (x-k): x + a = -b ⇒ x = -a - b
+  const a=r(2,9), k=r(2,9), b=r(2,9);
+  const x = -a - b;
+  const steps = [
+    `Note: (k − x) = −(x − k) ⇒ RHS = −${b}/(x − ${k}).`,
+    `Multiply both sides by (x − ${k}) (x≠${k}): x + ${a} = −${b}.`,
+    `x = −${a} − ${b} = ${x}.`
+  ];
+  return {
+    prompt:`Solve: <code>(x + ${a})/(x - ${k}) = ${b}/(${k} - x)</code>`,
+    answer: String(x),
+    check:(val)=>norm(val)===String(x) || norm(val)===norm(`x=${x}`),
+    whyWrong:`Remember (k−x)=−(x−k); distribute the negative correctly.`,
+    steps
+  };
+}
+
+/* Topic registry */
+const genByKey = {
+  eval: genEvaluate,
+  undef: genUndefined,
+  simpl1: genSimplify1,
+  groupSimp: genGroupingSimplify,
+  mulRat: genMultiplyRat,
+  divRat: genDivideRat,
+  lcdNum: genLCDnum,
+  lcdVar: genLCDvar,
+  rewrite: genRewrite,
+  sameDen: genSameDen,
+  mixDen: genMixDen,
+  linDen: genLinDen,
+  factAdd: genFactAdd,
+  id: genId,
+  eqConst: genEqConst,
+  eqFlip: genEqFlip
+};
+
+/* --------- UI wiring --------- */
 const quiz = document.getElementById('quiz');
+const scoreEl = document.getElementById('score');
+const barEl = document.getElementById('bar');
+
 document.getElementById('gen').addEventListener('click', ()=>{
   const chosen = [...document.querySelectorAll('.topic:checked')].map(e=>e.value);
-  const n = Math.max(3, Math.min(25, +document.getElementById('count').value||10));
+  const n = Math.max(3, Math.min(25, +document.getElementById('count').value||12));
   if(!chosen.length){ alert('Pick at least one topic.'); return; }
   const items=[];
-  for(let i=0;i<n;i++){ const key = chosen[i % chosen.length]; items.push(genByKey[key]()); }
+  for(let i=0;i<n;i++){
+    const key = chosen[i % chosen.length]; // round‑robin for variety
+    items.push(genByKey[key]());
+  }
   render(items);
 });
-document.getElementById('clear').addEventListener('click', ()=> quiz.innerHTML='');
+document.getElementById('clear').addEventListener('click', ()=> {
+  quiz.innerHTML='';
+  updateScore();
+});
 
 function render(items){
   quiz.innerHTML = items.map((it,idx)=>`
@@ -234,7 +499,7 @@ function render(items){
       <p>${it.prompt}</p>
       <div class="row">
         <label>Answer:
-          <input type="text" id="ans${idx}" placeholder="e.g., x = 3  or  (x, y) = (2, -1)  or  (x + 2)(3x - 5)">
+          <input type="text" id="ans${idx}" placeholder="e.g., -27/10  or  11/(17x)  or  x = 77/3">
         </label>
         <button class="chk" data-i="${idx}">Check</button>
       </div>
@@ -243,22 +508,46 @@ function render(items){
       <details><summary>Reveal exact answer</summary><p><code>${it.answer}</code></p></details>
     </article>
   `).join('');
+
   quiz.querySelectorAll('.chk').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const i = +btn.dataset.i, it = items[i];
       const user = (document.getElementById('ans'+i).value||'').trim();
       if(!user){ document.getElementById('res'+i).innerHTML = '<span class="warn">Type an answer first.</span>'; return; }
-      const correct = (typeof it.answer==='string'? it.answer : String(it.answer));
-      const eq = (it.check && typeof it.check==='function') ? it.check(user) : sameNumberForm(user, correct);
-      document.getElementById('res'+i).innerHTML = eq
+      let ok=false;
+      try{
+        ok = (it.check && typeof it.check==='function') ? it.check(user) : (norm(user)===norm(String(it.answer)));
+      }catch(e){ ok=false; }
+      document.getElementById('res'+i).innerHTML = ok
         ? '<span class="ok">Correct ✔</span>'
-        : `<span class="bad">Not quite.</span> <br><span>Why: ${it.whyWrong}</span><br><span class="muted">Expected a form equivalent to: <code>${correct}</code></span>`;
+        : `<span class="bad">Not quite.</span><br><span class="muted">Hint: ${it.whyWrong||'Open “Show steps”.'}</span>`;
+      updateScore();
     });
   });
+
+  updateScore();
+}
+
+function updateScore(){
+  const cards = [...document.querySelectorAll('.qa')];
+  let correct=0, answered=0;
+  cards.forEach((_,i)=>{
+    const res = document.getElementById('res'+i);
+    if(!res) return;
+    const text = res.textContent||'';
+    if(text.includes('Correct')){ correct++; answered++; }
+    else if(text.includes('Not quite') || text.includes('Type an answer')){ answered++; }
+  });
+  const total = cards.length;
+  const pct = total? Math.round(100*correct/total) : 0;
+  barEl.style.width = (total? (100*correct/total):0) + '%';
+  scoreEl.textContent = total? `Score: ${correct}/${total}  (${pct}%)` : 'Score: —';
 }
 
 /* PWA */
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js?ver=12').catch(()=>{}); }
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js?ver=16').catch(()=>{});
+}
 </script>
 </body>
 </html>

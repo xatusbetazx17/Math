@@ -122,11 +122,12 @@ nav a:active,.btn:active,button:active{transform:translateY(0)}
 
   <footer class="footer">Built for maximum compatibility.</footer>
 </div>
+
+<!-- Service worker: versioned to bypass old caches -->
 <script>
-  // Refresh the service worker (cache buster)
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('sw.js?ver=12');
-  }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js?ver=16');
+}
 </script>
 </body>
 </html>

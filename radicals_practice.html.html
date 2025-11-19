@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Radicals & Roots Practice (Offline)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --accent: #2563eb;
+      --accent-soft: #e0ebff;
+      --accent-strong: #1d4ed8;
+      --danger: #b91c1c;
+      --danger-soft: #fee2e2;
+      --success: #15803d;
+      --success-soft: #dcfce7;
+      --border-soft: #e5e7eb;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111827, #1f2937);
+      color: white;
+      padding: 1.25rem 1.5rem 1.1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      margin: 0 0 .25rem;
+      font-size: 1.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    header p {
+      margin: 0;
+      font-size: .9rem;
+      color: #e5e7eb;
+    }
+
+    main {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 1.25rem .75rem 2rem;
+    }
+
+    @media (min-width: 700px) {
+      main {
+        padding: 1.5rem 1rem 2.5rem;
+      }
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.1rem 1.1rem 1.2rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 12px 24px rgba(15,23,42,0.12);
+      border: 1px solid rgba(148,163,184,0.45);
+    }
+
+    .section-card + .section-card {
+      margin-top: 1.25rem;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: .4rem .8rem;
+      margin-bottom: .5rem;
+    }
+
+    .section-subtitle {
+      font-size: .85rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .25rem;
+      padding: .15rem .55rem;
+      border-radius: 999px;
+      font-size: .7rem;
+      background: #111827;
+      color: #e5e7eb;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .pill span {
+      font-size: .8rem;
+    }
+
+    .offline-tag {
+      background: #16a34a;
+    }
+
+    .question-card {
+      border-radius: 10px;
+      padding: .85rem .9rem .9rem;
+      margin-top: .8rem;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+      box-shadow: 0 3px 10px rgba(15,23,42,0.06);
+    }
+
+    .question-card h3 {
+      margin: 0 0 .25rem;
+      font-size: .98rem;
+    }
+
+    .prompt {
+      margin: 0 0 .5rem;
+      font-size: .95rem;
+    }
+
+    .choices {
+      margin-top: .3rem;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: .4rem;
+      margin: .1rem 0;
+      padding: .25rem .4rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .12s ease, box-shadow .12s ease, transform .04s ease;
+      user-select: none;
+    }
+
+    .choice input[type="radio"] {
+      margin-top: .15rem;
+      cursor: pointer;
+    }
+
+    .choice-letter {
+      font-weight: 600;
+      min-width: 1.2rem;
+      display: inline-block;
+    }
+
+    .choice-text {
+      font-size: .93rem;
+    }
+
+    .choice:hover {
+      background: #eff6ff;
+      box-shadow: 0 1px 4px rgba(37,99,235,0.15);
+      transform: translateY(-1px);
+    }
+
+    .choice.correct {
+      background: var(--success-soft);
+      border: 1px solid rgba(22,163,74,0.7);
+    }
+
+    .choice.incorrect {
+      background: var(--danger-soft);
+      border: 1px solid rgba(239,68,68,0.8);
+    }
+
+    .exam-controls,
+    .practice-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .4rem .5rem;
+      margin-top: .55rem;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: .32rem .8rem;
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: var(--accent);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: .25rem;
+      box-shadow: 0 2px 6px rgba(37,99,235,0.4);
+      transition: background .13s ease, transform .05s ease, box-shadow .13s ease;
+      white-space: nowrap;
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(37,99,235,0.55);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 1px 4px rgba(37,99,235,0.4);
+    }
+
+    .btn.outline-btn {
+      background: #ffffff;
+      color: var(--accent-strong);
+      border: 1px solid rgba(37,99,235,0.45);
+      box-shadow: none;
+    }
+
+    .btn.outline-btn:hover:not(:disabled) {
+      background: var(--accent-soft);
+      box-shadow: 0 2px 6px rgba(37,99,235,0.25);
+    }
+
+    .feedback {
+      font-size: .85rem;
+      margin-left: .15rem;
+    }
+
+    .feedback--correct {
+      color: var(--success);
+    }
+
+    .feedback--incorrect {
+      color: var(--danger);
+    }
+
+    .feedback--warning {
+      color: #92400e;
+    }
+
+    .explanation {
+      margin-top: .55rem;
+      padding-left: .75rem;
+      border-left: 3px solid var(--border-soft);
+      font-size: .9rem;
+      color: var(--text-muted);
+    }
+
+    .explanation p {
+      margin: .2rem 0;
+    }
+
+    .exam-note {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-top: .2rem;
+    }
+
+    /* Practice generator */
+
+    .practice-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 1.1rem;
+    }
+
+    @media (max-width: 800px) {
+      .practice-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .practice-panel {
+      border-radius: 10px;
+      padding: .8rem .85rem .85rem;
+      border: 1px dashed rgba(148,163,184,0.9);
+      background: #f9fafb;
+    }
+
+    .practice-panel h3 {
+      margin: 0 0 .5rem;
+      font-size: .95rem;
+    }
+
+    .practice-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-bottom: .55rem;
+      align-items: center;
+    }
+
+    label.select-label {
+      font-size: .82rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: .2rem;
+    }
+
+    select {
+      padding: .25rem .55rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      font-size: .84rem;
+      outline: none;
+      background: #ffffff;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(37,99,235,0.25);
+    }
+
+    #practice-question-area {
+      margin-top: .4rem;
+    }
+
+    #practice-question-text {
+      font-size: .95rem;
+      margin: 0 0 .4rem;
+    }
+
+    #practice-choices {
+      margin-bottom: .35rem;
+    }
+
+    .small-muted {
+      font-size: .78rem;
+      color: var(--text-muted);
+      margin-top: .25rem;
+    }
+
+    code {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .78rem;
+      background: #111827;
+      color: #e5e7eb;
+      padding: .14rem .3rem;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Radicals & Roots Practice</h1>
+    <p>Interactive exam + infinite randomized drills — all offline.</p>
+  </header>
+
+  <main>
+    <!-- Exam section -->
+    <section class="section-card" id="exam-section">
+      <div class="section-header">
+        <div>
+          <h2>MA 25B Practice Exam 3 – Interactive</h2>
+          <p class="section-subtitle">
+            Tap each question, pick an answer, then show the full step‑by‑step solution.
+          </p>
+        </div>
+        <div class="pill offline-tag">
+          <span>●</span> Offline ready
+        </div>
+      </div>
+      <p class="exam-note">
+        Variables are assumed to be positive real numbers (so √x² = x, ∛x³ = x).
+      </p>
+      <div id="exam-questions"></div>
+    </section>
+
+    <!-- Practice generator section -->
+    <section class="section-card" id="generator-section">
+      <div class="section-header">
+        <div>
+          <h2>Random Practice Generator</h2>
+          <p class="section-subtitle">
+            Generate unlimited new questions by topic and difficulty. Each one has a full solution.
+          </p>
+        </div>
+        <div class="pill">
+          <span>∞</span> Many variations
+        </div>
+      </div>
+
+      <div class="practice-layout">
+        <div class="practice-panel">
+          <h3>1. Choose topic & difficulty</h3>
+          <div class="practice-row">
+            <label class="select-label">
+              Topic
+              <select id="topic-select">
+                <option value="square">Basic square roots</option>
+                <option value="simplify">Simplify √(n)</option>
+                <option value="combine">Combine like radicals</option>
+                <option value="variables">Radicals with variables</option>
+                <option value="rationalize">Rationalize denominators</option>
+                <option value="cube">Cube roots</option>
+              </select>
+            </label>
+
+            <label class="select-label">
+              Difficulty
+              <select id="difficulty-select">
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
+              </select>
+            </label>
+
+            <button type="button" id="new-question-btn" class="btn">
+              New question
+            </button>
+          </div>
+          <p class="small-muted">
+            Tip: spam “New question” to get many different versions. The random generator can easily produce thousands of distinct exercises.
+          </p>
+        </div>
+
+        <div class="practice-panel">
+          <h3>2. Answer & reveal solution</h3>
+          <div id="practice-question-area">
+            <p id="practice-question-text">
+              Click <strong>New question</strong> to start practicing.
+            </p>
+            <div id="practice-choices"></div>
+            <div class="practice-controls">
+              <button type="button" id="practice-check-btn" class="btn" disabled>
+                Check answer
+              </button>
+              <button type="button" id="practice-solution-btn" class="btn outline-btn" disabled>
+                Show / hide solution
+              </button>
+              <span id="practice-feedback" class="feedback"></span>
+            </div>
+            <div id="practice-explanation" class="explanation" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="small-muted">
+        To keep this page offline‑friendly, everything is built with plain HTML, CSS, and JavaScript – no external libraries or internet calls.
+      </p>
+    </section>
+
+    <section class="section-card">
+      <h2>How to save this on your phone or PC</h2>
+      <ul style="font-size:.88rem; color:var(--text-muted); padding-left:1.1rem; margin-top:.2rem;">
+        <li>Save this file as <code>radicals_practice.html</code>.</li>
+        <li>On PC: double‑click the file, or right‑click → “Open with” → your browser.</li>
+        <li>On Android: put the file in Downloads, then open it from your browser’s “Open file” option or a file manager.</li>
+        <li>On iPhone/iPad: AirDrop or save it to Files, then tap it and choose “Open in Safari”.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // -----------------------------
+    //  Exam questions (from your PDF)
+    // -----------------------------
+    const examQuestions = [
+      {
+        number: 1,
+        prompt: 'Find the square root: <strong>-√36</strong>.',
+        choices: [
+          'Not a real number',
+          '-6',
+          '-18',
+          '6'
+        ],
+        correctIndex: 1,
+        explanation: `
+          <p>The square root of 36 is 6 because 6² = 36.</p>
+          <p>The minus sign in front stays there, so -√36 = -6.</p>
+        `
+      },
+      {
+        number: 2,
+        prompt: 'Find the root if it is a real number: <strong>∛(-8)</strong>.',
+        choices: [
+          '4',
+          '2',
+          '-2',
+          '3'
+        ],
+        correctIndex: 2,
+        explanation: `
+          <p>The cube root asks for a number whose cube is -8.</p>
+          <p>Because (-2)³ = -8, we have ∛(-8) = -2.</p>
+        `
+      },
+      {
+        number: 3,
+        prompt: 'Simplify by first converting to rational exponents: <strong>∛(x<sup>18</sup>)</strong>.',
+        choices: [
+          'x<sup>6</sup>',
+          'x<sup>54</sup>',
+          'x<sup>3</sup>',
+          '3x'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>Write the cube root as a rational exponent:</p>
+          <p>∛(x<sup>18</sup>) = (x<sup>18</sup>)<sup>1/3</sup> = x<sup>18·(1/3)</sup> = x<sup>6</sup>.</p>
+        `
+      },
+      {
+        number: 4,
+        prompt: 'Simplify: <strong>-20√15 − 16√15</strong>.',
+        choices: [
+          '-4√15',
+          '5√15',
+          '35√15',
+          '-36√15'
+        ],
+        correctIndex: 3,
+        explanation: `
+          <p>Both terms are like radicals (they each have √15), so combine coefficients:</p>
+          <p>-20√15 − 16√15 = (-20 − 16)√15 = -36√15.</p>
+        `
+      },
+      {
+        number: 5,
+        prompt: 'Multiply, then simplify the product: <strong>(√10 + 1)(√10 − 1)</strong>.',
+        choices: [
+          '11',
+          '9 + 2√10',
+          '9',
+          '9 − 2√10'
+        ],
+        correctIndex: 2,
+        explanation: `
+          <p>This is a difference of squares: (a + b)(a − b) = a² − b².</p>
+          <p>Here a = √10 and b = 1, so</p>
+          <p>(√10 + 1)(√10 − 1) = (√10)² − 1² = 10 − 1 = 9.</p>
+        `
+      },
+      {
+        number: 6,
+        prompt: 'Simplify: <strong>13(√13 + 2)</strong>.',
+        choices: [
+          '195',
+          '13√13 + 26',
+          '√13 + 26',
+          '39'
+        ],
+        correctIndex: 1,
+        explanation: `
+          <p>Distribute 13 across the parentheses:</p>
+          <p>13(√13 + 2) = 13·√13 + 13·2 = 13√13 + 26.</p>
+        `
+      },
+      {
+        number: 7,
+        prompt: 'Simplify: <strong>6√(32x<sup>2</sup>) − 3√(18x<sup>2</sup>) − √(2x<sup>2</sup>)</strong>.',
+        choices: [
+          '14x√2',
+          '3x√14',
+          '2x√14',
+          '15x√2'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>First simplify each radical:</p>
+          <ul>
+            <li>√(32x²) = √(16·2)·√(x²) = 4√2·x = 4x√2</li>
+            <li>√(18x²) = √(9·2)·√(x²) = 3√2·x = 3x√2</li>
+            <li>√(2x²) = √2·√(x²) = x√2</li>
+          </ul>
+          <p>Now apply the coefficients:</p>
+          <p>6√(32x²) = 6·4x√2 = 24x√2</p>
+          <p>−3√(18x²) = −3·3x√2 = −9x√2</p>
+          <p>−√(2x²) = −x√2</p>
+          <p>Combine like terms: 24x√2 − 9x√2 − x√2 = (24 − 9 − 1)x√2 = 14x√2.</p>
+        `
+      },
+      {
+        number: 8,
+        prompt: 'Simplify: <strong>-2√2 + 6√8</strong>.',
+        choices: [
+          '10√2',
+          '4√2',
+          '-10√2',
+          '14√2'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>First simplify √8:</p>
+          <p>√8 = √(4·2) = 2√2.</p>
+          <p>Then 6√8 = 6·2√2 = 12√2.</p>
+          <p>Now combine: -2√2 + 12√2 = 10√2.</p>
+        `
+      },
+      {
+        number: 9,
+        prompt: 'Rationalize the denominator: <strong>9 / √2</strong>.',
+        choices: [
+          '81√2 / 2',
+          '9√2 / 2',
+          '13',
+          '9√2'
+        ],
+        correctIndex: 1,
+        explanation: `
+          <p>Multiply numerator and denominator by √2:</p>
+          <p>9 / √2 = (9·√2) / (√2·√2) = 9√2 / 2.</p>
+        `
+      },
+      {
+        number: 10,
+        prompt: 'Rationalize the denominator (assume the denominator is not zero): <strong>5 / (7 + √2)</strong>.',
+        choices: [
+          '(35 − 5√2) / 47',
+          '(35 + 5√2) / 47',
+          '5(7 + √2) / 49',
+          '5 / (7 − √2)'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>Use the conjugate of the denominator, 7 − √2:</p>
+          <p>
+            5 / (7 + √2) =
+            5(7 − √2) / [(7 + √2)(7 − √2)].
+          </p>
+          <p>The denominator is a difference of squares:</p>
+          <p>(7 + √2)(7 − √2) = 7² − (√2)² = 49 − 2 = 47.</p>
+          <p>The numerator is 5(7 − √2) = 35 − 5√2.</p>
+          <p>So the rationalized result is (35 − 5√2) / 47.</p>
+        `
+      },
+      {
+        number: 11,
+        prompt: 'Simplify the expression: <strong>∛(8x<sup>4</sup>y<sup>5</sup>)</strong>.',
+        choices: [
+          '2xy∛(xy)',
+          '2xy∛(x<sup>2</sup>y)',
+          '5x<sup>2</sup>y∛(xy<sup>2</sup>)',
+          '2xy∛(xy<sup>2</sup>)'
+        ],
+        correctIndex: 3,
+        explanation: `
+          <p>Factor the radicand into perfect cubes and leftovers:</p>
+          <ul>
+            <li>8 = 2³</li>
+            <li>x⁴ = x³·x</li>
+            <li>y⁵ = y³·y²</li>
+          </ul>
+          <p>So 8x⁴y⁵ = (2³)(x³)(y³)(x)(y²).</p>
+          <p>Take the cube root of the perfect cubes:</p>
+          <p>∛(8x⁴y⁵) = 2xy ∛(xy²).</p>
+        `
+      },
+      {
+        number: 12,
+        prompt: 'Simplify: <strong>√(405x<sup>2</sup>)</strong>.',
+        choices: [
+          '405x',
+          '5x<sup>2</sup>√9',
+          '9x√5',
+          '9√5x<sup>2</sup>'
+        ],
+        correctIndex: 2,
+        explanation: `
+          <p>Factor 405:</p>
+          <p>405 = 81·5 = 9²·5, so √405 = 9√5.</p>
+          <p>Also, √(x²) = x (since x is positive).</p>
+          <p>Thus √(405x²) = √405·√(x²) = 9√5·x = 9x√5.</p>
+        `
+      },
+      {
+        number: 13,
+        prompt: 'Simplify: <strong>∛(8x<sup>4</sup>)</strong>.',
+        choices: [
+          '2x∛x',
+          '2x∛(x<sup>2</sup>)',
+          '∛(8x<sup>4</sup>)',
+          '4x∛x'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>Write 8x⁴ as a product of a perfect cube and a leftover factor:</p>
+          <p>8x⁴ = 2³·x³·x.</p>
+          <p>Take the cube root of the perfect cube and leave the rest inside:</p>
+          <p>∛(8x⁴) = 2x∛x.</p>
+        `
+      },
+      {
+        number: 14,
+        prompt: 'Simplify: <strong>√(112a<sup>2</sup>b / c<sup>2</sup>)</strong>.',
+        choices: [
+          '4√7a<sup>2</sup>b / c',
+          '16a√7b / c',
+          '4a√7b / c',
+          'a√(112b) / c'
+        ],
+        correctIndex: 2,
+        explanation: `
+          <p>Split the square root across the numerator and denominator:</p>
+          <p>√(112a²b / c²) = √(112a²b) / √(c²).</p>
+          <p>Factor 112 = 16·7, so √112 = √(16·7) = 4√7.</p>
+          <p>Also, √(a²) = a and √(c²) = c (variables are positive).</p>
+          <p>Thus √(112a²b / c²) = (4·a·√7·√b) / c = 4a√(7b) / c.</p>
+        `
+      },
+      {
+        number: 15,
+        prompt: 'Simplify: <strong>√16 − √196</strong>.',
+        choices: [
+          '-6√5',
+          '-10√2',
+          '-5',
+          '-10'
+        ],
+        correctIndex: 3,
+        explanation: `
+          <p>Compute each square root:</p>
+          <p>√16 = 4 and √196 = 14.</p>
+          <p>Then √16 − √196 = 4 − 14 = -10.</p>
+        `
+      },
+      {
+        number: 16,
+        prompt: 'Simplify: <strong>-3√19 + 18√19</strong>.',
+        choices: [
+          '15√19',
+          '-16√19',
+          '22√19',
+          '-21√19'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>Both terms have √19, so combine the coefficients:</p>
+          <p>-3√19 + 18√19 = (-3 + 18)√19 = 15√19.</p>
+        `
+      },
+      {
+        number: 17,
+        prompt: 'Simplify: <strong>6√(48x<sup>2</sup>) − 2√(27x<sup>2</sup>) − √(3x<sup>2</sup>)</strong>.',
+        choices: [
+          '18x√3',
+          '4x√21',
+          '3x√21',
+          '17x√3'
+        ],
+        correctIndex: 3,
+        explanation: `
+          <p>Simplify each radical:</p>
+          <ul>
+            <li>√(48x²) = √(16·3)·√(x²) = 4√3·x = 4x√3</li>
+            <li>√(27x²) = √(9·3)·√(x²) = 3√3·x = 3x√3</li>
+            <li>√(3x²) = √3·√(x²) = x√3</li>
+          </ul>
+          <p>Apply the coefficients:</p>
+          <p>6√(48x²) = 6·4x√3 = 24x√3</p>
+          <p>−2√(27x²) = −2·3x√3 = −6x√3</p>
+          <p>−√(3x²) = −x√3</p>
+          <p>Combine: 24x√3 − 6x√3 − x√3 = (24 − 6 − 1)x√3 = 17x√3.</p>
+        `
+      },
+      {
+        number: 18,
+        prompt: 'Simplify: <strong>∛(xy<sup>5</sup>) · ∛(x<sup>10</sup>y<sup>20</sup>)</strong>.',
+        choices: [
+          'x<sup>3</sup>y<sup>8</sup>∛(x<sup>2</sup>y)',
+          'x<sup>3</sup>y<sup>4</sup>∛(x<sup>2</sup>y<sup>2</sup>)',
+          'x<sup>11</sup>y<sup>25</sup>',
+          '∛(x<sup>11</sup>y<sup>25</sup>)'
+        ],
+        correctIndex: 0,
+        explanation: `
+          <p>Multiply the cube roots by combining the radicands:</p>
+          <p>∛(xy⁵) · ∛(x¹⁰y²⁰) = ∛(x·y⁵·x¹⁰·y²⁰) = ∛(x¹¹y²⁵).</p>
+          <p>Now factor exponents into multiples of 3 plus a remainder:</p>
+          <ul>
+            <li>x¹¹ = x⁹·x² = (x³)³·x²</li>
+            <li>y²⁵ = y²⁴·y = (y⁸)³·y</li>
+          </ul>
+          <p>So ∛(x¹¹y²⁵) = x³y⁸∛(x²y).</p>
+        `
+      }
+    ];
+
+    // -----------------------------
+    //  Helper functions
+    // -----------------------------
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+
+    function gcd(a, b) {
+      a = Math.abs(a);
+      b = Math.abs(b);
+      while (b !== 0) {
+        const t = b;
+        b = a % b;
+        a = t;
+      }
+      return a;
+    }
+
+    // Pretty-print radicals for combine-like-radicals generator
+    function formatRadicalTerm(coef, radicand) {
+      if (coef === 1) return '√' + radicand;
+      if (coef === -1) return '-√' + radicand;
+      return coef + '√' + radicand;
+    }
+
+    function formatTwoTermExpression(a, b, d) {
+      const first = formatRadicalTerm(a, d);
+      if (b >= 0) {
+        return first + ' + ' + formatRadicalTerm(b, d);
+      } else {
+        return first + ' - ' + formatRadicalTerm(Math.abs(b), d);
+      }
+    }
+
+    // -----------------------------
+    //  Render exam questions
+    // -----------------------------
+    function renderExamQuestions() {
+      const container = document.getElementById('exam-questions');
+      if (!container) return;
+
+      examQuestions.forEach(function (q) {
+        const card = document.createElement('article');
+        card.className = 'question-card';
+
+        const choicesHtmlParts = [];
+        q.choices.forEach(function (choiceText, idx) {
+          const letter = String.fromCharCode(65 + idx);
+          choicesHtmlParts.push(
+            '<label class="choice">' +
+            '<input type="radio" name="exam-q' + q.number + '" value="' + idx + '">' +
+            '<span class="choice-letter">' + letter + '.</span>' +
+            '<span class="choice-text">' + choiceText + '</span>' +
+            '</label>'
+          );
+        });
+
+        card.innerHTML =
+          '<h3>Question ' + q.number + '</h3>' +
+          '<p class="prompt">' + q.prompt + '</p>' +
+          '<div class="choices">' + choicesHtmlParts.join('') + '</div>' +
+          '<div class="exam-controls">' +
+          '<button type="button" class="btn check-btn">Check answer</button>' +
+          '<button type="button" class="btn outline-btn solution-btn">Show / hide solution</button>' +
+          '<span class="feedback"></span>' +
+          '</div>' +
+          '<div class="explanation" style="display:none;">' + q.explanation + '</div>';
+
+        const checkBtn = card.querySelector('.check-btn');
+        const solutionBtn = card.querySelector('.solution-btn');
+        const feedback = card.querySelector('.feedback');
+        const explanationDiv = card.querySelector('.explanation');
+
+        checkBtn.addEventListener('click', function () {
+          const selected = card.querySelector('input[type="radio"]:checked');
+          if (!selected) {
+            feedback.textContent = 'Select an answer first.';
+            feedback.className = 'feedback feedback--warning';
+            return;
+          }
+
+          const selectedIndex = parseInt(selected.value, 10);
+          const isCorrect = selectedIndex === q.correctIndex;
+
+          const choiceLabels = Array.prototype.slice.call(card.querySelectorAll('.choice'));
+          choiceLabels.forEach(function (label, idx) {
+            label.classList.remove('correct', 'incorrect');
+            if (idx === q.correctIndex) {
+              label.classList.add('correct');
+            }
+            if (idx === selectedIndex && !isCorrect) {
+              label.classList.add('incorrect');
+            }
+          });
+
+          if (isCorrect) {
+            feedback.textContent = 'Correct!';
+            feedback.className = 'feedback feedback--correct';
+          } else {
+            feedback.textContent = 'Not quite. The correct answer is highlighted in green.';
+            feedback.className = 'feedback feedback--incorrect';
+          }
+        });
+
+        solutionBtn.addEventListener('click', function () {
+          const hidden =
+            explanationDiv.style.display === 'none' || explanationDiv.style.display === '';
+          explanationDiv.style.display = hidden ? 'block' : 'none';
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // -----------------------------
+    //  Practice question generators
+    // -----------------------------
+    function generateSquareRootQuestion(difficulty) {
+      const easy = [4, 9, 16, 25, 36, 49, 64, 81, 100];
+      const medium = [121, 144, 169, 196, 225, 256, 289, 324];
+      const hard = [361, 400, 441, 484, 529, 576, 625, 676, 729, 784, 841, 900];
+
+      let source;
+      if (difficulty === 'easy') source = easy;
+      else if (difficulty === 'medium') source = medium;
+      else source = hard;
+
+      const n = source[randInt(0, source.length - 1)];
+      const correctNumber = Math.sqrt(n);
+      const correct = String(correctNumber);
+
+      const wrongs = [];
+      function addWrong(value) {
+        const s = String(value);
+        if (s !== correct && wrongs.indexOf(s) === -1) {
+          wrongs.push(s);
+        }
+      }
+
+      addWrong(correctNumber + 1);
+      if (correctNumber > 2) {
+        addWrong(correctNumber - 1);
+      } else {
+        addWrong(correctNumber + 2);
+      }
+      addWrong(n);
+
+      while (wrongs.length < 3) {
+        addWrong(correctNumber + randInt(2, 4));
+      }
+
+      const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+      shuffleArray(choices);
+      const correctIndex = choices.indexOf(correct);
+
+      const explanation = `
+        <p>We want a number whose square is ${n}.</p>
+        <p>${correctNumber} × ${correctNumber} = ${n}, so √${n} = ${correctNumber}.</p>
+      `;
+
+      const questionText = 'Simplify √' + n + '.';
+      return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+    }
+
+    function generateSimplifyRadicalQuestion(difficulty) {
+      const nonSquaresEasy = [2, 3, 5];
+      const nonSquaresMedium = [6, 7, 10, 11];
+      const nonSquaresHard = [12, 13, 14, 15, 17, 19];
+
+      let rootMin, rootMax, qList;
+      if (difficulty === 'easy') {
+        rootMin = 2; rootMax = 4; qList = nonSquaresEasy;
+      } else if (difficulty === 'medium') {
+        rootMin = 2; rootMax = 6; qList = nonSquaresMedium;
+      } else {
+        rootMin = 3; rootMax = 8; qList = nonSquaresHard;
+      }
+
+      const k = randInt(rootMin, rootMax);
+      const q = qList[randInt(0, qList.length - 1)];
+      const p = k * k;
+      const n = p * q;
+
+      const questionText = 'Simplify √' + n + '.';
+      const correct = k + '√' + q;
+
+      const wrongs = [];
+      function addWrong(str) {
+        if (str !== correct && wrongs.indexOf(str) === -1) {
+          wrongs.push(str);
+        }
+      }
+
+      addWrong('√' + n);
+      addWrong(k + '√' + n);
+      addWrong(p + '√' + q);
+
+      while (wrongs.length < 3) {
+        addWrong((k + randInt(1, 3)) + '√' + q);
+      }
+
+      const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+      shuffleArray(choices);
+      const correctIndex = choices.indexOf(correct);
+
+      const explanation = `
+        <p>Factor the radicand ${n} as ${p} · ${q} = ${k}<sup>2</sup> · ${q}.</p>
+        <p>Then √${n} = √(${k}<sup>2</sup> · ${q}) = √(${k}<sup>2</sup>) · √${q} = ${k}√${q}.</p>
+      `;
+
+      return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+    }
+
+    function generateCombineRadicalsQuestion(difficulty) {
+      const radicands = [2, 3, 5, 6, 7, 10];
+      const d = radicands[randInt(0, radicands.length - 1)];
+      const maxCoef = (difficulty === 'hard') ? 15 : 9;
+
+      let a = randInt(-maxCoef, maxCoef);
+      while (a === 0) {
+        a = randInt(-maxCoef, maxCoef);
+      }
+
+      let b = randInt(-maxCoef, maxCoef);
+      while (b === 0 || a + b === 0) {
+        b = randInt(-maxCoef, maxCoef);
+      }
+
+      const questionText = 'Simplify ' + formatTwoTermExpression(a, b, d) + '.';
+      const sumCoef = a + b;
+      const correct = formatRadicalTerm(sumCoef, d);
+
+      const wrongs = [];
+      function addWrong(str) {
+        if (str !== correct && wrongs.indexOf(str) === -1) {
+          wrongs.push(str);
+        }
+      }
+
+      addWrong(formatRadicalTerm(a - b, d));
+      addWrong(formatRadicalTerm(sumCoef, d * 2));
+      addWrong(formatTwoTermExpression(a, -b, d));
+
+      while (wrongs.length < 3) {
+        let tweak = sumCoef + randInt(-3, 3);
+        if (tweak === sumCoef) {
+          tweak = sumCoef + 2;
+        }
+        addWrong(formatRadicalTerm(tweak, d));
+      }
+
+      const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+      shuffleArray(choices);
+      const correctIndex = choices.indexOf(correct);
+
+      const explanation = `
+        <p>Both terms have the same radical √${d}, so combine the coefficients:</p>
+        <p>${formatTwoTermExpression(a, b, d)} = (${a} + ${b})√${d} = ${sumCoef}√${d}.</p>
+      `;
+
+      return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+    }
+
+    function generateVariableRadicalQuestion(difficulty) {
+      let sqrtList;
+      if (difficulty === 'easy') {
+        sqrtList = [2, 3, 4, 5];
+      } else if (difficulty === 'medium') {
+        sqrtList = [3, 4, 5, 6, 7];
+      } else {
+        sqrtList = [4, 5, 6, 7, 8];
+      }
+
+      const k = sqrtList[randInt(0, sqrtList.length - 1)];
+      const n = k * k;
+
+      const questionText = 'Simplify √(' + n + 'x²). (Assume x > 0.)';
+      const correct = k + 'x';
+
+      const wrongs = [];
+      function addWrong(str) {
+        if (str !== correct && wrongs.indexOf(str) === -1) {
+          wrongs.push(str);
+        }
+      }
+
+      addWrong(k + 'x²');
+      addWrong('x√' + n);
+      addWrong('√' + n + 'x');
+
+      while (wrongs.length < 3) {
+        addWrong((k + 1) + 'x');
+      }
+
+      const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+      shuffleArray(choices);
+      const correctIndex = choices.indexOf(correct);
+
+      const explanation = `
+        <p>Inside the square root we have ${n}x² = ${k}<sup>2</sup>x².</p>
+        <p>So √(${n}x²) = √(${k}<sup>2</sup>)·√(x²) = ${k}·x = ${k}x.</p>
+        <p>We drop absolute value bars because x is assumed positive.</p>
+      `;
+
+      return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+    }
+
+    function generateRationalizeQuestion(difficulty) {
+      if (difficulty === 'easy') {
+        const radicands = [2, 3, 5, 6, 7, 10, 11, 13, 15];
+        const m = radicands[randInt(0, radicands.length - 1)];
+        const n = randInt(2, 15);
+
+        const questionText = 'Rationalize the denominator: ' + n + ' / √' + m + '.';
+
+        const rawNumerator = n;
+        const rawDenominator = m;
+        const g = gcd(rawNumerator, rawDenominator);
+        const num = rawNumerator / g;
+        const den = rawDenominator / g;
+
+        let correct;
+        if (den === 1) {
+          correct = num + '√' + m;
+        } else {
+          correct = num + '√' + m + ' / ' + den;
+        }
+
+        const wrongs = [];
+        function addWrong(str) {
+          if (str !== correct && wrongs.indexOf(str) === -1) {
+            wrongs.push(str);
+          }
+        }
+
+        addWrong(n + '√' + m + ' / ' + m);
+        addWrong(n + ' / ' + m);
+        addWrong('√' + (n * m) + ' / ' + m);
+
+        while (wrongs.length < 3) {
+          addWrong(n + ' / √' + m);
+        }
+
+        const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+        shuffleArray(choices);
+        const correctIndex = choices.indexOf(correct);
+
+        let explanation = `
+          <p>Multiply top and bottom by √${m}:</p>
+          <p>${n} / √${m} = (${n}√${m}) / (√${m}·√${m}) = ${n}√${m} / ${m}.</p>
+        `;
+        if (g > 1) {
+          explanation += `
+            <p>Both ${n} and ${m} are divisible by ${g}, so we simplify the fraction to ${correct}.</p>
+          `;
+        }
+
+        return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+      } else {
+        const radicands = [2, 3, 5, 6, 7, 10, 11, 13];
+        const b = radicands[randInt(0, radicands.length - 1)];
+        const a = randInt(2, 10);
+        const n = randInt(1, 9);
+
+        const questionText = 'Rationalize the denominator: ' + n + ' / (' + a + ' + √' + b + ').';
+        const denomSquared = a * a - b;
+        const correct = n + '(' + a + ' - √' + b + ') / ' + denomSquared;
+
+        const wrongs = [];
+        function addWrong(str) {
+          if (str !== correct && wrongs.indexOf(str) === -1) {
+            wrongs.push(str);
+          }
+        }
+
+        addWrong(n + '(' + a + ' + √' + b + ') / ' + denomSquared);
+        addWrong(n + '(' + a + ' - √' + b + ') / ' + (a * a + b));
+        addWrong(n + ' / (' + a + ' - √' + b + ')');
+
+        while (wrongs.length < 3) {
+          addWrong(n + '√' + b + ' / ' + denomSquared);
+        }
+
+        const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+        shuffleArray(choices);
+        const correctIndex = choices.indexOf(correct);
+
+        const explanation = `
+          <p>Multiply numerator and denominator by the conjugate ${a} − √${b}:</p>
+          <p>
+            ${n} / (${a} + √${b}) =
+            ${n}(${a} - √${b}) / [(${a} + √${b})(${a} - √${b})].
+          </p>
+          <p>The denominator is a difference of squares:</p>
+          <p>${a}<sup>2</sup> − (√${b})<sup>2</sup> = ${a * a} − ${b} = ${denomSquared}.</p>
+          <p>So the rationalized form is ${correct}.</p>
+        `;
+
+        return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+      }
+    }
+
+    function generateCubeRootQuestion(difficulty) {
+      const min = (difficulty === 'easy') ? 2 : 3;
+      const max = (difficulty === 'hard') ? 8 : 6;
+      const k = randInt(min, max);
+      const n = k * k * k;
+
+      const questionText = 'Simplify ∛' + n + '.';
+      const correct = String(k);
+
+      const wrongs = [];
+      function addWrong(str) {
+        if (str !== correct && wrongs.indexOf(str) === -1) {
+          wrongs.push(str);
+        }
+      }
+
+      addWrong(String(n));
+      addWrong(String(k * k));
+      addWrong(String(k - 1));
+
+      while (wrongs.length < 3) {
+        addWrong(String(k + randInt(1, 3)));
+      }
+
+      const choices = [correct, wrongs[0], wrongs[1], wrongs[2]];
+      shuffleArray(choices);
+      const correctIndex = choices.indexOf(correct);
+
+      const explanation = `
+        <p>The cube root asks for a number whose cube is ${n}.</p>
+        <p>${k}³ = ${k} × ${k} × ${k} = ${n}, so ∛${n} = ${k}.</p>
+      `;
+
+      return { questionText: questionText, choices: choices, correctIndex: correctIndex, explanation: explanation };
+    }
+
+    function generatePracticeQuestion(topic, difficulty) {
+      if (topic === 'square') {
+        return generateSquareRootQuestion(difficulty);
+      } else if (topic === 'simplify') {
+        return generateSimplifyRadicalQuestion(difficulty);
+      } else if (topic === 'combine') {
+        return generateCombineRadicalsQuestion(difficulty);
+      } else if (topic === 'variables') {
+        return generateVariableRadicalQuestion(difficulty);
+      } else if (topic === 'rationalize') {
+        return generateRationalizeQuestion(difficulty);
+      } else if (topic === 'cube') {
+        return generateCubeRootQuestion(difficulty);
+      }
+      return generateSquareRootQuestion(difficulty);
+    }
+
+    // -----------------------------
+    //  Practice UI wiring
+    // -----------------------------
+    let currentPracticeQuestion = null;
+
+    function renderPracticeQuestion(q) {
+      const questionTextEl = document.getElementById('practice-question-text');
+      const choicesDiv = document.getElementById('practice-choices');
+      const explanationDiv = document.getElementById('practice-explanation');
+      const feedbackSpan = document.getElementById('practice-feedback');
+      const checkBtn = document.getElementById('practice-check-btn');
+      const solutionBtn = document.getElementById('practice-solution-btn');
+
+      if (!questionTextEl || !choicesDiv) return;
+
+      questionTextEl.textContent = '';
+      questionTextEl.innerHTML = q.questionText;
+
+      choicesDiv.innerHTML = '';
+      q.choices.forEach(function (choiceText, idx) {
+        const letter = String.fromCharCode(65 + idx);
+        const label = document.createElement('label');
+        label.className = 'choice';
+
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'practice-choice';
+        radio.value = String(idx);
+
+        const spanLetter = document.createElement('span');
+        spanLetter.className = 'choice-letter';
+        spanLetter.textContent = letter + '.';
+
+        const spanText = document.createElement('span');
+        spanText.className = 'choice-text';
+        spanText.innerHTML = choiceText;
+
+        label.appendChild(radio);
+        label.appendChild(spanLetter);
+        label.appendChild(spanText);
+
+        choicesDiv.appendChild(label);
+      });
+
+      explanationDiv.innerHTML = q.explanation;
+      explanationDiv.style.display = 'none';
+      feedbackSpan.textContent = '';
+      feedbackSpan.className = 'feedback';
+
+      checkBtn.disabled = false;
+      solutionBtn.disabled = false;
+
+      currentPracticeQuestion = q;
+    }
+
+    function setupPractice() {
+      const newBtn = document.getElementById('new-question-btn');
+      const checkBtn = document.getElementById('practice-check-btn');
+      const solutionBtn = document.getElementById('practice-solution-btn');
+      const feedbackSpan = document.getElementById('practice-feedback');
+      const explanationDiv = document.getElementById('practice-explanation');
+
+      if (newBtn) {
+        newBtn.addEventListener('click', function () {
+          const topicSelect = document.getElementById('topic-select');
+          const difficultySelect = document.getElementById('difficulty-select');
+          const topic = topicSelect ? topicSelect.value : 'square';
+          const difficulty = difficultySelect ? difficultySelect.value : 'medium';
+
+          const q = generatePracticeQuestion(topic, difficulty);
+          renderPracticeQuestion(q);
+        });
+      }
+
+      if (checkBtn) {
+        checkBtn.addEventListener('click', function () {
+          if (!currentPracticeQuestion) return;
+
+          const selected = document.querySelector('input[name="practice-choice"]:checked');
+          if (!selected) {
+            feedbackSpan.textContent = 'Select an answer first.';
+            feedbackSpan.className = 'feedback feedback--warning';
+            return;
+          }
+
+          const selectedIndex = parseInt(selected.value, 10);
+          const isCorrect = selectedIndex === currentPracticeQuestion.correctIndex;
+
+          const labels = Array.prototype.slice.call(
+            document.querySelectorAll('#practice-choices .choice')
+          );
+          labels.forEach(function (label, idx) {
+            label.classList.remove('correct', 'incorrect');
+            if (idx === currentPracticeQuestion.correctIndex) {
+              label.classList.add('correct');
+            }
+            if (idx === selectedIndex && !isCorrect) {
+              label.classList.add('incorrect');
+            }
+          });
+
+          if (isCorrect) {
+            feedbackSpan.textContent = 'Correct!';
+            feedbackSpan.className = 'feedback feedback--correct';
+          } else {
+            feedbackSpan.textContent = 'Not quite. The correct answer is highlighted in green.';
+            feedbackSpan.className = 'feedback feedback--incorrect';
+          }
+        });
+      }
+
+      if (solutionBtn) {
+        solutionBtn.addEventListener('click', function () {
+          if (!currentPracticeQuestion) return;
+          const hidden =
+            explanationDiv.style.display === 'none' || explanationDiv.style.display === '';
+          explanationDiv.style.display = hidden ? 'block' : 'none';
+        });
+      }
+    }
+
+    // -----------------------------
+    //  Init
+    // -----------------------------
+    document.addEventListener('DOMContentLoaded', function () {
+      renderExamQuestions();
+      setupPractice();
+    });
+  </script>
+</body>
+</html>

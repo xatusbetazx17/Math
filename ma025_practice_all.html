@@ -1,0 +1,875 @@
+Here is the single HTML file containing the content from your uploaded PDFs, organized into specific tests. I have digitized the clear questions from each document and updated the menu to reflect the specific "Practice," "Session," and "Exit Exam" forms found in your files.
+
+You can save the code below as an `.html` file (e.g., `MA025_Complete_Review.html`) and open it in any web browser.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MA025 Algebra Final Review & Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      color: #38bdf8;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      color: #94a3b8;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.9);
+      border: 1px solid #1e293b;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+    }
+
+    .field-group {
+      margin-bottom: 0.75rem;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      color: #9ca3af;
+    }
+
+    select,
+    input[type="number"] {
+      width: 100%;
+      padding: 0.4rem 0.6rem;
+      border-radius: 0.5rem;
+      border: 1px solid #1f2933;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+    }
+
+    select:focus,
+    input[type="number"]:focus {
+      outline: 2px solid #38bdf8;
+      border-color: #38bdf8;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.05s ease, box-shadow 0.05s ease,
+        background-color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    button.primary {
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      color: #0b1120;
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+    }
+
+    button.secondary {
+      background: #111827;
+      color: #e5e7eb;
+      border: 1px solid #1f2937;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    button:not(:disabled):active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.65);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #questionCounter {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-bottom: 0.35rem;
+    }
+
+    #questionText {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .choice-label {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 0.5rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      cursor: pointer;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .choice-label:hover {
+      border-color: #38bdf8;
+      background: #1e293b;
+    }
+
+    .choice-label input[type="radio"] {
+      margin-top: 0.25rem;
+    }
+
+    .choice-text strong {
+      color: #38bdf8;
+      margin-right: 0.5rem;
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+    }
+
+    .feedback p {
+      margin: 0.25rem 0;
+    }
+
+    .correct {
+      color: #4ade80;
+      font-weight: bold;
+    }
+
+    .incorrect {
+      color: #f87171;
+      font-weight: bold;
+    }
+
+    .explanation {
+      color: #cbd5e1;
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    #summary {
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    #reviewList {
+      padding-left: 0;
+      list-style: none;
+      margin: 0.5rem 0 1rem;
+    }
+
+    #reviewList li {
+      margin-bottom: 0.75rem;
+      padding: 0.75rem;
+      background: #1e293b;
+      border-radius: 0.5rem;
+      border: 1px solid #334155;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 1.1em;
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.1);
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .setup-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+      .field-group {
+        margin-bottom: 0;
+      }
+      .btn-row {
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>MA025 Algebra Practice</h1>
+    <h2 style="font-weight:normal; font-size: 0.9rem; margin-top:-0.5rem; color:#64748b;">
+      Aggregated from: Review Sessions, Practice 1 & 2, Final Review, and Exit Exam
+    </h2>
+
+    <section id="setup" class="card">
+      <h2 style="color:white; text-align:left;">1. Select Test</h2>
+      <div class="setup-grid">
+        <div class="field-group">
+          <label class="field-label" for="modeSelect">Select Source PDF</label>
+          <select id="modeSelect">
+            <option value="session1">Review Session #1 (Practice 2 PDF)</option>
+            <option value="session2">Review Session #2 (Practice 2 PDF)</option>
+            <option value="practice1">Practice #1 (Practice 1 PDF)</option>
+            <option value="practice2">Practice #2 (Practice 1 PDF)</option>
+            <option value="finalreview">Final Review (Practice 3 PDF)</option>
+            <option value="exitexam">Exit Exam Form B (Practice 4 PDF)</option>
+            <option value="all">Mixed (All Questions)</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="questionCount">
+            Number of questions (Leave blank for all)
+          </label>
+          <input
+            id="questionCount"
+            type="number"
+            min="1"
+            placeholder="e.g. 10"
+          />
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button id="startButton" class="primary">
+          Start Practice ▶
+        </button>
+      </div>
+    </section>
+
+    <section id="quiz" class="card hidden">
+      <h2 style="color:white; text-align:left;">Quiz In Progress</h2>
+      <div id="questionCounter"></div>
+      <div id="questionText"></div>
+
+      <div id="choices" class="choices"></div>
+
+      <div class="btn-row">
+        <button id="checkButton" class="primary">✔ Check Answer</button>
+        <button id="nextButton" class="secondary" disabled>
+          Next ⟩
+        </button>
+      </div>
+
+      <div id="feedback" class="feedback hidden"></div>
+    </section>
+
+    <section id="results" class="card hidden">
+      <h2 style="color:white;">Results</h2>
+      <p id="summary" style="text-align:center;"></p>
+      <div class="btn-row" style="justify-content:center; margin-bottom:1rem;">
+        <button id="restartButton" class="primary">⬅ Return to Menu</button>
+      </div>
+      <h3 style="margin-top:1.5rem;">Review Details:</h3>
+      <ul id="reviewList"></ul>
+    </section>
+  </div>
+
+  <script>
+    // =========================================================================
+    // DATA: Transcribed from PDF Uploads
+    // =========================================================================
+
+    // --- Review Session #1 (From ma025finalreviewPractice2.pdf) ---
+    const session1Questions = [
+      {
+        id: "s1q1",
+        text: "Simplify: <code>-5(x - 3)</code>",
+        choices: { a: "-5x - 15", b: "-5x + 15", c: "5x - 15", d: "5x + 15" },
+        correct: "b",
+        explanation: "Distribute the -5: (-5 * x) + (-5 * -3) = -5x + 15."
+      },
+      {
+        id: "s1q2",
+        text: "Factor: <code>4x²y + 8y²</code>",
+        choices: { a: "y(4x² + 8y)", b: "4y(x² + 2y)", c: "4x(y + 2y)", d: "4xy(1 + 2y)" },
+        correct: "b",
+        explanation: "The Greatest Common Factor (GCF) is 4y. Divide each term by 4y: 4y(x² + 2y)."
+      },
+      {
+        id: "s1q3",
+        text: "Evaluate <code>x - 2xy²</code> for <code>x = -1, y = -4</code>",
+        choices: { a: "31", b: "-17", c: "15", d: "-33" },
+        correct: "a",
+        explanation: "Substitute: (-1) - 2(-1)(-4)². First exponent: (-4)²=16. Then mult: 2(-1)(16) = -32. Finally: -1 - (-32) = -1 + 32 = 31."
+      },
+      {
+        id: "s1q4",
+        text: "Simplify: <code>(3x + 5y) - (2x - 3y)</code>",
+        choices: { a: "x + 2y", b: "x + 8y", c: "5x + 2y", d: "6x + 15y" },
+        correct: "b",
+        explanation: "Distribute the negative: 3x + 5y - 2x + 3y. Combine like terms: (3x-2x) + (5y+3y) = x + 8y."
+      },
+      {
+        id: "s1q5",
+        text: "Multiply: <code>(2a + 3)(3a - 3)</code>",
+        choices: { a: "6a² + 3a - 9", b: "6a² - 6a - 9", c: "6a² - 3a + 9", d: "6a² + 3a - 6" },
+        correct: "a",
+        explanation: "FOIL: 2a(3a) - 2a(3) + 3(3a) - 3(3) = 6a² - 6a + 9a - 9 = 6a² + 3a - 9."
+      },
+      {
+        id: "s1q6",
+        text: "Find <code>(a²b - 3) / (2a)</code> if <code>a = 3, b = -2</code>",
+        choices: { a: "5/2", b: "7/2", c: "-7/2", d: "-5/6" },
+        correct: "c",
+        explanation: "Numerator: (3²)(-2) - 3 = 9(-2) - 3 = -18 - 3 = -21. Denominator: 2(3) = 6. Result: -21/6 = -7/2."
+      },
+      {
+        id: "s1q7",
+        text: "Factor: <code>3x² - 5x - 12</code>",
+        choices: { a: "(3x - 12)(x + 1)", b: "(3x - 4)(x + 3)", c: "(3x + 4)(x - 3)", d: "(3x - 1)(x + 3)" },
+        correct: "c",
+        explanation: "We need factors of -36 (3*-12) that sum to -5. The numbers are -9 and 4. (3x - 9)(3x + 4)/3 = (x - 3)(3x + 4)."
+      },
+      {
+        id: "s1q8",
+        text: "If <code>2y - 3 = 4</code>, then y =",
+        choices: { a: "1/2", b: "5", c: "9", d: "7/2" },
+        correct: "d",
+        explanation: "Add 3: 2y = 7. Divide by 2: y = 7/2."
+      },
+      {
+        id: "s1q9",
+        text: "If <code>6t - 3 = 4t + 5</code>, then t =",
+        choices: { a: "4", b: "-4", c: "1", d: "-1" },
+        correct: "a",
+        explanation: "Subtract 4t: 2t - 3 = 5. Add 3: 2t = 8. Divide by 2: t = 4."
+      },
+      {
+        id: "s1q17",
+        text: "Solve: <code>(2/5)x < -4</code>",
+        choices: { a: "x > -10", b: "x < -10", c: "x < 10", d: "x > 10" },
+        correct: "b",
+        explanation: "Multiply both sides by 5/2: x < -4 * (5/2) = -20/2 = -10."
+      },
+      {
+        id: "s1q18",
+        text: "Find the solution: <code>9x² = 49</code>",
+        choices: { a: "±√7", b: "7/3", c: "7/9", d: "±7/3" },
+        correct: "d",
+        explanation: "Divide by 9: x² = 49/9. Take square root: x = ±7/3."
+      },
+      {
+        id: "s1q20",
+        text: "Evaluate: <code>3⁻¹</code>",
+        choices: { a: "-3", b: "-1/3", c: "1/3", d: "1/2" },
+        correct: "c",
+        explanation: "A negative exponent means reciprocal: 1 / 3¹ = 1/3."
+      },
+      {
+        id: "s1q21",
+        text: "Add: <code>x/4 + x/5</code>",
+        choices: { a: "2x/9", b: "x/9", c: "x/10", d: "9x/20" },
+        correct: "d",
+        explanation: "Common denominator is 20. 5x/20 + 4x/20 = 9x/20."
+      }
+    ];
+
+    // --- Review Session #2 (From ma025finalreviewPractice2.pdf) ---
+    const session2Questions = [
+      {
+        id: "s2q1",
+        text: "Evaluate <code>(20x + y²) / (x + y)</code> if <code>x = 2, y = 5</code>",
+        choices: { a: "30/7", b: "65/7", c: "45/7", d: "50/7" },
+        correct: "b",
+        explanation: "Substitute: (20*2 + 5²) / (2 + 5) = (40 + 25) / 7 = 65/7."
+      },
+      {
+        id: "s2q2",
+        text: "Factor: <code>4p²g - 10pg²</code>",
+        choices: { a: "4p(g - 10pg)", b: "2pg(2p - 10g)", c: "2pg(2p - 5g)", d: "2pg(2p - 8g)" },
+        correct: "c",
+        explanation: "GCF is 2pg. Divide terms: 4p²g/2pg = 2p; -10pg²/2pg = -5g. Result: 2pg(2p - 5g)."
+      },
+      {
+        id: "s2q3",
+        text: "If <code>2x + 1 = 3 - x</code>, then x =",
+        choices: { a: "2", b: "4/3", c: "-2/3", d: "2/3" },
+        correct: "d",
+        explanation: "Add x: 3x + 1 = 3. Subtract 1: 3x = 2. Divide by 3: x = 2/3."
+      },
+      {
+        id: "s2q6",
+        text: "Simplify: <code>4 - 3(2 - x)</code>",
+        choices: { a: "-3x - 2", b: "3x - 2", c: "-x - 2", d: "-x + 2" },
+        correct: "b",
+        explanation: "Distribute -3: 4 - 6 + 3x = -2 + 3x or 3x - 2."
+      },
+      {
+        id: "s2q10",
+        text: "Factor: <code>x² - 7x + 12</code>",
+        choices: { a: "(x+4)(x+3)", b: "(x+4)(x-3)", c: "(x-4)(x+3)", d: "(x-4)(x-3)" },
+        correct: "d",
+        explanation: "Factors of 12 that sum to -7 are -4 and -3."
+      },
+      {
+        id: "s2q14",
+        text: "Solve: <code>2/x + 1/2 = 1</code>",
+        choices: { a: "1/2", b: "2", c: "4", d: "3" },
+        correct: "c",
+        explanation: "Subtract 1/2: 2/x = 1/2. Cross multiply: x = 4."
+      },
+      {
+        id: "s2q19",
+        text: "System: <code>2x + y = 3</code> and <code>x - y = -1</code>. Find y.",
+        choices: { a: "1", b: "2/3", c: "4/3", d: "5/3" },
+        correct: "d",
+        explanation: "Add equations: 3x = 2 -> x = 2/3. Substitute into Eq 2: 2/3 - y = -1 -> -y = -1 - 2/3 -> -y = -5/3 -> y = 5/3."
+      },
+      {
+        id: "s2q24",
+        text: "Simplify: <code>√50 - √32</code>",
+        choices: { a: "√2", b: "√18", c: "2", d: "√8" },
+        correct: "a",
+        explanation: "√50 = 5√2. √32 = 4√2. 5√2 - 4√2 = 1√2."
+      }
+    ];
+
+    // --- Practice #1 (From ma025finalreviewPractice1.pdf) ---
+    const practice1Questions = [
+      {
+        id: "p1q1",
+        text: "Simplify: <code>-5x⁴(-6x - 7)</code>",
+        choices: { a: "65x⁶", b: "30x⁵ + 35x⁴", c: "30x + 35", d: "30x³ - 7" },
+        correct: "b",
+        explanation: "Distribute -5x⁴: (-5x⁴)(-6x) = 30x⁵. (-5x⁴)(-7) = +35x⁴."
+      },
+      {
+        id: "p1q2",
+        text: "Solve: <code>4(2z - 2) = 7(z + 4)</code>",
+        choices: { a: "20", b: "36", c: "24", d: "-20" },
+        correct: "b",
+        explanation: "8z - 8 = 7z + 28. Subtract 7z: z - 8 = 28. Add 8: z = 36."
+      },
+      {
+        id: "p1q3",
+        text: "Solve: <code>(2/5)x - (1/3)x = 4</code>",
+        choices: { a: "120", b: "-120", c: "60", d: "-60" },
+        correct: "c",
+        explanation: "Common denom is 15. 6x/15 - 5x/15 = 4 -> x/15 = 4 -> x = 60."
+      },
+      {
+        id: "p1q4",
+        text: "A factor of <code>x² - 4x - 21</code> is:",
+        choices: { a: "(x-3)", b: "(x+3)", c: "(x+7)", d: "(x+8)" },
+        correct: "b",
+        explanation: "Factors of -21 summing to -4 are -7 and 3. Factors are (x-7)(x+3)."
+      },
+      {
+        id: "p1q11",
+        text: "Expand: <code>(5a - 9)²</code>",
+        choices: { a: "5a² + 81", b: "5a² - 90a + 81", c: "25a² + 81", d: "25a² - 90a + 81" },
+        correct: "d",
+        explanation: "(5a)² - 2(5a)(9) + 9² = 25a² - 90a + 81."
+      },
+      {
+        id: "p1q12",
+        text: "Factor completely: <code>3x² - 12x + 12</code>",
+        choices: { a: "(3x-6)(x-2)", b: "3(x-4)(x+1)", c: "3(x-2)(x-2)", d: "(3x-6)(x+2)" },
+        correct: "c",
+        explanation: "Factor out 3: 3(x² - 4x + 4). Factor perfect square: 3(x-2)(x-2)."
+      },
+      {
+        id: "p1q16",
+        text: "Simplify: <code>-3√6 + 9√54</code>",
+        choices: { a: "-24√6", b: "30√6", c: "6√6", d: "24√6" },
+        correct: "d",
+        explanation: "√54 = √(9*6) = 3√6. So 9(3√6) = 27√6. -3√6 + 27√6 = 24√6."
+      }
+    ];
+
+    // --- Practice #2 (From ma025finalreviewPractice1.pdf) ---
+    const practice2Questions = [
+      {
+        id: "p2q1",
+        text: "Simplify: <code>-10x⁴(10x - 12)</code>",
+        choices: { a: "-100x + 120", b: "20x²", c: "-100x⁵ - 12", d: "-100x⁵ + 120x⁴" },
+        correct: "d",
+        explanation: "Distribute: -100x⁵ + 120x⁴."
+      },
+      {
+        id: "p2q2",
+        text: "Solve: <code>2(2x - 2) = 3(x + 2)</code>",
+        choices: { a: "-2", b: "2", c: "10", d: "4" },
+        correct: "c",
+        explanation: "4x - 4 = 3x + 6. Subtract 3x: x - 4 = 6. Add 4: x = 10."
+      },
+      {
+        id: "p2q4",
+        text: "A factor of <code>x² - 5x - 66</code> is:",
+        choices: { a: "(x+11)", b: "(x-11)", c: "(x-5)", d: "(x-6)" },
+        correct: "b",
+        explanation: "Factors of -66 summing to -5 are -11 and 6. (x-11)(x+6)."
+      },
+      {
+        id: "p2q5",
+        text: "Solve: <code>6x + 10 - 5x = 0</code>",
+        choices: { a: "10", b: "-0.769", c: "-13", d: "-10" },
+        correct: "d",
+        explanation: "Combine x: x + 10 = 0. x = -10."
+      },
+      {
+        id: "p2q16",
+        text: "Simplify: <code>-2√3 - 4√27</code>",
+        choices: { a: "14√3", b: "-10√3", c: "-6√3", d: "-14√3" },
+        correct: "d",
+        explanation: "√27 = 3√3. So 4(3√3) = 12√3. -2√3 - 12√3 = -14√3."
+      }
+    ];
+
+    // --- Final Review (From MA025FinalReviewPractice3.pdf) ---
+    const finalReviewQuestions = [
+      {
+        id: "frq1",
+        text: "Which property? <code>5 * -2 = -2 * 5</code>",
+        choices: { a: "-2; associative", b: "2; associative", c: "2; commutative", d: "-2; commutative" },
+        correct: "d",
+        explanation: "The order is swapped, which is the Commutative Property."
+      },
+      {
+        id: "frq2",
+        text: "Solve <code>P = 2L + 2W</code> for L.",
+        choices: { a: "L = d - 2W", b: "L = P - W", c: "L = (P - 2W)/2", d: "L = (P - W)/2" },
+        correct: "c",
+        explanation: "Subtract 2W: P - 2W = 2L. Divide by 2."
+      },
+      {
+        id: "frq3",
+        text: "9% discount resulted in saving $52. What was the total bill?",
+        choices: { a: "$6", b: "$578", c: "$5", d: "$500" },
+        correct: "b",
+        explanation: "0.09 * x = 52. x = 52 / 0.09 ≈ 577.77."
+      },
+      {
+        id: "frq5",
+        text: "Graph <code>y + 4 = 0</code>. This represents:",
+        choices: { a: "Vertical line at x=-4", b: "Vertical line at x=4", c: "Horizontal line at y=-4", d: "Horizontal line at y=4" },
+        correct: "c",
+        explanation: "y = -4 is a horizontal line passing through -4 on the y-axis."
+      },
+      {
+        id: "frq6",
+        text: "Slope through (-9, 3) and (6, 8).",
+        choices: { a: "6", b: "1/6", c: "3", d: "1/3" },
+        correct: "d",
+        explanation: "(8 - 3) / (6 - -9) = 5 / 15 = 1/3."
+      },
+      {
+        id: "frq8",
+        text: "Solve by elimination: <code>x + 9y = 9</code> and <code>7x - 5y = -5</code>",
+        choices: { a: "(1,0)", b: "(0,1)", c: "(1,1)", d: "(0,0)" },
+        correct: "b",
+        explanation: "If x=0, y=1: (0)+9(1)=9 (true). 7(0)-5(1)=-5 (true)."
+      },
+      {
+        id: "frq13",
+        text: "Solve: <code>x² - x = 56</code>",
+        choices: { a: "(1, 56)", b: "(-7, -8)", c: "(-7, 8)", d: "(7, 8)" },
+        correct: "c",
+        explanation: "x² - x - 56 = 0. (x-8)(x+7) = 0. x=8, x=-7."
+      }
+    ];
+
+    // --- Exit Exam Form B (From MA025finalPractice4.pdf) ---
+    const exitExamQuestions = [
+      {
+        id: "exq2",
+        text: "Solve: <code>y² = 25y</code>",
+        choices: { a: "(-5, 5)", b: "[25]", c: "(0, 5)", d: "(0, 25)" },
+        correct: "d",
+        explanation: "y² - 25y = 0. Factor: y(y - 25) = 0. y = 0 or y = 25."
+      },
+      {
+        id: "exq5",
+        text: "Solve: <code>x² - x = 20</code>",
+        choices: { a: "1, 20", b: "4, 5", c: "-4, 5", d: "-4, -5" },
+        correct: "c",
+        explanation: "x² - x - 20 = 0. (x - 5)(x + 4) = 0. x = 5, x = -4."
+      },
+      {
+        id: "exq8",
+        text: "Factor completely: <code>x² + 16x + 64</code>",
+        choices: { a: "(x-8)²", b: "(x+8)²", c: "(x+8)(x-8)", d: "Prime" },
+        correct: "b",
+        explanation: "This is a perfect square trinomial: (x + 8)²."
+      },
+      {
+        id: "exq16",
+        text: "Solve: <code>2(y + 3) = 3(y - 3)</code>",
+        choices: { a: "-3", b: "-15", c: "3", d: "15" },
+        correct: "d",
+        explanation: "2y + 6 = 3y - 9. Subtract 2y: 6 = y - 9. Add 9: 15 = y."
+      },
+      {
+        id: "exq22",
+        text: "Factor: <code>2x² + 2x - 24</code>",
+        choices: { a: "2(x+3)(x-4)", b: "(x+3)(x-4)", c: "2(x-3)(x-4)", d: "2(x-3)(x+4)" },
+        correct: "d",
+        explanation: "Factor 2: 2(x² + x - 12). Factor trinomial: 2(x + 4)(x - 3)."
+      },
+      {
+        id: "exq23",
+        text: "Simplify: <code>√5(√7 - √3)</code>",
+        choices: { a: "5√7 + 5√3", b: "√35 - √15", c: "√50", d: "10√5" },
+        correct: "b",
+        explanation: "Distribute: √(5*7) - √(5*3) = √35 - √15."
+      },
+      {
+        id: "exq28",
+        text: "Product: <code>(4x + 8)(x + 5)</code>",
+        choices: { a: "4x² + 40x + 28", b: "4x² + 26x + 40", c: "4x² + 28x + 28", d: "4x² + 28x + 40" },
+        correct: "d",
+        explanation: "4x² + 20x + 8x + 40 = 4x² + 28x + 40."
+      }
+    ];
+
+
+    // Map IDs to Question Sets
+    const QUESTION_SETS = {
+      session1: session1Questions,
+      session2: session2Questions,
+      practice1: practice1Questions,
+      practice2: practice2Questions,
+      finalreview: finalReviewQuestions,
+      exitexam: exitExamQuestions
+    };
+
+    // =========================================================================
+    // APP LOGIC
+    // =========================================================================
+    let currentQuiz = [];
+    let currentIndex = 0;
+    let userAnswers = {};
+
+    function shuffle(array) {
+      const arr = array.slice();
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function getAllQuestions() {
+      let out = [];
+      Object.keys(QUESTION_SETS).forEach(key => {
+        out = out.concat(QUESTION_SETS[key]);
+      });
+      return out;
+    }
+
+    function startQuiz() {
+      const mode = document.getElementById("modeSelect").value;
+      const countValue = document.getElementById("questionCount").value;
+      let pool = (mode === "all") ? getAllQuestions() : QUESTION_SETS[mode] || [];
+
+      if (!pool.length) {
+        alert("No questions available for this selection.");
+        return;
+      }
+
+      pool = shuffle(pool);
+      const limit = (countValue && countValue > 0 && countValue < pool.length) ? countValue : pool.length;
+      
+      currentQuiz = pool.slice(0, limit);
+      currentIndex = 0;
+      userAnswers = {};
+
+      document.getElementById("setup").classList.add("hidden");
+      document.getElementById("quiz").classList.remove("hidden");
+      document.getElementById("results").classList.add("hidden");
+      
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = currentQuiz[currentIndex];
+      document.getElementById("questionCounter").textContent = 
+        `Question ${currentIndex + 1} of ${currentQuiz.length}`;
+      document.getElementById("questionText").innerHTML = q.text;
+
+      const choicesDiv = document.getElementById("choices");
+      choicesDiv.innerHTML = "";
+
+      Object.keys(q.choices).forEach(key => {
+        const label = document.createElement("label");
+        label.className = "choice-label";
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "choice";
+        input.value = key;
+        
+        // Restore previous answer if exists
+        if(userAnswers[q.id] && userAnswers[q.id].choice === key) {
+          input.checked = true;
+        }
+
+        const span = document.createElement("span");
+        span.className = "choice-text";
+        span.innerHTML = `<strong>${key.toUpperCase()}.</strong> ${q.choices[key]}`;
+
+        label.appendChild(input);
+        label.appendChild(span);
+        choicesDiv.appendChild(label);
+      });
+
+      // Reset UI state
+      document.getElementById("feedback").classList.add("hidden");
+      document.getElementById("checkButton").disabled = false;
+      document.getElementById("checkButton").classList.remove("hidden");
+      document.getElementById("nextButton").disabled = true;
+      document.getElementById("nextButton").textContent = 
+        (currentIndex === currentQuiz.length - 1) ? "Finish Quiz" : "Next ⟩";
+    }
+
+    function checkAnswer() {
+      const q = currentQuiz[currentIndex];
+      const selected = document.querySelector('input[name="choice"]:checked');
+      
+      if (!selected) return;
+
+      const choice = selected.value;
+      const isCorrect = choice === q.correct;
+      
+      userAnswers[q.id] = { choice, isCorrect };
+
+      const fb = document.getElementById("feedback");
+      fb.innerHTML = isCorrect 
+        ? `<p class="correct">✅ Correct!</p>` 
+        : `<p class="incorrect">❌ Incorrect. The correct answer was ${q.correct.toUpperCase()}.</p>`;
+      
+      if(q.explanation) {
+        fb.innerHTML += `<span class="explanation"><strong>Explanation:</strong> ${q.explanation}</span>`;
+      }
+
+      fb.classList.remove("hidden");
+      document.getElementById("checkButton").disabled = true;
+      document.getElementById("nextButton").disabled = false;
+    }
+
+    function nextQuestion() {
+      if (currentIndex < currentQuiz.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById("quiz").classList.add("hidden");
+      document.getElementById("results").classList.remove("hidden");
+
+      const total = currentQuiz.length;
+      const correct = currentQuiz.filter(q => userAnswers[q.id]?.isCorrect).length;
+      const percent = Math.round((correct / total) * 100);
+
+      document.getElementById("summary").innerHTML = 
+        `You scored <strong>${correct}</strong> out of <strong>${total}</strong> (${percent}%).`;
+
+      const list = document.getElementById("reviewList");
+      list.innerHTML = "";
+      
+      currentQuiz.forEach((q, i) => {
+        const ans = userAnswers[q.id];
+        const li = document.createElement("li");
+        const icon = ans?.isCorrect ? "✅" : "❌";
+        const userChoice = ans ? ans.choice.toUpperCase() : "None";
+        
+        li.innerHTML = `
+          <div><strong>${icon} Q${i+1}:</strong> ${q.text}</div>
+          <div style="margin-top:0.25rem; font-size:0.9rem; color:#94a3b8;">
+            Your answer: <strong>${userChoice}</strong> | 
+            Correct: <strong>${q.correct.toUpperCase()}</strong>
+          </div>
+          <div class="explanation" style="font-size:0.85rem; margin-top:0.25rem;">
+            ${q.explanation || ""}
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function restart() {
+      document.getElementById("results").classList.add("hidden");
+      document.getElementById("setup").classList.remove("hidden");
+      currentQuiz = [];
+      currentIndex = 0;
+      userAnswers = {};
+    }
+
+    // Event Listeners
+    document.getElementById("startButton").addEventListener("click", startQuiz);
+    document.getElementById("checkButton").addEventListener("click", checkAnswer);
+    document.getElementById("nextButton").addEventListener("click", nextQuestion);
+    document.getElementById("restartButton").addEventListener("click", restart);
+
+  </script>
+</body>
+</html>
+```

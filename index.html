@@ -36,6 +36,13 @@ nav a:active,.btn:active,button:active{transform:translateY(0)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .footer{color:var(--muted);text-align:center;margin:30px 0 40px}
 .tag{display:inline-block;padding:.2rem .6rem;border-radius:20px;background:rgba(255,255,255,.12);margin-right:6px}
+
+/* Special style for the Ultimate Suite Card */
+.card.featured {
+  border: 2px solid var(--accent);
+  background: linear-gradient(145deg, var(--panel), rgba(91, 192, 190, 0.1));
+}
+.card.featured h3 { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -46,16 +53,38 @@ nav a:active,.btn:active,button:active{transform:translateY(0)}
       <h1>MA025B — Algebra Study Hub</h1>
     </div>
     <nav aria-label="Primary">
+      <a href="algebra_master.html">★ Ultimate Suite</a>
       <a href="references.html">🎥 References</a>
-      <a href="practice_exam1.html">Practice Exam 1</a>
-      <a href="practice_exam1-v2.html">Practice Exam 1 (v2)</a>
-      <a href="practice_exam2.html">Practice Exam 2</a>
-      <!-- NEW: Exam 3 / radicals page -->
-      <a href="radicals_practice.html">Practice Exam 3</a>
-      <a href="random_practice.html">Random Practice</a>
-      <a href="random_practice_hard.html">Hard Random</a>
     </nav>
   </header>
+
+  <section class="card">
+    <h2>Practice Tests</h2>
+    <div class="grid">
+      
+      <a class="card featured" href="algebra_master.html">
+        <h3>🏆 Algebra Master Suite</h3>
+        <p><strong>Start Here!</strong> Contains all 4 Official Tests + Infinite Practice Mode + Explanations.</p>
+      </a>
+
+      <a class="card" href="practice_exam1.html">
+        <h3>Practice Exam 1</h3>
+        <p>Multiple choice + step‑by‑step explanations</p>
+      </a>
+      <a class="card" href="practice_exam2.html">
+        <h3>Practice Exam 2</h3>
+        <p>Original exam — MC + step‑by‑step grading</p>
+      </a>
+      <a class="card" href="radicals_practice.html">
+        <h3>Practice Exam 3 — Radicals</h3>
+        <p>Radicals-focused exam + infinite generated drills</p>
+      </a>
+      <a class="card" href="random_practice.html">
+        <h3>Random Practice</h3>
+        <p>Create custom drills with notebook‑style steps</p>
+      </a>
+    </div>
+  </section>
 
   <section class="card">
     <h2>Pick a Unit</h2>
@@ -79,39 +108,6 @@ nav a:active,.btn:active,button:active{transform:translateY(0)}
     </div>
   </section>
 
-  <!-- Practice Tests -->
-  <section class="card">
-    <h2>Practice Tests</h2>
-    <div class="grid">
-      <a class="card" href="practice_exam1.html">
-        <h3>Practice Exam 1</h3>
-        <p>Multiple choice + step‑by‑step explanations</p>
-      </a>
-      <a class="card" href="practice_exam1-v2.html">
-        <h3>Practice Exam 1 (v2)</h3>
-        <p>Same exam, cleaner layout, full worked steps</p>
-      </a>
-      <!-- NEW cards -->
-      <a class="card" href="practice_exam2.html">
-        <h3>Practice Exam 2</h3>
-        <p>Original exam — MC + step‑by‑step grading</p>
-      </a>
-      <!-- NEW: Practice Exam 3 / radicals hub page -->
-      <a class="card" href="radicals_practice.html">
-        <h3>Practice Exam 3 — Radicals</h3>
-        <p>Radicals-focused exam + infinite generated drills</p>
-      </a>
-      <a class="card" href="random_practice_hard.html">
-        <h3>Hard Random Practice</h3>
-        <p>Tougher drills with full notebook‑style steps</p>
-      </a>
-      <a class="card" href="random_practice.html">
-        <h3>Random Practice</h3>
-        <p>Create custom drills with notebook‑style steps</p>
-      </a>
-    </div>
-  </section>
-
   <section class="card">
     <h2>Audio/Class Review</h2>
     <p>Put your <code>.m4a</code> files in an <code>audio/</code> folder. Open <a href="unit5_quick_review.html">Unit 5 Quick Review</a> to auto‑load players.</p>
@@ -130,10 +126,9 @@ nav a:active,.btn:active,button:active{transform:translateY(0)}
   <footer class="footer">Built for maximum compatibility.</footer>
 </div>
 
-<!-- Service worker: versioned to bypass old caches -->
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js?ver=16');
+  navigator.serviceWorker.register('sw.js?ver=17');
 }
 </script>
 </body>

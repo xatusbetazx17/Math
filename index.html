@@ -1,3 +1,15 @@
+This is the **complete, consolidated `index.html`**.
+
+It automatically links to **every single file** you uploaded (`algebra_master.html`, `practice_exam1-v2.html`, `random_practice_hard.html`, etc.) so nothing is missing.
+
+### **Instructions:**
+
+1.  Save the code below as **`index.html`**.
+2.  Ensure all your other `.html` files are in the same folder.
+
+<!-- end list -->
+
+```html
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,7 +18,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <title>MA025B — Algebra Study Hub</title>
 <style>
-/* --- shared styles (mobile-first, high-contrast) --- */
+/* --- Shared Styles (Mobile-First, High-Contrast) --- */
 :root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--danger:#ff6b6b;--ok:#2ecc71;--warn:#ffd166;--shadow:0 6px 20px rgba(0,0,0,.25)}
 @media (prefers-color-scheme: light){
   :root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--warn:#a97300;--shadow:0 10px 25px rgba(0,0,0,.08)}
@@ -32,17 +44,20 @@ nav a,.btn,button{
 }
 nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}
 nav a:active,.btn:active,button:active{transform:translateY(0)}
-.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0; display:flex; flex-direction:column; height:100%; text-decoration:none; color:inherit;}
+.card h3 { margin-top: 0; color: var(--accent-2); }
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .footer{color:var(--muted);text-align:center;margin:30px 0 40px}
-.tag{display:inline-block;padding:.2rem .6rem;border-radius:20px;background:rgba(255,255,255,.12);margin-right:6px}
+.tag{display:inline-block;padding:.2rem .6rem;border-radius:20px;background:rgba(255,255,255,.12);margin-right:6px;font-size:0.85rem;}
 
-/* Special style for the Ultimate Suite Card */
+/* Featured Card Style */
 .card.featured {
   border: 2px solid var(--accent);
   background: linear-gradient(145deg, var(--panel), rgba(91, 192, 190, 0.1));
+  grid-column: 1 / -1; 
 }
-.card.featured h3 { color: var(--accent); }
+.card.featured h3 { color: var(--accent); font-size: 1.4rem; }
+.section-title { margin-top: 30px; margin-bottom: 10px; color: var(--muted); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
 </style>
 </head>
 <body>
@@ -50,86 +65,101 @@ nav a:active,.btn:active,button:active{transform:translateY(0)}
   <header class="header">
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
-      <h1>MA025B — Algebra Study Hub</h1>
+      <h1>MA025B — Algebra Hub</h1>
     </div>
     <nav aria-label="Primary">
-      <a href="algebra_master.html">★ Ultimate Suite</a>
+      <a href="algebra_master.html">★ Ultimate App</a>
       <a href="references.html">🎥 References</a>
     </nav>
   </header>
 
-  <section class="card">
-    <h2>Practice Tests</h2>
-    <div class="grid">
-      
-      <a class="card featured" href="algebra_master.html">
-        <h3>🏆 Algebra Master Suite</h3>
-        <p><strong>Start Here!</strong> Contains all 4 Official Tests + Infinite Practice Mode + Explanations.</p>
-      </a>
+  <div class="section-title">Practice Exams & Drills</div>
+  <div class="grid">
+    
+    <a class="card featured" href="algebra_master.html">
+      <h3>🏆 Algebra Master Suite</h3>
+      <p><strong>The All-in-One App.</strong> Includes Practice Exams 1, 2, 3, & 4 plus the Infinite Generator. <em>Start here!</em></p>
+    </a>
 
-      <a class="card" href="practice_exam1.html">
-        <h3>Practice Exam 1</h3>
-        <p>Multiple choice + step‑by‑step explanations</p>
-      </a>
-      <a class="card" href="practice_exam2.html">
-        <h3>Practice Exam 2</h3>
-        <p>Original exam — MC + step‑by‑step grading</p>
-      </a>
-      <a class="card" href="radicals_practice.html">
-        <h3>Practice Exam 3 — Radicals</h3>
-        <p>Radicals-focused exam + infinite generated drills</p>
-      </a>
-      <a class="card" href="random_practice.html">
-        <h3>Random Practice</h3>
-        <p>Create custom drills with notebook‑style steps</p>
-      </a>
-    </div>
-  </section>
+    <a class="card" href="practice_exam1.html">
+      <h3>Practice Exam 1</h3>
+      <p>Form 2. Standard multiple choice with notebook-style step-by-step explanations.</p>
+    </a>
 
-  <section class="card">
-    <h2>Pick a Unit</h2>
-    <div class="grid">
-      <a class="card" href="unit5_quick_review.html">
-        <h3>Unit 5: Polynomials</h3>
-        <p>Quick Review ➜ notes + examples</p>
-      </a>
-      <a class="card" href="unit5_polynomials_quiz.html">
-        <h3>Unit 5 Practice</h3>
-        <p>Interactive, step‑by‑step notebook mode</p>
-      </a>
-      <a class="card" href="algebra_quiz_notebook.html">
-        <h3>Units 0–4 Review</h3>
-        <p>General algebra foundations</p>
-      </a>
-      <a class="card" href="algebra_units6_9_quiz.html">
-        <h3>Units 6–9 Practice</h3>
-        <p>Factoring, rationals, radicals, quadratics</p>
-      </a>
-    </div>
-  </section>
+    <a class="card" href="practice_exam1-v2.html">
+      <h3>Practice Exam 1 (v2)</h3>
+      <p><strong>Review Mode:</strong> Cleaner layout focused on reading the solutions.</p>
+    </a>
 
-  <section class="card">
-    <h2>Audio/Class Review</h2>
-    <p>Put your <code>.m4a</code> files in an <code>audio/</code> folder. Open <a href="unit5_quick_review.html">Unit 5 Quick Review</a> to auto‑load players.</p>
-    <ul><li><a href="audio.html">Audio Lectures</a></li></ul>
-  </section>
+    <a class="card" href="practice_exam2.html">
+      <h3>Practice Exam 2</h3>
+      <p>Form 2B. 18 Questions. Includes strict grading logic out of 100 points.</p>
+    </a>
 
-  <section class="card">
-    <h2>Tips</h2>
-    <ul>
-      <li><span class="tag">Mobile‑first</span> Works on iOS, Android, desktop, and Steam Deck.</li>
-      <li><span class="tag">Offline</span> After first load, pages work without internet.</li>
-      <li><span class="tag">No dependencies</span> Pure HTML/CSS/JS — easy to host on GitHub Pages.</li>
-    </ul>
-  </section>
+    <a class="card" href="radicals_practice.html">
+      <h3>Practice Exam 3 (Radicals)</h3>
+      <p>Focuses on Radicals & Roots. Includes a specific random generator for these topics.</p>
+    </a>
 
-  <footer class="footer">Built for maximum compatibility.</footer>
+    <a class="card" href="random_practice.html">
+      <h3>Random Practice</h3>
+      <p>Customize your drill. Select specific topics to generate new questions.</p>
+    </a>
+
+    <a class="card" href="random_practice_hard.html">
+      <h3>Hard Random Practice</h3>
+      <p><strong>Challenge Mode:</strong> Tougher questions aligned with Exam 2 topics.</p>
+    </a>
+  </div>
+
+  <div class="section-title">Unit Study & Review</div>
+  <div class="grid">
+    
+    <a class="card" href="algebra_quiz_notebook.html">
+      <h3>Units 0–4: Foundations</h3>
+      <p>Arithmetic, linear equations, inequalities, and graphing basics.</p>
+    </a>
+
+    <a class="card" href="unit5_quick_review.html">
+      <h3>Unit 5: Quick Notes</h3>
+      <p>Polynomials reference sheet. Exponents, Scientific Notation, FOIL.</p>
+    </a>
+
+    <a class="card" href="unit5_polynomials_quiz.html">
+      <h3>Unit 5: Practice Quiz</h3>
+      <p>Interactive quiz specifically for Polynomials and Exponents.</p>
+    </a>
+
+    <a class="card" href="algebra_units6_9_quiz.html">
+      <h3>Units 6–9: Advanced</h3>
+      <p>Factoring, Rational Expressions, Radicals, and Quadratics.</p>
+    </a>
+
+  </div>
+
+  <div class="section-title">Resources</div>
+  <div class="grid">
+    <a class="card" href="audio.html">
+      <h3>🎧 Audio Lectures</h3>
+      <p>Listen to class recordings (requires audio files in folder).</p>
+    </a>
+    <a class="card" href="references.html">
+      <h3>🎥 Video References</h3>
+      <p>Curated list of YouTube search links for every topic.</p>
+    </a>
+  </div>
+
+  <footer class="footer">
+    <p>MA025B Algebra Study Hub • Updated 2025</p>
+    <span class="tag">Offline Ready</span> <span class="tag">Mobile Optimized</span>
+  </footer>
 </div>
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js?ver=17');
+  navigator.serviceWorker.register('sw.js?ver=19');
 }
 </script>
 </body>
 </html>
+```

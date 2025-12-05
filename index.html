@@ -1,11 +1,17 @@
-This is the **complete, consolidated `index.html`**.
+This is the **final, polished `index.html`** dashboard.
 
-It automatically links to **every single file** you uploaded (`algebra_master.html`, `practice_exam1-v2.html`, `random_practice_hard.html`, etc.) so nothing is missing.
+It is designed to be the "Home Base" for your repository. It automatically organizes every file you uploaded into a logical, easy-to-navigate interface that looks like a native app on phones (iOS/Android) and works perfectly on desktops (Mac/Windows/Linux).
+
+### **Changes:**
+
+1.  **Linked Everything:** Every file you shared (`ma025_practice_all.html`, `practice_exam1.html`, `unit5...`, etc.) is connected.
+2.  **Responsive Design:** Uses a modern "Card Grid" layout that stacks on phones and expands on computers.
+3.  **Correct File Names:** I used the filenames exactly as they appear in your repo (e.g., linking to `ma025_practice_all.html` for the Ultimate Suite).
 
 ### **Instructions:**
 
-1.  Save the code below as **`index.html`**.
-2.  Ensure all your other `.html` files are in the same folder.
+1.  Save this code as **`index.html`** in the main folder of your repository.
+2.  **Note:** I noticed one file was named `radicals_practice.html.html`. For this index to work perfectly, please rename that file to just **`radicals_practice.html`** (remove the second `.html`).
 
 <!-- end list -->
 
@@ -14,152 +20,271 @@ It automatically links to **every single file** you uploaded (`algebra_master.ht
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f172a">
 <title>MA025B — Algebra Study Hub</title>
 <style>
-/* --- Shared Styles (Mobile-First, High-Contrast) --- */
-:root{--bg:#0b132b;--panel:#1c2541;--accent:#5bc0be;--accent-2:#98c1d9;--ink:#edf2f4;--muted:#a8b2c1;--danger:#ff6b6b;--ok:#2ecc71;--warn:#ffd166;--shadow:0 6px 20px rgba(0,0,0,.25)}
-@media (prefers-color-scheme: light){
-  :root{--bg:#f6f7fb;--panel:#fff;--accent:#005f73;--accent-2:#0a9396;--ink:#102a43;--muted:#697386;--danger:#b00020;--ok:#1b8a5a;--warn:#a97300;--shadow:0 10px 25px rgba(0,0,0,.08)}
-}
-*{box-sizing:border-box}html,body{height:100%}
-body{
-  margin:0;
-  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-  color:var(--ink);
-  background:linear-gradient(180deg,var(--bg),#111b2e);
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-}
-.container{max-width:1100px;margin:0 auto;padding:clamp(12px,2vw,24px)}
-.header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:8px 0 18px}
-.brand{display:flex;align-items:center;gap:12px}
-.brand .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:var(--shadow)}
-.brand h1{font-size:clamp(18px,4.3vw,28px);margin:0}
-nav a,.btn,button{
-  appearance:none;-webkit-appearance:none;cursor:pointer;border:0;border-radius:10px;
-  padding:10px 14px;font-weight:600;background:var(--accent);color:#fff;text-decoration:none;
-  box-shadow:var(--shadow);transition:transform .04s ease,box-shadow .2s ease
-}
-nav a:hover,.btn:hover,button:hover{transform:translateY(-1px)}
-nav a:active,.btn:active,button:active{transform:translateY(0)}
-.card{background:var(--panel);border-radius:14px;box-shadow:var(--shadow);padding:clamp(14px,2.6vw,22px);margin:14px 0; display:flex; flex-direction:column; height:100%; text-decoration:none; color:inherit;}
-.card h3 { margin-top: 0; color: var(--accent-2); }
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.footer{color:var(--muted);text-align:center;margin:30px 0 40px}
-.tag{display:inline-block;padding:.2rem .6rem;border-radius:20px;background:rgba(255,255,255,.12);margin-right:6px;font-size:0.85rem;}
+  /* --- MODERN CSS VARIABLES --- */
+  :root {
+    --bg-color: #0f172a;       /* Slate 900 */
+    --card-bg: #1e293b;        /* Slate 800 */
+    --text-main: #f1f5f9;      /* Slate 100 */
+    --text-muted: #94a3b8;     /* Slate 400 */
+    --accent: #6366f1;         /* Indigo 500 */
+    --accent-hover: #818cf8;   /* Indigo 400 */
+    --border: #334155;         /* Slate 700 */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+  }
 
-/* Featured Card Style */
-.card.featured {
-  border: 2px solid var(--accent);
-  background: linear-gradient(145deg, var(--panel), rgba(91, 192, 190, 0.1));
-  grid-column: 1 / -1; 
-}
-.card.featured h3 { color: var(--accent); font-size: 1.4rem; }
-.section-title { margin-top: 30px; margin-bottom: 10px; color: var(--muted); text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* --- HEADER --- */
+  header {
+    width: 100%;
+    max-width: 1200px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+    background: rgba(15, 23, 42, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+  }
+
+  h1 { margin: 0; font-size: 1.5rem; color: var(--accent); letter-spacing: -0.5px; }
+  p.subtitle { margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.9rem; }
+
+  /* --- LAYOUT GRID --- */
+  main {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1rem 3rem;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* --- CARDS --- */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: var(--shadow);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  }
+
+  .card:active { transform: translateY(0); }
+
+  .card h3 { margin: 0 0 0.5rem; font-size: 1.1rem; color: #fff; }
+  .card p { margin: 0; font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
+
+  /* Featured Card Style */
+  .card.featured {
+    background: linear-gradient(145deg, #1e1b4b, #312e81);
+    border-color: var(--accent);
+    grid-column: 1 / -1; /* Spans full width */
+    padding: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+  .card.featured h3 { font-size: 1.75rem; color: var(--accent-hover); margin-bottom: 0.75rem; }
+  .card.featured p { font-size: 1.1rem; color: #e2e8f0; max-width: 600px; }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #334155;
+    color: #cbd5e1;
+    margin-top: 1rem;
+    align-self: flex-start;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: auto;
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+
+  /* --- MOBILE ADJUSTMENTS --- */
+  @media (max-width: 600px) {
+    .card.featured { text-align: left; align-items: flex-start; padding: 1.5rem; }
+    .card.featured h3 { font-size: 1.4rem; }
+    h1 { font-size: 1.3rem; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
-  <header class="header">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <h1>MA025B — Algebra Hub</h1>
+
+<header>
+  <h1>MA025B Algebra Hub</h1>
+  <p class="subtitle">Practice Tests • Random Drills • Step-by-Step Solutions</p>
+</header>
+
+<main>
+
+  <div>
+    <div class="card-grid">
+      <a href="ma025_practice_all.html" class="card featured">
+        <h3>🏆 Algebra Master Suite</h3>
+        <p>The complete all-in-one app. Contains Practice Exams 1, 2, 3, & 4 plus the Infinite Generator in a single interface.</p>
+        <span class="tag" style="background:var(--accent); color:white; align-self:center; margin-top:1.5rem;">Start Here</span>
+      </a>
     </div>
-    <nav aria-label="Primary">
-      <a href="algebra_master.html">★ Ultimate App</a>
-      <a href="references.html">🎥 References</a>
-    </nav>
-  </header>
-
-  <div class="section-title">Practice Exams & Drills</div>
-  <div class="grid">
-    
-    <a class="card featured" href="algebra_master.html">
-      <h3>🏆 Algebra Master Suite</h3>
-      <p><strong>The All-in-One App.</strong> Includes Practice Exams 1, 2, 3, & 4 plus the Infinite Generator. <em>Start here!</em></p>
-    </a>
-
-    <a class="card" href="practice_exam1.html">
-      <h3>Practice Exam 1</h3>
-      <p>Form 2. Standard multiple choice with notebook-style step-by-step explanations.</p>
-    </a>
-
-    <a class="card" href="practice_exam1-v2.html">
-      <h3>Practice Exam 1 (v2)</h3>
-      <p><strong>Review Mode:</strong> Cleaner layout focused on reading the solutions.</p>
-    </a>
-
-    <a class="card" href="practice_exam2.html">
-      <h3>Practice Exam 2</h3>
-      <p>Form 2B. 18 Questions. Includes strict grading logic out of 100 points.</p>
-    </a>
-
-    <a class="card" href="radicals_practice.html">
-      <h3>Practice Exam 3 (Radicals)</h3>
-      <p>Focuses on Radicals & Roots. Includes a specific random generator for these topics.</p>
-    </a>
-
-    <a class="card" href="random_practice.html">
-      <h3>Random Practice</h3>
-      <p>Customize your drill. Select specific topics to generate new questions.</p>
-    </a>
-
-    <a class="card" href="random_practice_hard.html">
-      <h3>Hard Random Practice</h3>
-      <p><strong>Challenge Mode:</strong> Tougher questions aligned with Exam 2 topics.</p>
-    </a>
   </div>
 
-  <div class="section-title">Unit Study & Review</div>
-  <div class="grid">
-    
-    <a class="card" href="algebra_quiz_notebook.html">
-      <h3>Units 0–4: Foundations</h3>
-      <p>Arithmetic, linear equations, inequalities, and graphing basics.</p>
-    </a>
+  <div>
+    <div class="section-title">Individual Practice Tests</div>
+    <div class="card-grid">
+      <a href="practice_exam1.html" class="card">
+        <h3>Practice Exam 1 (Standard)</h3>
+        <p>Form 2. Multiple choice with explanations.</p>
+        <span class="tag">35 Questions</span>
+      </a>
 
-    <a class="card" href="unit5_quick_review.html">
-      <h3>Unit 5: Quick Notes</h3>
-      <p>Polynomials reference sheet. Exponents, Scientific Notation, FOIL.</p>
-    </a>
+      <a href="practice_exam1-v2.html" class="card">
+        <h3>Practice Exam 1 (Review View)</h3>
+        <p>Cleaner layout focused on reading and reviewing solutions.</p>
+        <span class="tag">Review Mode</span>
+      </a>
 
-    <a class="card" href="unit5_polynomials_quiz.html">
-      <h3>Unit 5: Practice Quiz</h3>
-      <p>Interactive quiz specifically for Polynomials and Exponents.</p>
-    </a>
+      <a href="practice_exam2.html" class="card">
+        <h3>Practice Exam 2</h3>
+        <p>Form 2B. Strict grading logic with detailed score reports.</p>
+        <span class="tag">18 Questions</span>
+      </a>
 
-    <a class="card" href="algebra_units6_9_quiz.html">
-      <h3>Units 6–9: Advanced</h3>
-      <p>Factoring, Rational Expressions, Radicals, and Quadratics.</p>
-    </a>
-
+      <a href="radicals_practice.html" class="card">
+        <h3>Practice Exam 3 (Radicals)</h3>
+        <p>Final Review focus on Roots and Radicals. Includes generated drills.</p>
+        <span class="tag">Specialized</span>
+      </a>
+    </div>
   </div>
 
-  <div class="section-title">Resources</div>
-  <div class="grid">
-    <a class="card" href="audio.html">
-      <h3>🎧 Audio Lectures</h3>
-      <p>Listen to class recordings (requires audio files in folder).</p>
-    </a>
-    <a class="card" href="references.html">
-      <h3>🎥 Video References</h3>
-      <p>Curated list of YouTube search links for every topic.</p>
-    </a>
+  <div>
+    <div class="section-title">Training Generators</div>
+    <div class="card-grid">
+      <a href="random_practice.html" class="card">
+        <h3>Random Practice</h3>
+        <p>Customize your drill. Select specific topics (factoring, equations) to generate new questions.</p>
+        <span class="tag">Customizable</span>
+      </a>
+
+      <a href="random_practice_hard.html" class="card">
+        <h3>Hard Mode Practice</h3>
+        <p>Tougher questions aligned with Exam 2 topics. Good for deep practice.</p>
+        <span class="tag">Advanced</span>
+      </a>
+    </div>
   </div>
 
-  <footer class="footer">
-    <p>MA025B Algebra Study Hub • Updated 2025</p>
-    <span class="tag">Offline Ready</span> <span class="tag">Mobile Optimized</span>
-  </footer>
-</div>
+  <div>
+    <div class="section-title">Unit Study & Review</div>
+    <div class="card-grid">
+      <a href="algebra_quiz_notebook.html" class="card">
+        <h3>Foundations (Units 0–4)</h3>
+        <p>Arithmetic, linear equations, inequalities, and graphing basics.</p>
+      </a>
+
+      <a href="unit5_quick_review.html" class="card">
+        <h3>Unit 5: Quick Notes</h3>
+        <p>Reference sheet for Polynomials, Exponents, Scientific Notation, and FOIL.</p>
+      </a>
+
+      <a href="unit5_polynomials_quiz.html" class="card">
+        <h3>Unit 5: Practice Quiz</h3>
+        <p>Interactive quiz specifically for Polynomials.</p>
+      </a>
+
+      <a href="algebra_units6_9_quiz.html" class="card">
+        <h3>Advanced (Units 6–9)</h3>
+        <p>Factoring, Rational Expressions, Radicals, and Quadratics.</p>
+      </a>
+    </div>
+  </div>
+
+  <div>
+    <div class="section-title">Media & Resources</div>
+    <div class="card-grid">
+      <a href="audio.html" class="card">
+        <h3>🎧 Audio Lectures</h3>
+        <p>Listen to class recordings (requires audio files in folder).</p>
+      </a>
+      
+      <a href="references.html" class="card">
+        <h3>🎥 Video References</h3>
+        <p>Curated list of YouTube search links for every math topic.</p>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>© 2025 Algebra Study Hub. Works Offline.</p>
+</footer>
 
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js?ver=19');
-}
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js?ver=20')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.log('SW Error:', err));
+  }
 </script>
+
 </body>
 </html>
 ```

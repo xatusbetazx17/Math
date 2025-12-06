@@ -7,15 +7,15 @@
 <meta name="theme-color" content="#0f172a">
 <title>MA025B — Algebra Study Hub</title>
 <style>
-  /* --- MODERN CSS VARIABLES --- */
+  /* --- CSS VARIABLES --- */
   :root {
-    --bg-color: #0f172a;       /* Slate 900 */
-    --card-bg: #1e293b;        /* Slate 800 */
-    --text-main: #f1f5f9;      /* Slate 100 */
-    --text-muted: #94a3b8;     /* Slate 400 */
-    --accent: #6366f1;         /* Indigo 500 */
-    --accent-hover: #818cf8;   /* Indigo 400 */
-    --border: #334155;         /* Slate 700 */
+    --bg-color: #0f172a;       /* Dark Navy */
+    --card-bg: #1e293b;        /* Slate */
+    --text-main: #f1f5f9;      /* White */
+    --text-muted: #94a3b8;     /* Grey */
+    --accent: #6366f1;         /* Indigo */
+    --accent-hover: #818cf8;   /* Light Indigo */
+    --border: #334155;         /* Border Color */
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
   }
 
@@ -57,7 +57,7 @@
     max-width: 1200px;
     padding: 0 1rem 3rem;
     display: grid;
-    gap: 2rem;
+    gap: 2.5rem;
   }
 
   .section-title {
@@ -107,7 +107,7 @@
   .card.featured {
     background: linear-gradient(145deg, #1e1b4b, #312e81);
     border-color: var(--accent);
-    grid-column: 1 / -1; /* Spans full width */
+    grid-column: 1 / -1; /* Spans full width on desktop */
     padding: 2rem;
     align-items: center;
     text-align: center;
@@ -159,16 +159,16 @@
 
   <div>
     <div class="card-grid">
-      <a href="algebra_master.html" class="card featured">
+      <a href="ma025_practice_all.html" class="card featured">
         <h3>🏆 Algebra Master Suite</h3>
-        <p>The complete all-in-one app. Contains Practice Exams 1, 2, 3, & 4 plus the Infinite Generator in a single interface.</p>
+        <p>The ultimate all-in-one tool. Contains all 4 Official Practice Tests plus the Infinite Question Generator.</p>
         <span class="tag" style="background:var(--accent); color:white; align-self:center; margin-top:1.5rem;">Start Here</span>
       </a>
     </div>
   </div>
 
   <div>
-    <div class="section-title">Individual Practice Tests</div>
+    <div class="section-title">Practice Exams</div>
     <div class="card-grid">
       <a href="practice_exam1.html" class="card">
         <h3>Practice Exam 1 (Standard)</h3>
@@ -178,19 +178,19 @@
 
       <a href="practice_exam1-v2.html" class="card">
         <h3>Practice Exam 1 (Review View)</h3>
-        <p>Cleaner layout focused on reading and reviewing solutions.</p>
-        <span class="tag">Review Mode</span>
+        <p>Optimized layout focused on reading solutions.</p>
+        <span class="tag">Study Mode</span>
       </a>
 
       <a href="practice_exam2.html" class="card">
         <h3>Practice Exam 2</h3>
-        <p>Form 2B. Strict grading logic with detailed score reports.</p>
+        <p>Form 2B. Strict grading logic out of 100 points.</p>
         <span class="tag">18 Questions</span>
       </a>
 
-      <a href="radicals_practice.html" class="card">
+      <a href="radicals_practice.html.html" class="card">
         <h3>Practice Exam 3 (Radicals)</h3>
-        <p>Final Review focus on Roots and Radicals. Includes generated drills.</p>
+        <p>Roots and Radicals focus. Includes random drills.</p>
         <span class="tag">Specialized</span>
       </a>
     </div>
@@ -214,11 +214,11 @@
   </div>
 
   <div>
-    <div class="section-title">Unit Study & Review</div>
+    <div class="section-title">Unit Study Modules</div>
     <div class="card-grid">
       <a href="algebra_quiz_notebook.html" class="card">
         <h3>Foundations (Units 0–4)</h3>
-        <p>Arithmetic, linear equations, inequalities, and graphing basics.</p>
+        <p>Review of arithmetic, linear equations, inequalities, and graphing basics.</p>
       </a>
 
       <a href="unit5_quick_review.html" class="card">
@@ -256,12 +256,13 @@
 </main>
 
 <footer>
-  <p>© 2025 Algebra Study Hub. Works Offline.</p>
+  <p>© 2025 Algebra Study Hub. Works Offline on iOS, Android, Windows & Mac.</p>
 </footer>
 
 <script>
+  // Service Worker for Offline Capability
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js?ver=20')
+    navigator.serviceWorker.register('sw.js?ver=21')
       .then(() => console.log('Service Worker Registered'))
       .catch(err => console.log('SW Error:', err));
   }

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA 25B Practice Exam 4 - Interactive</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; color: #333; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: #2c3e50; }
+        .question-box { margin-bottom: 30px; padding: 20px; border: 1px solid #eee; border-radius: 8px; background: #fafafa; }
+        .question-text { font-size: 1.1em; font-weight: bold; margin-bottom: 15px; }
+        .options { list-style-type: none; padding: 0; }
+        .options li { margin: 8px 0; }
+        .btn-option {
+            display: block; width: 100%; text-align: left; padding: 12px 15px;
+            border: 2px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; transition: 0.2s; font-size: 1em; color: #444;
+        }
+        .btn-option:hover { background-color: #f0f8ff; border-color: #b0d4ff; }
+        
+        /* State styles */
+        .btn-option.correct { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; }
+        .btn-option.incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+        
+        /* Feedback Box */
+        .feedback-box { 
+            margin-top: 15px; padding: 15px; border-radius: 6px; display: none; 
+            border-left: 5px solid #ccc; background: #fff;
+        }
+        .feedback-box.show { display: block; }
+        .feedback-correct { border-left-color: #28a745; background-color: #f0fff4; }
+        .feedback-incorrect { border-left-color: #dc3545; background-color: #fff5f5; }
+        
+        .solution-title { font-weight: bold; margin-bottom: 5px; display: block; text-decoration: underline; }
+        .math-step { margin-bottom: 5px; display: block; }
+
+        .score-box { text-align: center; font-size: 1.2em; margin-top: 20px; padding: 15px; background: #2c3e50; color: white; border-radius: 5px; }
+        .reset-btn { display: block; width: 100%; padding: 15px; background: #6c757d; color: white; border: none; font-size: 1.1em; cursor: pointer; margin-top: 10px; border-radius: 5px; }
+        .reset-btn:hover { background: #5a6268; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>MA 25B Practice Exam 4</h1>
+    <h2>Practice with Explanations</h2>
+    <p style="text-align:center; font-style:italic; color:#666;">Compatible with Mac, Windows, Linux, iOS & Android</p>
+    
+    <div id="quiz-container"></div>
+    
+    <div class="score-box" id="score-box">
+        Score: 0 / 18
+    </div>
+    
+    <button class="reset-btn" onclick="renderQuiz()">Reset Quiz</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: "Solve the equation: $$\\sqrt{6q-5}=5$$",
+            options: [
+                { id: "A", text: "$$\\left\\{\\frac{25}{6}\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{25\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{10\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{5\\right\\}$$" }
+            ],
+            answer: "D",
+            explanation: "Square both sides to remove the radical:<br>$$(\\sqrt{6q-5})^2 = 5^2$$<br>$$6q - 5 = 25$$<br>Add 5 to both sides:<br>$$6q = 30$$<br>Divide by 6:<br>$$q = 5$$"
+        },
+        {
+            id: 2,
+            text: "Solve the equation: $$\\sqrt{2k+1}=21$$",
+            options: [
+                { id: "A", text: "$$\\left\\{220\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{440\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{-220\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{110\\right\\}$$" }
+            ],
+            answer: "A",
+            explanation: "Square both sides:<br>$$2k + 1 = 21^2$$<br>$$2k + 1 = 441$$<br>Subtract 1:<br>$$2k = 440$$<br>Divide by 2:<br>$$k = 220$$"
+        },
+        {
+            id: 3,
+            text: "Solve the equation: $$\\sqrt{2x-7}-5=0$$",
+            options: [
+                { id: "A", text: "$$\\left\\{6\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{32\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{16\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{25\\right\\}$$" }
+            ],
+            answer: "C",
+            explanation: "Isolate the radical first:<br>$$\\sqrt{2x-7} = 5$$<br>Square both sides:<br>$$2x - 7 = 25$$<br>Add 7:<br>$$2x = 32$$<br>Divide by 2:<br>$$x = 16$$"
+        },
+        {
+            id: 4,
+            text: "Solve the equation: $$\\sqrt{7a-2}-\\sqrt{5a+3}=0$$",
+            options: [
+                { id: "A", text: "$$\\left\\{\\frac{5}{12}\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{\\frac{5}{2}\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{\\frac{1}{2}\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{\\frac{2}{5}\\right\\}$$" }
+            ],
+            answer: "B",
+            explanation: "Move one radical to the other side:<br>$$\\sqrt{7a-2} = \\sqrt{5a+3}$$<br>Square both sides:<br>$$7a - 2 = 5a + 3$$<br>Subtract 5a from both sides:<br>$$2a - 2 = 3$$<br>Add 2:<br>$$2a = 5$$<br>$$a = \\frac{5}{2}$$"
+        },
+        {
+            id: 5,
+            text: "Solve the equation: $$\\sqrt{p^{2}-3p+32}=p+2$$",
+            options: [
+                { id: "A", text: "$$\\left\\{-4\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{4\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{6\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{2\\right\\}$$" }
+            ],
+            answer: "B",
+            explanation: "Square both sides:<br>$$p^2 - 3p + 32 = (p+2)^2$$<br>Expand the right side:<br>$$p^2 - 3p + 32 = p^2 + 4p + 4$$<br>Subtract $$p^2$$ from both sides (they cancel):<br>$$-3p + 32 = 4p + 4$$<br>Add 3p to both sides:<br>$$32 = 7p + 4$$<br>Subtract 4:<br>$$28 = 7p$$<br>$$p = 4$$"
+        },
+        {
+            id: 6,
+            text: "Solve the equation: $$\\sqrt{2x+3}-\\sqrt{x+1}=1$$",
+            options: [
+                { id: "A", text: "$$\\left\\{-3, -1\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{10\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{3, -1\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{3\\right\\}$$" }
+            ],
+            answer: "C",
+            explanation: "Isolate one radical:<br>$$\\sqrt{2x+3} = 1 + \\sqrt{x+1}$$<br>Square both sides:<br>$$2x+3 = 1 + 2\\sqrt{x+1} + (x+1)$$<br>$$2x+3 = x+2 + 2\\sqrt{x+1}$$<br>Isolate the remaining radical:<br>$$x+1 = 2\\sqrt{x+1}$$<br>Square again:<br>$$(x+1)^2 = 4(x+1)$$<br>$$x^2+2x+1 = 4x+4$$<br>$$x^2-2x-3=0$$<br>Factor:<br>$$(x-3)(x+1)=0$$<br>Solutions: $$x=3, x=-1$$<br>Both check out when plugged back in."
+        },
+        {
+            id: 7,
+            text: "Solve by using the square root property: $$y^{2}=5$$",
+            options: [
+                { id: "A", text: "$$\\left\\{\\sqrt{5}\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{\\pm\\sqrt{5}\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{\\pm 2.5\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{25\\right\\}$$" }
+            ],
+            answer: "B",
+            explanation: "Take the square root of both sides. Remember the plus/minus sign:<br>$$y = \\pm\\sqrt{5}$$"
+        },
+        {
+            id: 8,
+            text: "Solve by using the square root property: $$m^{2}=147$$",
+            options: [
+                { id: "A", text: "$$\\left\\{\\pm 7\\sqrt{3}\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{3\\sqrt{7}\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{21\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{\\pm 3\\sqrt{7}\\right\\}$$" }
+            ],
+            answer: "A",
+            explanation: "Take the square root:<br>$$m = \\pm\\sqrt{147}$$<br>Simplify the radical ($$147 = 49 \\times 3$$):<br>$$m = \\pm\\sqrt{49 \\cdot 3}$$<br>$$m = \\pm 7\\sqrt{3}$$"
+        },
+        {
+            id: 9,
+            text: "Solve by using the square root property: $$x^{2}+5=54$$",
+            options: [
+                { id: "A", text: "$$\\left\\{7\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{\\pm 6\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{27\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{\\pm 7\\right\\}$$" }
+            ],
+            answer: "D",
+            explanation: "Subtract 5 from both sides:<br>$$x^2 = 49$$<br>Square root both sides:<br>$$x = \\pm 7$$"
+        },
+        {
+            id: 10,
+            text: "Solve by using the square root property: $$(r+3)^{2}=15$$",
+            options: [
+                { id: "A", text: "$$\\left\\{3\\pm\\sqrt{15}\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{-3\\pm\\sqrt{15}\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{\\pm\\sqrt{15}\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{12\\right\\}$$" }
+            ],
+            answer: "B",
+            explanation: "Take the square root of both sides:<br>$$r+3 = \\pm\\sqrt{15}$$<br>Subtract 3:<br>$$r = -3 \\pm \\sqrt{15}$$"
+        },
+        {
+            id: 11,
+            text: "Use the quadratic formula to solve: $$a^{2}+14a+40=0$$",
+            options: [
+                { id: "A", text: "$$\\left\\{-20, -8\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{4, 10\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{-10, -4\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{2\\sqrt{10}, -2\\sqrt{10}\\right\\}$$" }
+            ],
+            answer: "C",
+            explanation: "You can factor this easily: find two numbers multiplying to 40 and adding to 14.<br>$$10 \\times 4 = 40$$ and $$10 + 4 = 14$$.<br>$$(a+10)(a+4)=0$$<br>$$a=-10, a=-4$$"
+        },
+        {
+            id: 12,
+            text: "Use the quadratic formula to solve: $$x^{2}=5-8x$$",
+            options: [
+                { id: "A", text: "$$\\left\\{4+\\sqrt{21}\\right\\}$$" },
+                { id: "B", text: "$$\\left\\{-4+2\\sqrt{21}, -4-2\\sqrt{21}\\right\\}$$" },
+                { id: "C", text: "$$\\left\\{-4+\\sqrt{21}, -4-\\sqrt{21}\\right\\}$$" },
+                { id: "D", text: "$$\\left\\{-1+\\sqrt{21}, -1-\\sqrt{21}\\right\\}$$" }
+            ],
+            answer: "C",
+            explanation: "Rewrite in standard form $$ax^2+bx+c=0$$:<br>$$x^2 + 8x - 5 = 0$$<br>Use formula: $$x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}$$<br>$$x = \\frac{-8 \\pm \\sqrt{64 - 4(1)(-5)}}{2}$$<br>$$x = \\frac{-8 \\pm \\sqrt{84}}{2}$$<br>Simplify $$\\sqrt{84} = \\sqrt{4 \\cdot 21} = 2\\sqrt{21}$$:<br>$$x = \\frac{-8 \\pm 2\\sqrt{21}}{2}$$<br>$$x = -4 \\pm \\sqrt{21}$$"
+        },
+        {
+            id: 13,
+            text: "Find the slope of the line shown in the graph (Points at (0, -6) and (3, 0)).",
+            options: [
+                { id: "A", text: "$$-2$$" },
+                { id: "B", text: "$$2$$" },
+                { id: "C", text: "$$-\\frac{1}{2}$$" },
+                { id: "D", text: "$$\\frac{1}{2}$$" }
+            ],
+            answer: "B",
+            explanation: "Use the slope formula $$m = \\frac{y_2 - y_1}{x_2 - x_1}$$ with points $$(0, -6)$$ and $$(3, 0)$$.<br>$$m = \\frac{0 - (-6)}{3 - 0}$$<br>$$m = \\frac{6}{3}$$<br>$$m = 2$$"
+        },
+        {
+            id: 14,
+            text: "Find the slope of the line going through the given pair of points: $$(-9, 0) \\text{ and } (0, -4)$$",
+            options: [
+                { id: "A", text: "$$\\frac{9}{4}$$" },
+                { id: "B", text: "$$-\\frac{9}{4}$$" },
+                { id: "C", text: "$$\\frac{4}{9}$$" },
+                { id: "D", text: "$$-\\frac{4}{9}$$" }
+            ],
+            answer: "D",
+            explanation: "Slope formula $$m = \\frac{y_2 - y_1}{x_2 - x_1}$$:<br>$$m = \\frac{-4 - 0}{0 - (-9)}$$<br>$$m = \\frac{-4}{0 + 9}$$<br>$$m = \\frac{-4}{9} = -\\frac{4}{9}$$"
+        },
+        {
+            id: 15,
+            text: "Find the slope of the line: $$-4y=6+5x$$",
+            options: [
+                { id: "A", text: "$$\\frac{5}{4}$$" },
+                { id: "B", text: "$$-\\frac{4}{5}$$" },
+                { id: "C", text: "$$-\\frac{5}{4}$$" },
+                { id: "D", text: "$$-\\frac{6}{5}$$" }
+            ],
+            answer: "C",
+            explanation: "Convert to slope-intercept form ($$y = mx + b$$) by solving for y.<br>Divide everything by -4:<br>$$y = \\frac{6}{-4} + \\frac{5}{-4}x$$<br>$$y = -\\frac{3}{2} - \\frac{5}{4}x$$<br>The coefficient of x is the slope: $$-\\frac{5}{4}$$"
+        },
+        {
+            id: 16,
+            text: "Identify the slope and y-intercept of the line: $$f(x)=-6x-9$$",
+            options: [
+                { id: "A", text: "Slope -9, y-intercept (0, -6)" },
+                { id: "B", text: "Slope -6, y-intercept (0, -9)" },
+                { id: "C", text: "Slope 6, y-intercept (0, -9)" },
+                { id: "D", text: "Slope -9, y-intercept (0, 6)" }
+            ],
+            answer: "B",
+            explanation: "The equation is already in $$y = mx + b$$ form.<br>Slope ($$m$$) = -6<br>Y-intercept ($$b$$) = -9 (point: 0, -9)"
+        },
+        {
+            id: 17,
+            text: "Graph the equation by using the slope and y-intercept: $$y=\\frac{2}{5}x-2$$",
+            options: [
+                { id: "A", text: "Graph A" },
+                { id: "B", text: "Graph B" },
+                { id: "C", text: "Graph C" },
+                { id: "D", text: "Graph D" }
+            ],
+            answer: "D",
+            explanation: "Start at the y-intercept: $$-2$$.<br>Use the slope $$\\frac{2}{5}$$: go UP 2 units, and RIGHT 5 units.<br>Graph D matches this (Starts at -2 on y-axis, crosses x-axis at 5)."
+        },
+        {
+            id: 18,
+            text: "Write an equation of the line through $$(3,5)$$ with slope $$m=-\\frac{4}{7}$$",
+            options: [
+                { id: "A", text: "$$y=-\\frac{4}{7}x+\\frac{47}{7}$$" },
+                { id: "B", text: "$$y=-\\frac{4}{7}x+\\frac{7}{47}$$" },
+                { id: "C", text: "$$y=-\\frac{4}{7}x-\\frac{47}{7}$$" },
+                { id: "D", text: "$$y=-\\frac{7}{4}x-\\frac{7}{47}$$" }
+            ],
+            answer: "A",
+            explanation: "Use point-slope form: $$y - y_1 = m(x - x_1)$$<br>$$y - 5 = -\\frac{4}{7}(x - 3)$$<br>Distribute the slope:<br>$$y - 5 = -\\frac{4}{7}x + \\frac{12}{7}$$<br>Add 5 to both sides (convert 5 to $$\\frac{35}{7}$$):<br>$$y = -\\frac{4}{7}x + \\frac{12}{7} + \\frac{35}{7}$$<br>$$y = -\\frac{4}{7}x + \\frac{47}{7}$$"
+        }
+    ];
+
+    let score = 0;
+    const answered = new Set();
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+        score = 0;
+        answered.clear();
+        updateScore();
+
+        questions.forEach((q) => {
+            const box = document.createElement('div');
+            box.className = 'question-box';
+            
+            const title = document.createElement('div');
+            title.className = 'question-text';
+            title.innerHTML = `${q.id}) ${q.text}`;
+            box.appendChild(title);
+
+            const optionsList = document.createElement('ul');
+            optionsList.className = 'options';
+
+            q.options.forEach(opt => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.id = `q${q.id}-${opt.id}`;
+                btn.innerHTML = `${opt.id}) ${opt.text}`;
+                btn.onclick = () => checkAnswer(q.id, opt.id, q.answer, q.explanation);
+                li.appendChild(btn);
+                optionsList.appendChild(li);
+            });
+
+            box.appendChild(optionsList);
+
+            const feedback = document.createElement('div');
+            feedback.id = `feedback-${q.id}`;
+            feedback.className = 'feedback-box';
+            box.appendChild(feedback);
+
+            container.appendChild(box);
+        });
+
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    function checkAnswer(questionId, selectedId, correctId, explanationText) {
+        if (answered.has(questionId)) return;
+        answered.add(questionId);
+
+        const feedbackEl = document.getElementById(`feedback-${questionId}`);
+        const selectedBtn = document.getElementById(`q${questionId}-${selectedId}`);
+        const correctBtn = document.getElementById(`q${questionId}-${correctId}`);
+
+        let feedbackHtml = "";
+        
+        if (selectedId === correctId) {
+            selectedBtn.classList.add('correct');
+            feedbackEl.classList.add('feedback-correct');
+            feedbackHtml = `<span style="color:#155724; font-weight:bold;">✅ Correct!</span>`;
+            score++;
+        } else {
+            selectedBtn.classList.add('incorrect');
+            correctBtn.classList.add('correct');
+            feedbackEl.classList.add('feedback-incorrect');
+            feedbackHtml = `<span style="color:#721c24; font-weight:bold;">❌ Incorrect. The correct answer is ${correctId}.</span>`;
+        }
+
+        // Add explanation
+        feedbackHtml += `<hr style="border-top: 1px solid rgba(0,0,0,0.1); margin: 10px 0;">`;
+        feedbackHtml += `<span class="solution-title">Solution:</span>`;
+        feedbackHtml += `<div class="math-step">${explanationText}</div>`;
+
+        feedbackEl.innerHTML = feedbackHtml;
+        feedbackEl.classList.add('show');
+        
+        // Re-render math in feedback
+        if (window.MathJax) {
+            MathJax.typesetPromise([feedbackEl]);
+        }
+
+        updateScore();
+    }
+
+    function updateScore() {
+        document.getElementById('score-box').innerHTML = `Score: ${score} / ${questions.length}`;
+    }
+
+    window.onload = renderQuiz;
+</script>
+
+</body>
+</html>

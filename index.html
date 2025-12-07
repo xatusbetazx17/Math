@@ -128,6 +128,9 @@
     margin-top: 1rem;
     align-self: flex-start;
   }
+  
+  /* Specific tag colors */
+  .tag.green { background-color: #064e3b; color: #6ee7b7; border: 1px solid #059669; }
 
   /* Footer */
   footer {
@@ -193,6 +196,13 @@
         <p>Roots and Radicals focus. Includes random drills.</p>
         <span class="tag">Specialized</span>
       </a>
+
+      <a href="practice_exam_4_feedback.html" class="card">
+        <h3>Practice Exam 4</h3>
+        <p>Interactive Form 4. Includes detailed step-by-step solutions for every question.</p>
+        <span class="tag green">New & Interactive</span>
+      </a>
+
     </div>
   </div>
 
@@ -245,7 +255,7 @@
         <h3>🎧 Audio Lectures</h3>
         <p>Listen to class recordings (requires audio files in folder).</p>
       </a>
-      
+       
       <a href="references.html" class="card">
         <h3>🎥 Video References</h3>
         <p>Curated list of YouTube search links for every math topic.</p>
@@ -262,7 +272,7 @@
 <script>
   // Service Worker for Offline Capability
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js?ver=21')
+    navigator.serviceWorker.register('sw.js?ver=22')
       .then(() => console.log('Service Worker Registered'))
       .catch(err => console.log('SW Error:', err));
   }
